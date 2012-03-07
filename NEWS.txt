@@ -1,9 +1,9 @@
 News
 ====
 
-0.1
+0.2
 -----
 
 *Release date: UNRELEASED*
 
-* Initial implementation of builder and writer.
+* Initial implementation of Sphinx builder.
