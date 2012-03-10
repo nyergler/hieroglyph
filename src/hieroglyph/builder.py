@@ -92,6 +92,6 @@ def setup(app):
 
     app.add_builder(SlideBuilder)
 
-    app.add_config_value('slide_theme', 'default', 'html')
+    app.add_config_value('slide_theme', 'slides', 'html')
     app.add_config_value('slide_theme_options', {}, 'html')
     app.add_config_value('slide_theme_path', [], 'html')
