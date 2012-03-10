@@ -1,3 +1,25 @@
+img.fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  min-width: 100%;
+  min-height: 100%;
+
+  border-radius: 10px;
+  -o-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+
+  z-index: -1;
+}
+
 a.headerlink {
     display: none;
+}
+
+div.figure p.caption {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 16px;
 }
