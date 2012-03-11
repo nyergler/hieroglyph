@@ -2,7 +2,7 @@
  hieroglyph
 ============
 
-.. ifconfig:: builder == 'html5slides'
+.. slides::
 
    .. figure:: /_static/hieroglyphs.jpg
       :class: fill
@@ -65,19 +65,15 @@ Incremental Slides
 - To incrementally show its contents
 - Remember that *Sphinx* maps the basic ``class`` directive to ``rst-class``
 
-Handout Content
----------------
+Slide-Only (and non-slide) Content
+----------------------------------
 
-Currently::
+Two directives let you restrict whether content is included::
 
-  .. ifconfig:: build != 'html5slides'
+  .. slides::
 
-     Non-slide content here
 
-This requires that you enable the `ifconfig`_ extension.
-
-Perhaps one day we'll provide something like the rst2s5's
-``.. handout ::`` directive.
+  .. notslides::
 
 
 Styling Slides

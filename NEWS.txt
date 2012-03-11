@@ -7,6 +7,7 @@ News
 *Release date: UNRELEASED*
 
 * Provide directory and standalone based builders.
+* Added ``slides`` and ``notslides`` directives.
 
 0.2
 ---
