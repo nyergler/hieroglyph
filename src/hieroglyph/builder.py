@@ -2,7 +2,10 @@ import os.path
 
 from docutils import nodes
 from sphinx.theming import Theme
-from sphinx.builders.html import DirectoryHTMLBuilder
+from sphinx.builders.html import (
+    StandaloneHTMLBuilder,
+    DirectoryHTMLBuilder,
+)
 from sphinx.writers.html import HTMLTranslator
 
 
@@ -58,9 +61,7 @@ class SlideTranslator(HTMLTranslator):
             html4css1.HTMLTranslator.visit_subtitle(self, node)
 
 
-class SlideBuilder(DirectoryHTMLBuilder):
-
-    name = 'html5slides'
+class AbstractSlideBuilder(object):
 
     def init_translator_class(self):
         self.translator_class = SlideTranslator
@@ -90,12 +91,22 @@ class SlideBuilder(DirectoryHTMLBuilder):
             if node.get('candidates') is None:
                 node['candidates'] = ('*',)
 
-        return super(SlideBuilder, self).post_process_images(doctree)
+        return super(AbstractSlideBuilder, self).post_process_images(doctree)
 
+
+class DirectorySlideBuilder(AbstractSlideBuilder, DirectoryHTMLBuilder):
+
+    name = 'dirhtml5slides'
+
+
+class SlideBuilder(AbstractSlideBuilder, StandaloneHTMLBuilder):
+
+    name = 'html5slides'
 
 def setup(app):
 
     app.add_builder(SlideBuilder)
+    app.add_builder(DirectorySlideBuilder)
 
     app.add_config_value('slide_theme', 'slides', 'html')
     app.add_config_value('slide_levels', 3, 'html')

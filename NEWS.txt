@@ -1,8 +1,15 @@
 News
 ====
 
+0.3
+---
+
+*Release date: UNRELEASED*
+
+* Provide directory and standalone based builders.
+
 0.2
------
+---
 
 *Release date: 10 March 2012*
 
