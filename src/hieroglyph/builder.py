@@ -87,9 +87,15 @@ class AbstractSlideBuilder(object):
 
     def post_process_images(self, doctree):
         """Pick the best candidate for all image URIs."""
+
         for node in doctree.traverse(nodes.image):
+
             if node.get('candidates') is None:
                 node['candidates'] = ('*',)
+
+            # fix up images with absolute paths
+            if node['uri'].startswith(self.outdir):
+                node['uri'] = node['uri'][len(self.outdir) + 1:]
 
         return super(AbstractSlideBuilder, self).post_process_images(doctree)
 

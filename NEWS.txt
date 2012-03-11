@@ -8,6 +8,7 @@ News
 
 * Provide directory and standalone based builders.
 * Added ``slides`` and ``notslides`` directives.
+* Fix up absolute image paths from things like blockdiag
 
 0.2
 ---
