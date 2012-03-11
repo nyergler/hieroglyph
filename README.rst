@@ -6,8 +6,8 @@
 from ReStructured Text documents.
 
 
-Using
-=====
+Using Hieroglyph
+================
 
 Add **hieroglyph** as a Sphinx extension to your configuration::
 
@@ -18,18 +18,6 @@ Add **hieroglyph** as a Sphinx extension to your configuration::
 Build your slides::
 
   $ sphinx -b html5slides output/slides
-
-You make optionally want to add the following to your ``Makefile``::
-
-  slides:
-          $(SPHINXBUILD) -b html5slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
-          @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
-
-
-Document Structure
-==================
-
-First and second level headings become slides
 
 
 License

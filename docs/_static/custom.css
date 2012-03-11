@@ -1,0 +1,36 @@
+@import url(http://fonts.googleapis.com/css?family=Amatic+SC:700);
+
+.slides > article.level-1 {
+    padding-right: 0px;
+}
+
+.slides > article.level-1 > h1 {
+    color: #222;
+    font-size:96px;
+    margin-top: 250px;
+    background: rgba(255, 255, 255, 0.65);
+    line-height: 1.5em;
+    padding-left: 30px;
+    font-family: 'Amatic SC', cursive;
+}
+
+.slides > article.level-1 > p {
+    color: #333;
+    font-size: 48px;
+    line-height: 48px;
+    background: rgba(255, 255, 255, 0.65);
+    text-align: right;
+    margin-top: 0px;
+    padding-right: 20px;
+    padding-left: 60px;
+    padding-bottom: 0.5em;
+    font-family: 'Amatic SC', sans-serif;
+}
+
+.slides > article.level-1 .caption {
+    color: black;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 0 5px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
