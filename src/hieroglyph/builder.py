@@ -19,7 +19,7 @@ class SlideTranslator(HTMLTranslator):
         self.section_count += 1
         self.section_level += 1
 
-        if self.section_level > 3:
+        if self.section_level > self.builder.config.slide_levels:
             # dummy for matching div's
             self.body.append(
                 self.starttag(
@@ -37,9 +37,14 @@ class SlideTranslator(HTMLTranslator):
                     node, 'article', CLASS='slide level-%s' % self.section_level))
 
     def depart_section(self, node):
+
+        if self.section_level > self.builder.config.slide_levels:
+            self.body.append('</div>')
+        else:
+            if not getattr(node, 'closed', False):
+                self.body.append('</article>\n')
+
         self.section_level -= 1
-        if not getattr(node, 'closed', False):
-            self.body.append('</article>\n')
 
     def visit_subtitle(self, node):
         if isinstance(node.parent, nodes.section):
@@ -93,5 +98,6 @@ def setup(app):
     app.add_builder(SlideBuilder)
 
     app.add_config_value('slide_theme', 'slides', 'html')
+    app.add_config_value('slide_levels', 3, 'html')
     app.add_config_value('slide_theme_options', {}, 'html')
     app.add_config_value('slide_theme_path', [], 'html')
