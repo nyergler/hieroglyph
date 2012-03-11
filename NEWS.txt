@@ -4,6 +4,8 @@ News
 0.2
 -----
 
-*Release date: UNRELEASED*
+*Release date: 10 March 2012*
 
 * Initial implementation of Sphinx builder.
+* Two themes: slides and single-level
+* Basic documentation
