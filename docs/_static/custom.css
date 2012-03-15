@@ -6,8 +6,8 @@
 
 .slides > article.level-1 > h1 {
     color: #222;
-    font-size:96px;
-    margin-top: 250px;
+    font-size: 3.2em;
+    margin-top: 35%;
     background: rgba(255, 255, 255, 0.65);
     line-height: 1.5em;
     padding-left: 30px;
@@ -16,8 +16,8 @@
 
 .slides > article.level-1 > p {
     color: #333;
-    font-size: 48px;
-    line-height: 48px;
+    font-size: 1.6em;
+    line-height: 1em;;
     background: rgba(255, 255, 255, 0.65);
     text-align: right;
     margin-top: 0px;

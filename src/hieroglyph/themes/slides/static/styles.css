@@ -226,14 +226,18 @@ body {
 
 /* Styles for slides */
 
+.slides {
+    font-size: 30px;
+}
+
 .slides > article {
   font-family: 'Open Sans', Arial, sans-serif;
 
   color: rgb(102, 102, 102);
   text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
 
-  font-size: 30px;
-  line-height: 36px;
+  font-size: 1em;
+  line-height: 1.2em;
 
   letter-spacing: -1px;
 }
@@ -282,8 +286,8 @@ p:first-child {
 }
 
 h1 {
-  font-size: 60px;
-  line-height: 60px;
+  font-size: 2em;
+  line-height: 1em;
 
   padding: 0;
   margin: 0;
@@ -298,8 +302,8 @@ h1 {
 }
 
 h2 {
-  font-size: 45px;
-  line-height: 45px;
+  font-size: 1.5em;
+  line-height: 1em;
 
   position: absolute;
   bottom: 150px;
@@ -316,8 +320,8 @@ h2 {
 }
 
 h3 {
-  font-size: 30px;
-  line-height: 36px;
+  font-size: 1em;
+  line-height: 1.2em;
 
   padding: 0;
   margin: 0;
@@ -374,8 +378,8 @@ li::before {
 pre {
   font-family: 'Droid Sans Mono', 'Courier New', monospace;
 
-  font-size: 20px;
-  line-height: 28px;
+  font-size: 0.66em;
+  line-height: 1.4em;
   padding: 5px 10px;
 
   letter-spacing: -1px;
@@ -473,14 +477,14 @@ th {
   top: 644px;
   padding-right: 175px;
 
-  font-size: 15px;
+  font-size: 0.5em;
   letter-spacing: 0;
   line-height: 18px;
 }
 
 q {
   display: block;
-  font-size: 60px;
+  font-size: 2em;
   line-height: 72px;
 
   margin-left: 20px;
@@ -497,7 +501,7 @@ q::before {
   width: 2em;
   text-align: right;
 
-  font-size: 90px;
+  font-size: 3em;
   color: rgb(192, 192, 192);
 }
 q::after {
@@ -506,12 +510,12 @@ q::after {
   position: absolute;
   margin-left: .1em;
 
-  font-size: 90px;
+  font-size: 3em;
   color: rgb(192, 192, 192);
 }
 div.author {
   text-align: right;
-  font-size: 40px;
+  font-size: 1.33em;
 
   margin-top: 20px;
   margin-right: 150px;
@@ -524,27 +528,27 @@ div.author::before {
 
 article.smaller p,
 article.smaller ul {
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 0.66em;
+  line-height: 1.2em;
   letter-spacing: 0;
 }
 article.smaller table {
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 0.66em;
+  line-height: 1.2em;
   letter-spacing: 0;
 }
 article.smaller pre {
-  font-size: 15px;
-  line-height: 20px;
+  font-size: 0.5em;
+  line-height: 1.33em;
   letter-spacing: 0;
 }
 article.smaller q {
-  font-size: 40px;
-  line-height: 48px;
+  font-size: 1.33em;
+  line-height: 1.2em;
 }
 article.smaller q::before,
 article.smaller q::after {
-  font-size: 60px;
+  font-size: 2em;
 }
 
 /* Builds */
