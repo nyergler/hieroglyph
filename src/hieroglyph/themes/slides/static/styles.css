@@ -654,3 +654,26 @@ article.smaller q::after {
 .prettyprint .var { /* a declaration; a variable name */
   color: rgb(127, 0, 127);
 }
+
+@media print {
+
+    .slides > article,
+    .slides > article.far-past,
+    .slides > article.past,
+    .slides > article.next,
+    .slides > article.far-next {
+
+        position: static;
+        overflow: hidden;
+        display: block !important;
+
+        margin: auto;
+        page-break-after: always;
+
+        transform: none;
+        -o-transform: none;
+        -moz-transform: none;
+        -webkit-transform: none;
+    }
+
+}
