@@ -15,7 +15,7 @@ var PERMANENT_URL_PREFIX = DOCUMENTATION_OPTIONS.URL_ROOT + '_static/';
 var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
 
 var PM_TOUCH_SENSITIVITY = 15;
-
+var TABLE_CLASS = 'table';
 var curSlide;
 
 /* ---------------------------------------------------------------------- */
@@ -227,6 +227,8 @@ function buildNextItem() {
 };
 
 function prevSlide() {
+  if (slidesContainer.classList.contains(TABLE_CLASS)) return;
+
   if (curSlide > 0) {
     curSlide--;
 
@@ -235,6 +237,8 @@ function prevSlide() {
 };
 
 function nextSlide() {
+  if (slidesContainer.classList.contains(TABLE_CLASS)) return;
+
   if (buildNextItem()) {
     return;
   }
@@ -244,6 +248,40 @@ function nextSlide() {
 
     updateSlides();
   }
+};
+
+function showSlide(e) {
+
+    if (!slidesContainer.classList.contains(TABLE_CLASS)) return;
+
+    // toggle table class
+    toggleView();
+
+    // set curSlide
+    if (e) {
+        for (i = 0; i < slideEls.length; i++) {
+            if (slideEls[i].contains(e.target)) {
+                curSlide = i;
+                break;
+            }
+        }
+    }
+
+    // update slide classes
+    updateSlides();
+};
+
+function toggleView() {
+  for (var i = 0; i < slideEls.length; i++) {
+      updateSlideClass(i);
+  };
+
+  if (slidesContainer.classList.contains(TABLE_CLASS)) {
+      // leaving table mode
+      updateSlides();
+  }
+
+  slidesContainer.classList.toggle(TABLE_CLASS);
 };
 
 /* Slide events */
@@ -396,6 +434,12 @@ function setupInteraction() {
   /* Swiping */
 
   document.body.addEventListener('touchstart', handleTouchStart, false);
+
+  /* Clicking Slides */
+  for (i = 0; i < slideEls.length; i++) {
+      slideEls[i].addEventListener('click', showSlide, false);
+  }
+
 }
 
 /* ChromeVox support */
@@ -516,6 +560,11 @@ function handleBodyKeyDown(event) {
       }
       event.preventDefault();
       break;
+
+    case 27: // ESC
+      toggleView();
+      break;
+
   }
 };
 
@@ -582,6 +631,7 @@ function makeBuildLists() {
 };
 
 function handleDomLoaded() {
+  slidesContainer = document.querySelector('section.slides');
   slideEls = document.querySelectorAll('section.slides > article');
 
   setupFrames();

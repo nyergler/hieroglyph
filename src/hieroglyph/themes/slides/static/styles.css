@@ -105,6 +105,68 @@ body {
     display: none;
 }
 
+.slides.table {
+    font-size: 15px;
+    padding: 10px;
+}
+
+.slides.table > .slide-area {
+    display: none;
+}
+
+.slides.table > article:hover {
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 5px 5px 5px black;
+    -webkit-box-shadow: 5px 5px 5px black;
+    box-shadow: 5px 5px 5px black;
+
+    background: #ddd;
+}
+
+.slides.table > article {
+  display: block;
+  float: left;
+  position: relative;
+  overflow: hidden;
+
+  width: 450px;
+  height: 350px;
+
+  left: 0;
+  top: 0;
+
+  margin: 10px;
+
+  padding: 20px 30px;
+
+  box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+
+  border-radius: 10px;
+  -o-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+
+  background-color: white;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+  border: 1px solid rgba(0, 0, 0, .3);
+
+  /* transform: scale(0.5); */
+  /* -webkit-transform: scale(0.5); */
+  transition: width height .3s ease-out;
+  -o-transition: -o-transform .3s ease-out;
+  -moz-transition: -moz-transform .3s ease-out;
+  -webkit-transition: width height .3s ease-out;
+}
+
+.slides.table > article .to-build {
+    opacity: 100;
+}
+
 /* Clickable/tappable areas */
 
 .slide-area {
