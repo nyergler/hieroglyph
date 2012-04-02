@@ -28,10 +28,8 @@ Build your slides::
 
   $ sphinx-build -b html5slides sourcedir outdir
 
-.. note::
-
-    Where sourcedir is the directory containing the sphinx conf.py file and 
-    outdir is where you want your slides to output to.
+Where sourcedir is the directory containing the sphinx conf.py file and 
+outdir is where you want your slides to output to.
 
 
 License
