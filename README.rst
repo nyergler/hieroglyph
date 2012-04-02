@@ -26,7 +26,12 @@ Add **hieroglyph** as a Sphinx extension to your configuration::
 
 Build your slides::
 
-  $ sphinx -b html5slides output/slides
+  $ sphinx-build -b html5slides sourcedir outdir
+
+.. note::
+
+    Where sourcedir is the directory containing the sphinx conf.py file and 
+    outdir is where you want your slides to output to.
 
 
 License
