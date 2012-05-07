@@ -7,7 +7,7 @@ from sphinx.builders.html import (
     DirectoryHTMLBuilder,
 )
 
-from writer import SlideTranslator
+from hieroglyph import writer
 
 
 class AbstractSlideBuilder(object):
@@ -15,7 +15,7 @@ class AbstractSlideBuilder(object):
     add_permalinks = False
 
     def init_translator_class(self):
-        self.translator_class = SlideTranslator
+        self.translator_class = writer.SlideTranslator
 
     def get_builtin_theme_dirs(self):
 

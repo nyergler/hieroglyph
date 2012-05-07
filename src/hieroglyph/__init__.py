@@ -1,9 +1,8 @@
 import unicodedata
 
-import builder
-import directives
-import html
-
+from hieroglyph import builder
+from hieroglyph import directives
+from hieroglyph import html
 
 def setup(app):
 

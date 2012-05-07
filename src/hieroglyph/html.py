@@ -1,9 +1,8 @@
 """Support for interacting with HTML builds."""
+
 import os
 
 from sphinx.jinja2glue import SphinxFileSystemLoader
-
-import writer
 
 HTML_BUILDERS = ('html', 'dirhtml', 'singlehtml',)
 SLIDELINK_TEMPLATE = 'slidelink.html'
@@ -21,6 +20,9 @@ def inspect_config(app):
     configuration is not specified, we'll attempt to emulate what
     Sphinx does by default.
     """
+
+    # avoid import cycles :/
+    from hieroglyph import writer
 
     # only reconfigure Sphinx if we're generating HTML
     if app.builder.name not in HTML_BUILDERS:

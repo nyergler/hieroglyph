@@ -5,7 +5,7 @@ from sphinx.locale import _
 from docutils.writers.html4css1 import HTMLTranslator as BaseTranslator
 from sphinx.writers.html import HTMLTranslator
 
-import html
+from hieroglyph import html
 
 
 def depart_title(self, node):
