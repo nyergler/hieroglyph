@@ -1,5 +1,5 @@
-import builder
-import directives
+from hieroglyph import builder
+from hieroglyph import directives
 
 def setup(app):
 
