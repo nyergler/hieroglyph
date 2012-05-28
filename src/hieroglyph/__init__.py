@@ -1,5 +1,7 @@
-from hieroglyph import builder
-from hieroglyph import directives
+import builder
+import directives
+import html
+
 
 def setup(app):
 
@@ -11,7 +13,15 @@ def setup(app):
     app.add_config_value('slide_theme_options', {}, 'html')
     app.add_config_value('slide_theme_path', [], 'html')
 
+    # support for linking html output to slides
+    app.add_config_value('slide_link_html_to_slides', False, 'html')
+    app.add_config_value('slide_relative_path', '../slides/', 'html')
+
+
     app.add_node(directives.slides)
     app.add_directive('notslides', directives.Slides)
     app.add_directive('slides', directives.Slides)
     app.connect('doctree-resolved', directives.process_slide_nodes)
+
+    app.connect('builder-inited', html.inspect_config)
+    app.connect('html-page-context', html.add_link)
