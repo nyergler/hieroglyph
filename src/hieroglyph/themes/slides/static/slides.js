@@ -13,6 +13,7 @@
 var PERMANENT_URL_PREFIX = DOCUMENTATION_OPTIONS.URL_ROOT + '_static/';
 
 var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
+var SLIDES_SELECTOR = 'section.slides > article';
 
 var PM_TOUCH_SENSITIVITY = 15;
 var TABLE_CLASS = 'table';
@@ -510,8 +511,29 @@ function speakPrevItem() {
 
 /* Hash functions */
 
+function getSlideById(title_id) {
+    // Return the 1-base index of the Slide with id ``title_id``
+    //
+    // The index must be 1-based, as it's passed to code which assumes
+    // it was specified as the location fragment.
+
+    for (var i = 0; i < slideEls.length; i++) {
+        if (slideEls.item(i).id == title_id) {
+            return i + 1;
+        }
+    }
+
+    return false;
+
+};
+
 function getCurSlideFromHash() {
-  var slideNo = parseInt(location.hash.substr(1));
+  var slideNo = Number(location.hash.substr(1));
+
+  if (isNaN(slideNo)) {
+      // must be a section title reference
+      slideNo = getSlideById(location.hash.substr(1));
+  }
 
   if (slideNo) {
     curSlide = slideNo - 1;
@@ -632,8 +654,9 @@ function makeBuildLists() {
 
 function handleDomLoaded() {
   slidesContainer = document.querySelector('section.slides');
-  slideEls = document.querySelectorAll('section.slides > article');
+  slideEls = document.querySelectorAll(SLIDES_SELECTOR);
 
+  getCurSlideFromHash();
   setupFrames();
 
   addFontStyle();
@@ -650,8 +673,6 @@ function handleDomLoaded() {
 };
 
 function initialize() {
-  getCurSlideFromHash();
-
   if (window['_DEBUG']) {
     PERMANENT_URL_PREFIX = '../';
   }
