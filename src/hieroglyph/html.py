@@ -88,6 +88,17 @@ def slide_path(builder, pagename=None):
     )
 
 
+def html_path(builder, pagename=None):
+    """Calculate the relative path to the Slides for pagename."""
+
+    return builder.get_outfilename(
+        os.path.join(
+            builder.app.config.slide_html_relative_path,
+            pagename or builder.current_docname,
+        )
+    )
+
+
 def add_link(app, pagename, templatename, context, doctree):
     """Add the slides link to the HTML context."""
 

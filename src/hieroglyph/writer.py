@@ -88,3 +88,17 @@ class SlideTranslator(HTMLTranslator):
             self.context.append('</%s>\n' % tag)
         else:
             HTMLTranslator.visit_subtitle(self, node)
+
+    def depart_title(self, node):
+
+        if node.parent.hasattr('ids') and node.parent['ids']:
+            aname = node.parent['ids'][0]
+
+            if self.builder.app.config.slide_link_to_html:
+                self.body.append(u'<a class="headerlink" href="%s#%s" ' % (
+                                        html.html_path(self.builder), aname,) +
+                                 u'title="%s">%s</a>' % (
+                                 _('View HTML'),
+                                 self.builder.app.config.slides_html_slide_link_symbol))
+
+        HTMLTranslator.depart_title(self, node)

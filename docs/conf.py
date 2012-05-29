@@ -106,6 +106,9 @@ slide_theme_options = {'custom_css':'custom.css'}
 slide_link_html_to_slides = True
 slide_link_html_sections_to_slides = True
 
+slide_link_to_html = True
+
+
 # -- Options for HTML output ---------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for

@@ -12,6 +12,8 @@ from writer import SlideTranslator
 
 class AbstractSlideBuilder(object):
 
+    add_permalinks = False
+
     def init_translator_class(self):
         self.translator_class = SlideTranslator
 
