@@ -104,6 +104,7 @@ slide_theme = 'single-level'
 slide_theme_options = {'custom_css':'custom.css'}
 
 slide_link_html_to_slides = True
+slide_link_html_sections_to_slides = True
 
 # -- Options for HTML output ---------------------------------------------------
 

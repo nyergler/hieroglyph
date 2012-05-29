@@ -1,7 +1,42 @@
 """Writer Support for Hieroglyph Slides."""
 
 from docutils import nodes
+from sphinx.locale import _
+from docutils.writers.html4css1 import HTMLTranslator as BaseTranslator
 from sphinx.writers.html import HTMLTranslator
+
+import html
+
+
+def depart_title(self, node):
+
+    # XXX Because we want to inject our link into the title, this is
+    # largely copy-pasta'd from sphinx.html.writers.HtmlTranslator.
+
+    close_tag = self.context[-1]
+
+    if (self.permalink_text and self.builder.add_permalinks and
+        node.parent.hasattr('ids') and node.parent['ids']):
+        aname = node.parent['ids'][0]
+
+        if close_tag.startswith('</a></h'):
+            self.body.append('</a>')
+
+        self.body.append(u'<a class="headerlink" href="#%s" ' % aname +
+                         u'title="%s">%s</a>' % (
+                         _('Permalink to this headline'),
+                         self.permalink_text))
+
+        self.body.append(u'<a class="headerlink" href="%s#%s" ' % (
+                                html.slide_path(self.builder), aname,) +
+                         u'title="%s">%s' % (
+                         _('Slides'),
+                         self.builder.app.config.slides_html_slide_link_symbol))
+
+        if not close_tag.startswith('</a></h'):
+            self.body.append('</a>')
+
+    BaseTranslator.depart_title(self, node)
 
 
 class SlideTranslator(HTMLTranslator):

@@ -1,3 +1,5 @@
+import unicodedata
+
 import builder
 import directives
 import html
@@ -15,8 +17,10 @@ def setup(app):
 
     # support for linking html output to slides
     app.add_config_value('slide_link_html_to_slides', False, 'html')
+    app.add_config_value('slide_link_html_sections_to_slides', False, 'html')
     app.add_config_value('slide_relative_path', '../slides/', 'html')
-
+    app.add_config_value('slides_html_slide_link_symbol',
+                         unicodedata.lookup('section sign'), 'html')
 
     app.add_node(directives.slides)
     app.add_directive('notslides', directives.Slides)

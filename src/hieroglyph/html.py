@@ -3,6 +3,9 @@ import os
 
 from sphinx.jinja2glue import SphinxFileSystemLoader
 
+import writer
+
+HTML_BUILDERS = ('html', 'dirhtml', 'singlehtml',)
 SLIDELINK_TEMPLATE = 'slidelink.html'
 
 
@@ -18,6 +21,10 @@ def inspect_config(app):
     configuration is not specified, we'll attempt to emulate what
     Sphinx does by default.
     """
+
+    # only reconfigure Sphinx if we're generating HTML
+    if app.builder.name not in HTML_BUILDERS:
+        return
 
     if app.config.slide_link_html_to_slides:
 
@@ -58,6 +65,28 @@ def inspect_config(app):
                     SLIDELINK_TEMPLATE,
                 )
 
+    if app.config.slide_link_html_sections_to_slides:
+        # fix up the HTML Translator
+        app.builder.translator_class = type(
+            'SlideLinkTranslator',
+            (app.builder.translator_class,
+             object,
+             ),
+            {'depart_title': writer.depart_title,
+             },
+        )
+
+
+def slide_path(builder, pagename=None):
+    """Calculate the relative path to the Slides for pagename."""
+
+    return builder.get_outfilename(
+        os.path.join(
+            builder.app.config.slide_relative_path,
+            pagename or builder.current_docname,
+        )
+    )
+
 
 def add_link(app, pagename, templatename, context, doctree):
     """Add the slides link to the HTML context."""
@@ -69,6 +98,4 @@ def add_link(app, pagename, templatename, context, doctree):
     )
 
     if context['show_slidelink']:
-        context['slide_path'] = app.builder.get_outfilename(
-            os.path.join(app.config.slide_relative_path, pagename)
-        )
+        context['slide_path'] = slide_path(app.builder, pagename)
