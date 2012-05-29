@@ -153,5 +153,5 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 slides:
-	$(SPHINXBUILD) -b html5slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
+	$(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
 	@echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."

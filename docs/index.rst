@@ -53,10 +53,14 @@ Adding Hieroglyph to your Makefile
 You make optionally want to add the following to your ``Makefile``::
 
   slides:
-          $(SPHINXBUILD) -b html5slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
+          $(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
           @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
-(Don't forget ``Makefiles`` love tabs!)
+  dirslides:
+          $(SPHINXBUILD) -b dirslides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
+          @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
+
+(Don't forget, ``Makefiles`` love tabs!)
 
 Writing Your Document
 =====================

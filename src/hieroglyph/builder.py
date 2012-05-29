@@ -51,9 +51,9 @@ class AbstractSlideBuilder(object):
 
 class DirectorySlideBuilder(AbstractSlideBuilder, DirectoryHTMLBuilder):
 
-    name = 'dirhtml5slides'
+    name = 'dirslides'
 
 
 class SlideBuilder(AbstractSlideBuilder, StandaloneHTMLBuilder):
 
-    name = 'html5slides'
+    name = 'slides'

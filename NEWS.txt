@@ -11,7 +11,6 @@ News
 * Fix up absolute image paths from things like blockdiag
 * Preliminary support for linking between HTML to Slides
 * Preliminary slide table support
-* Cleaned up and expanded documentation
 
 Backward Incompatible Changes:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
