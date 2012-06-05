@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'hieroglyph'
+project = u'Hieroglyph'
 copyright = u'2012, Nathan R. Yergler'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -197,7 +197,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'hieroglyph.tex', u'hieroglyph Documentation',
+  ('index', 'hieroglyph.tex', u'Hieroglyph Documentation',
    u'Nathan R. Yergler', 'manual'),
 ]
 
@@ -241,7 +241,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'hieroglyph', u'hieroglyph Documentation',
+  ('index', 'hieroglyph', u'Hieroglyph Documentation',
    u'Nathan R. Yergler', 'hieroglyph', 'One line description of project.',
    'Miscellaneous'),
 ]

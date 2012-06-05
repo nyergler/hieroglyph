@@ -1,5 +1,5 @@
 ============
- hieroglyph
+ Hieroglyph
 ============
 
 .. slides::
@@ -9,12 +9,21 @@
 
       CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
 
-**hieroglyph** is an extension for Sphinx which builds HTML5 slides
+**Hieroglyph** is an extension for Sphinx which builds HTML5 slides
 from ReStructured Text documents.
 
-.. toctree::
-   :maxdepth: 2
+.. notslides::
 
+   This document provides a basic overview of Hieroglyph; dive deeper
+   with the following documents:
+
+   .. toctree::
+      :maxdepth: 2
+
+      config
+      styling
+      advanced
+      ref-index
 
 Why?
 ====
@@ -28,7 +37,7 @@ Why?
 Using Hieroglyph
 ================
 
-Add **hieroglyph** as a Sphinx extension to your configuration::
+Add **Hieroglyph** as a Sphinx extension to your configuration::
 
   extensions = [
       'hieroglyph',
@@ -79,8 +88,8 @@ Two directives let you restrict whether content is included::
 Styling Slides
 ==============
 
-- Slides are contained in ``<article>`` elements
-- The heading level is added as a class; ie, ``level-2``
+- Slides are just HTML, so you can write CSS to style them, either
+  individually or as a whole
 - You can add a custom CSS file to most themes by adding a
   ``custom_css`` theme options::
 
@@ -92,7 +101,7 @@ Styling Slides
 Themes
 ------
 
-Hieroglyph includes two `themes <http://sphinx.pocoo.org/theming.html>`_:
+Hieroglyph includes two themes_:
 
 ``slides``
 
@@ -103,45 +112,26 @@ Hieroglyph includes two `themes <http://sphinx.pocoo.org/theming.html>`_:
 
   Only one style of slide, every slide has a title at the top.
 
-Setting the Theme
------------------
+See :ref:`hieroglyph-themes` for more information on using themes and
+writing your own.
 
-You can set your theme using the ``slide_theme`` configuration
-setting.
-
-::
-
-  slide_theme = 'single-level'
-
-If you're using a custom theme, you can also set the directory to look
-in for themes::
-
-  slide_theme_path = '...'
+.. _themes: http://sphinx.pocoo.org/theming.html
 
 Settings
 ========
 
-``slide_theme``
+**Hieroglyph** has some configuration dials you can turn to customize
+the output. In addition to the theme, you can configure:
 
-  The theme to use when generating slides. Default: ``slides``
+- The number of levels of headings which become slides
+- Linking between slides and HTML documentation
 
-``slide_levels``
-
-  Number of heading levels to convert to slides; note that the
-  document title is level 1. Default: 3
-
-``slide_theme_options``
-
-  Theme specific options as a ``dict``; default: {}
-
-``slide_theme_path``
-
-  The path to look for themes in; default: None.
+See :ref:`hieroglyph-configuration` for more information.
 
 License
 =======
 
-**hieroglyph** is made available under a BSD license; see LICENSE for
+**Hieroglyph** is made available under a BSD license; see LICENSE for
 details.
 
 Included slide CSS and javascript licensed under the Apache Public
@@ -160,11 +150,3 @@ More Information
 .. _rst2s5: http://docutils.sourceforge.net/docs/user/slide-shows.html
 .. _ifconfig: http://sphinx.pocoo.org/ext/ifconfig.html
 .. _`HTML 5 Slides Project`: http://code.google.com/p/html5slides/
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
