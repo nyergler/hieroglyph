@@ -511,7 +511,7 @@ function speakPrevItem() {
 
 /* Hash functions */
 
-function getSlideById(title_id) {
+function findSlideById(title_id) {
     // Return the 1-base index of the Slide with id ``title_id``
     //
     // The index must be 1-based, as it's passed to code which assumes
@@ -523,6 +523,16 @@ function getSlideById(title_id) {
         }
     }
 
+    // no match on a slide, perhaps it's an explicit reference?
+    var
+    target_link = document.querySelector("span[id='" + title_id + "']"),
+    // XXX this is pretty strict, may need to be more flexible in the future
+    slide = (target_link && target_link.parentNode);
+
+    if (slide && slide.tagName == 'ARTICLE') {
+        return findSlideById(slide.id);
+    }
+
     return false;
 
 };
@@ -532,7 +542,7 @@ function getCurSlideFromHash() {
 
   if (isNaN(slideNo)) {
       // must be a section title reference
-      slideNo = getSlideById(location.hash.substr(1));
+      slideNo = findSlideById(location.hash.substr(1));
   }
 
   if (slideNo) {
