@@ -80,23 +80,23 @@ def inspect_config(app):
 def slide_path(builder, pagename=None):
     """Calculate the relative path to the Slides for pagename."""
 
-    return builder.get_outfilename(
+    return builder.get_relative_uri(
+        pagename or builder.current_docname,
         os.path.join(
             builder.app.config.slide_relative_path,
             pagename or builder.current_docname,
-        )
-    )
+        ))
 
 
 def html_path(builder, pagename=None):
     """Calculate the relative path to the Slides for pagename."""
 
-    return builder.get_outfilename(
+    return builder.get_relative_uri(
+        pagename or builder.current_docname,
         os.path.join(
             builder.app.config.slide_html_relative_path,
             pagename or builder.current_docname,
-        )
-    )
+        ))
 
 
 def add_link(app, pagename, templatename, context, doctree):

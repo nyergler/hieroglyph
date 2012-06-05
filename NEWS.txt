@@ -1,6 +1,13 @@
 News
 ====
 
+0.3.2
+-----
+
+*Release date: 5 June 2012*
+
+* Correctly generate relative links between HTML & Slides
+
 0.3.1
 -----
 
