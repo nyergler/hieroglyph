@@ -1,6 +1,15 @@
 News
 ====
 
+0.3.1
+-----
+
+*Release date: 5 June 2012*
+
+* Added content, code missing from the 0.3 release.
+* Updated README to reflect changes in 0.3.
+* Changed docs configuration to build HTML + Slides.
+
 0.3
 ---
 
