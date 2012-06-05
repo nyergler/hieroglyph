@@ -155,3 +155,8 @@ doctest:
 slides:
 	$(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
 	@echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
+
+html+slides:
+	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/
+	$(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
+	@echo "Build finished. The HTML and linked slides are in $(BUILDDIR)."
