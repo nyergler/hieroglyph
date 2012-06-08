@@ -10,6 +10,7 @@ def slide_context(app, pagename, templatename, context, doctree):
         context['script_files'] = context['script_files'][:]
 
         # add the slides javascript
+        context['script_files'].append('_static/common.js')
         context['script_files'].append('_static/slides.js')
 
         # add additional code for additional pages
