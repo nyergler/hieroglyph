@@ -3,11 +3,14 @@ import unicodedata
 from hieroglyph import builder
 from hieroglyph import directives
 from hieroglyph import html
+from hieroglyph import slides
+
 
 def setup(app):
 
     app.add_builder(builder.SlideBuilder)
     app.add_builder(builder.DirectorySlideBuilder)
+    app.connect('html-page-context', slides.slide_context)
 
     # core slide configuration
     app.add_config_value('slide_theme', 'slides', 'html')

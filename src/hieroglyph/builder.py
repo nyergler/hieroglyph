@@ -10,6 +10,12 @@ from sphinx.builders.html import (
 from hieroglyph import writer
 
 
+def building_slides(app):
+    """Returns True if building Slides."""
+
+    return isinstance(app.builder, AbstractSlideBuilder)
+
+
 class AbstractSlideBuilder(object):
 
     add_permalinks = False
