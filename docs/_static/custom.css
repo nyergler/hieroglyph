@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Amatic+SC:700);
+@import url(amatic.css);
 
 .slides > article.level-1 {
     padding-right: 0px;
@@ -11,7 +11,8 @@
     background: rgba(255, 255, 255, 0.65);
     line-height: 1.5em;
     padding-left: 30px;
-    font-family: 'Amatic SC', cursive;
+    font-family: 'AmaticSCBold', cursive;
+    font-weight: 500;
 }
 
 .slides > article.level-1 > p {
@@ -24,7 +25,8 @@
     padding-right: 20px;
     padding-left: 60px;
     padding-bottom: 0.5em;
-    font-family: 'Amatic SC', sans-serif;
+    font-family: 'AmaticSCBold', sans-serif;
+    font-weight: 500;
 }
 
 .slides > article.level-1 .caption {

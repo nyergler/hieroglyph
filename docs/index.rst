@@ -9,8 +9,8 @@
 
       CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
 
-**Hieroglyph** is an extension for Sphinx which builds HTML5 slides
-from ReStructured Text documents.
+Hieroglyph is an extension for Sphinx which builds HTML5 slides from
+ReStructured Text documents.
 
 .. notslides::
 
