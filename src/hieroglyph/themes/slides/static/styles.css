@@ -161,6 +161,19 @@ body {
   -webkit-transition: width height .3s ease-out;
 }
 
+.slides.table > article,
+.slides.table > article.next,
+.slides.table > article.far-past,
+.slides.table > article.past,
+.slides.table > article.current,
+.slides.table > article.far-next {
+    display: block;
+    transform: translate(0px);
+    -o-transform: translate(0px);
+    -moz-transform: translate(0px);
+    -webkit-transform: translate(0px);
+}
+
 .slides.table > article .to-build {
     opacity: 100;
 }
