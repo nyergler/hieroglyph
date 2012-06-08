@@ -11,6 +11,7 @@ News
 * More accurate display of scaled slides on Slide Table
 * Initial implementation of Presenter Console
 * Themes and docs include font files locally
+* Changed interlink configuration keys to be more consistent.
 
 0.3.2
 -----

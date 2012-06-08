@@ -76,18 +76,18 @@ parameters for this. They're configured to work with Sphinx and
 Hieroglyph's standard configuration (output in sub-directories of a
 common build directory) by default .
 
-``slides_relative_path``
+``slide_relative_path``
 
   Relative path from HTML to slides; default: ``../slides/``
 
-``slides_html_relative_path``
+``slide_html_relative_path``
 
   Relative path from slides to HTML; default: ``../html/``
 
-Additional Paramters
---------------------
+Additional Parameters
+---------------------
 
-``slides_html_slide_link_symbol``
+``slide_html_slide_link_symbol``
 
   Text used to link between HTML sections and slides.
 

@@ -23,7 +23,7 @@ def setup(app):
     app.add_config_value('slide_link_html_to_slides', False, 'html')
     app.add_config_value('slide_link_html_sections_to_slides', False, 'html')
     app.add_config_value('slide_relative_path', '../slides/', 'html')
-    app.add_config_value('slides_html_slide_link_symbol',
+    app.add_config_value('slide_html_slide_link_symbol',
                          unicodedata.lookup('section sign'), 'html')
 
     # support for linking from slide output to html

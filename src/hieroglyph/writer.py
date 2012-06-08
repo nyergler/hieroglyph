@@ -31,7 +31,7 @@ def depart_title(self, node):
                                 html.slide_path(self.builder), aname,) +
                          u'title="%s">%s' % (
                          _('Slides'),
-                         self.builder.app.config.slides_html_slide_link_symbol))
+                         self.builder.app.config.slide_html_slide_link_symbol))
 
         if not close_tag.startswith('</a></h'):
             self.body.append('</a>')
@@ -99,6 +99,6 @@ class SlideTranslator(HTMLTranslator):
                                         html.html_path(self.builder), aname,) +
                                  u'title="%s">%s</a>' % (
                                  _('View HTML'),
-                                 self.builder.app.config.slides_html_slide_link_symbol))
+                                 self.builder.app.config.slide_html_slide_link_symbol))
 
         HTMLTranslator.depart_title(self, node)
