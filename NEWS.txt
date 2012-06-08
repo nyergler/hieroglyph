@@ -1,6 +1,17 @@
 News
 ====
 
+0.4
+---
+
+*Release date: UNRELEASED*
+
+* Print-specific styling for printing slides
+* Template and javascript clean-up/reorganization
+* More accurate display of scaled slides on Slide Table
+* Initial implementation of Presenter Console
+* Themes and docs include font files locally
+
 0.3.2
 -----
 
