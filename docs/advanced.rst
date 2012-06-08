@@ -56,10 +56,17 @@ following ``theme.conf``::
 
   [theme]
   inherit = slides
-  stylesheet = slides.css
+  stylesheet = single.css
 
   [options]
   custom_css =
+
+In order to include the base slide styling, your theme's stylesheet
+should begin with::
+
+  @import url(slides.css);
+
+``slides.css`` will be supplied by the base theme (``slides``).
 
 See the Sphinx documentation for `themes`_ for more information.
 
