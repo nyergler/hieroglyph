@@ -17,7 +17,10 @@
 
 */
 
-var curSlide;
+var
+curSlide,
+slide_console,
+slide_listeners = [];
 
 /* Slide movement */
 
@@ -45,6 +48,14 @@ function updateSlideClass(slideNo, className) {
       el.classList.remove(SLIDE_CLASSES[i]);
     }
   }
+};
+
+function notifyListeners(message) {
+
+    for (var i = 0; i < slide_listeners.length; i++) {
+        slide_listeners[i].postMessage(message, '*');
+    }
+
 };
 
 function updateSlides() {
@@ -87,6 +98,16 @@ function updateSlides() {
   }
 
   updateHash();
+
+  notifyListeners(
+      {command: 'cur_slide',
+       content: curSlide,
+       prev_slide: curSlide > 0 ? getSlideEl(curSlide - 1).outerHTML : '',
+       slide: getSlideEl(curSlide).outerHTML,
+       next_slide: curSlide < slideEls.length - 1 ? getSlideEl(curSlide + 1).outerHTML : ''
+      }
+  );
+
 };
 
 function buildNextItem() {
@@ -161,6 +182,14 @@ function toggleView() {
   }
 
   slidesContainer.classList.toggle(TABLE_CLASS);
+};
+
+function showConsole(e) {
+
+    slide_console = window.open(
+        DOCUMENTATION_OPTIONS.URL_ROOT + 'console.html',
+        'console',
+        "menubar=no,location=no,resizable=yes,scrollbars=yes,status=yes");
 };
 
 /* Slide events */
@@ -475,11 +504,41 @@ function handleBodyKeyDown(event) {
       toggleView();
       break;
 
+    case 67: // c
+      showConsole();
+      break;
   }
 };
 
+function handleMessage(e) {
+    console.log(e.data);
+
+    switch (e.data.command) {
+        case 'register':
+            slide_listeners.push(e.source);
+            e.source.postMessage(
+                {command: 'num_slides',
+                 content: slideEls.length
+                }, '*');
+            updateSlides();
+            break;
+
+        case 'nextSlide':
+            nextSlide();
+            break;
+
+        case 'prevSlide':
+            prevSlide();
+            break;
+
+    };
+};
+
 function addEventListeners() {
-  document.addEventListener('keydown', handleBodyKeyDown, false);
+    document.addEventListener('keydown', handleBodyKeyDown, false);
+
+    // XXX register message handler for communication with other frames
+    window.addEventListener('message', handleMessage, false);
 };
 
 /* Initialization */

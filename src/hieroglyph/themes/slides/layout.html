@@ -105,7 +105,9 @@
   <body>
 {%- block header %}{% endblock %}
 
-<section class='slides layout-regular'>
+<section
+   id="slide_container"
+   class='slides {% block slide_container_class %}layout-regular{% endblock %}'>
 
 {% block body %} {% endblock %}
 </section>

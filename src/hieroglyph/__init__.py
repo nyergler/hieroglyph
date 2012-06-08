@@ -11,6 +11,7 @@ def setup(app):
     app.add_builder(builder.SlideBuilder)
     app.add_builder(builder.DirectorySlideBuilder)
     app.connect('html-page-context', slides.slide_context)
+    app.connect('html-collect-pages', slides.get_pages)
 
     # core slide configuration
     app.add_config_value('slide_theme', 'slides', 'html')

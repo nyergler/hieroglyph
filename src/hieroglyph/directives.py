@@ -31,7 +31,7 @@ class Slides(Directive):
 
 def process_slide_nodes(app, doctree, docname):
 
-    is_slides = isinstance(app.builder, builder.AbstractSlideBuilder)
+    is_slides = builder.building_slides(app)
 
     # this is a slide builder, remove notslides nodes
     for node in doctree.traverse(slides):

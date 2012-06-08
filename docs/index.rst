@@ -132,6 +132,17 @@ the output. In addition to the theme, you can configure:
 
 See :ref:`hieroglyph-configuration` for more information.
 
+Presenter Console
+=================
+
+Hieroglyph includes a simple presenter console to make it easier to
+use when presenting slides.
+
+**To activate the console, press "c" when viewing the slides.**
+
+The console will open in a new window. Advancing the slides in either
+window will update the other one, as well.
+
 License
 =======
 
