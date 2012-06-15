@@ -8,9 +8,9 @@ from ReStructured Text documents.
 Installing
 ==========
 
-You can install **Hieroglyph** using ``easy_install`` or ``pip``::
+You can install **Hieroglyph** using ``pip``::
 
-   $ easy_install hieroglyph
+   $ pip hieroglyph
 
 You can also download the `latest development version`_, which may
 contain new features.
