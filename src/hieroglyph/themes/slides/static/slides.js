@@ -17,10 +17,12 @@
 
 */
 
+var SlideDeck = (
+    function() {
+
 var
 curSlide,
-slide_console,
-slide_listeners = [];
+slide_console;
 
 /* Slide movement */
 
@@ -50,13 +52,6 @@ function updateSlideClass(slideNo, className) {
   }
 };
 
-function notifyListeners(message) {
-
-    for (var i = 0; i < slide_listeners.length; i++) {
-        slide_listeners[i].postMessage(message, '*');
-    }
-
-};
 
 function updateSlides() {
   for (var i = 0; i < slideEls.length; i++) {
@@ -99,14 +94,14 @@ function updateSlides() {
 
   updateHash();
 
-  notifyListeners(
-      {command: 'cur_slide',
-       content: curSlide,
-       prev_slide: curSlide > 0 ? getSlideEl(curSlide - 1).outerHTML : '',
-       slide: getSlideEl(curSlide).outerHTML,
-       next_slide: curSlide < slideEls.length - 1 ? getSlideEl(curSlide + 1).outerHTML : ''
-      }
-  );
+  // notifyListeners(
+  //     {command: 'cur_slide',
+  //      content: curSlide,
+  //      prev_slide: curSlide > 0 ? getSlideEl(curSlide - 1).outerHTML : '',
+  //      slide: getSlideEl(curSlide).outerHTML,
+  //      next_slide: curSlide < slideEls.length - 1 ? getSlideEl(curSlide + 1).outerHTML : ''
+  //     }
+  // );
 
 };
 
@@ -125,6 +120,7 @@ function buildNextItem() {
 
   return true;
 };
+
 
 function prevSlide() {
   if (slidesContainer.classList.contains(TABLE_CLASS)) return;
@@ -184,13 +180,6 @@ function toggleView() {
   slidesContainer.classList.toggle(TABLE_CLASS);
 };
 
-function showConsole(e) {
-
-    slide_console = window.open(
-        DOCUMENTATION_OPTIONS.URL_ROOT + 'console.html',
-        'console',
-        "menubar=no,location=no,resizable=yes,scrollbars=yes,status=yes");
-};
 
 /* Slide events */
 
@@ -465,80 +454,11 @@ function updateHash() {
 
 /* Event listeners */
 
-function handleBodyKeyDown(event) {
-  switch (event.keyCode) {
-    case 39: // right arrow
-    case 13: // Enter
-    case 32: // space
-    case 34: // PgDn
-      nextSlide();
-      event.preventDefault();
-      break;
 
-    case 37: // left arrow
-    case 8: // Backspace
-    case 33: // PgUp
-      prevSlide();
-      event.preventDefault();
-      break;
 
-    case 40: // down arrow
-      if (isChromeVoxActive()) {
-        speakNextItem();
-      } else {
-        nextSlide();
-      }
-      event.preventDefault();
-      break;
-
-    case 38: // up arrow
-      if (isChromeVoxActive()) {
-        speakPrevItem();
-      } else {
-        prevSlide();
-      }
-      event.preventDefault();
-      break;
-
-    case 27: // ESC
-      toggleView();
-      break;
-
-    case 67: // c
-      showConsole();
-      break;
-  }
-};
-
-function handleMessage(e) {
-    console.log(e.data);
-
-    switch (e.data.command) {
-        case 'register':
-            slide_listeners.push(e.source);
-            e.source.postMessage(
-                {command: 'num_slides',
-                 content: slideEls.length
-                }, '*');
-            updateSlides();
-            break;
-
-        case 'nextSlide':
-            nextSlide();
-            break;
-
-        case 'prevSlide':
-            prevSlide();
-            break;
-
-    };
-};
 
 function addEventListeners() {
-    document.addEventListener('keydown', handleBodyKeyDown, false);
 
-    // XXX register message handler for communication with other frames
-    window.addEventListener('message', handleMessage, false);
 };
 
 /* Initialization */
@@ -602,34 +522,40 @@ function handleDomLoaded() {
   document.body.classList.add('loaded');
 };
 
-function initialize() {
-  if (window['_DEBUG']) {
-    PERMANENT_URL_PREFIX = '../';
-  }
 
-  if (window['_DCL']) {
-    handleDomLoaded();
-  } else {
-    document.addEventListener('DOMContentLoaded', handleDomLoaded, false);
-  }
-}
+        var
 
-// If ?debug exists then load the script relative instead of absolute
-if (!window['_DEBUG'] && document.location.href.indexOf('?debug') !== -1) {
-  document.addEventListener('DOMContentLoaded', function() {
-    // Avoid missing the DomContentLoaded event
-    window['_DCL'] = true
-  }, false);
+        getLocation = function () {
+            return curSlide;
+        },
 
-  window['_DEBUG'] = true;
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = '../slides.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(script, s);
+        setLocation = function (slide) {
+            curSlide = slide;
+            updateSlides();
+        },
 
-  // Remove this script
-  s.parentNode.removeChild(s);
-} else {
-  initialize();
-}
+        getLength = function () {
+            return slideEls.length;
+        },
+
+        init = function () {
+            document.addEventListener('DOMContentLoaded', handleDomLoaded, false);
+        };
+
+
+        init();
+
+        return {
+            curSlide: getLocation,
+            location: getLocation,
+            setLocation: setLocation,
+
+            length: getLength,
+
+            getSlideEl: getSlideEl,
+
+            nextSlide: nextSlide,
+            prevSlide: prevSlide
+        };
+
+    }());

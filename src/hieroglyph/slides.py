@@ -32,6 +32,9 @@ def slide_context(app, pagename, templatename, context, doctree):
 
             context['script_files'].append('_static/common.js')
             context['script_files'].append('_static/slides.js')
+            context['script_files'].append('_static/sync.js')
+            context['script_files'].append('_static/controller.js')
+            context['script_files'].append('_static/init.js')
 
     return context
 
