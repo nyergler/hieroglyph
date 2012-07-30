@@ -9,8 +9,8 @@
 
       CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
 
-Hieroglyph is an extension for Sphinx which builds HTML5 slides from
-ReStructured Text documents.
+Hieroglyph is an extension for `Sphinx`_ which builds HTML slides from
+`ReStructured Text`_ documents.
 
 .. notslides::
 
@@ -37,6 +37,10 @@ Why?
 Using Hieroglyph
 ================
 
+Install from `PyPI`_ (or `github`_)::
+
+  pip install hieroglyph
+
 Add **Hieroglyph** as a Sphinx extension to your configuration::
 
   extensions = [
@@ -45,7 +49,10 @@ Add **Hieroglyph** as a Sphinx extension to your configuration::
 
 Build your slides::
 
-  $ sphinx -b html5slides output/slides
+  $ sphinx-build -b slides output/slides
+
+.. _`PyPI`: http://pypi.python.org/pypi/hieroglyph
+.. _`github`: http://github.com/nyergler/hieroglyph
 
 Adding Hieroglyph to your Makefile
 ----------------------------------
@@ -56,17 +63,31 @@ You make optionally want to add the following to your ``Makefile``::
           $(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
           @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
+You can also build using directories.
+
+.. notslides::
+
+   The directory builder is analogous to Sphinx's `HTML Directory
+   builder`_ . Each document is placed in its own directory as
+   index.html, which allows you to omit the file from the URL.
+
+   You can add this to the ``Makefile`` with the following.
+
+::
+
   dirslides:
           $(SPHINXBUILD) -b dirslides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
           @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
 (Don't forget, ``Makefiles`` love tabs!)
 
+.. _`HTML Directory Builder`: http://sphinx.pocoo.org/builders.html#sphinx.builders.html.DirectoryHTMLBuilder
+
 Writing Your Document
 =====================
 
-- By default, first and second level headings become slides
-- The default theme styles these differently for topic breaks
+- First and second level headings become slides
+- Default theme styles these differently for topic breaks
 - Otherwise it's just ReStructured Text!
 
 Incremental Slides
@@ -127,7 +148,7 @@ Settings
 **Hieroglyph** has some configuration dials you can turn to customize
 the output. In addition to the theme, you can configure:
 
-- The number of levels of headings which become slides
+- The number of heading levels which become slides
 - Linking between slides and HTML documentation
 
 See :ref:`hieroglyph-configuration` for more information.
@@ -149,8 +170,8 @@ License
 **Hieroglyph** is made available under a BSD license; see LICENSE for
 details.
 
-Included slide CSS and javascript licensed under the Apache Public
-License. See http://code.google.com/p/html5slides/.
+Included slide CSS and JavaScript originally based on `HTML 5 Slides`_
+licensed under the Apache Public License.
 
 More Information
 ================
@@ -158,10 +179,11 @@ More Information
 * `Sphinx`_
 * `Docutils`_
 * `rst2s5`_
-* `HTML 5 Slides Project`_
+* `HTML 5 Slides`_
 
 .. _Sphinx: http://sphinx.pocoo.org/
 .. _docutils: http://docutils.sourceforge.net/
 .. _rst2s5: http://docutils.sourceforge.net/docs/user/slide-shows.html
 .. _ifconfig: http://sphinx.pocoo.org/ext/ifconfig.html
-.. _`HTML 5 Slides Project`: http://code.google.com/p/html5slides/
+.. _`HTML 5 Slides`: http://code.google.com/p/html5slides/
+.. _`ReStructured Text`: http://docutils.sourceforge.net/

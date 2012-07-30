@@ -38,8 +38,9 @@ License
 **Hieroglyph** is made available under a BSD license; see LICENSE for
 details.
 
-Included slide CSS and javascript licensed under the Apache Public
-License. See http://code.google.com/p/html5slides/.
+Included slide CSS and JavaScript originally based on `HTML 5 Slides`_
+licensed under the Apache Public License.
 
 .. _`Sphinx`: http://sphinx.pocoo.org/
 .. _`latest development version`: https://github.com/nyergler/hieroglyph/tarball/master#egg=hieroglyph-dev
+.. _`HTML 5 Slides`: http://code.google.com/p/html5slides/

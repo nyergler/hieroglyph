@@ -8,7 +8,13 @@
     color: #222;
     font-size: 3.2em;
     margin-top: 35%;
-    background: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.7);
+
+    border-top-left-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-top-left-radius: 10px;
+    -o-border-top-left-radius: 10px;
+
     line-height: 1.5em;
     padding-left: 30px;
     font-family: 'AmaticSCBold', 'Open Sans Light Italic';
@@ -19,7 +25,7 @@
     color: #333;
     font-size: 1.6em;
     line-height: 1em;;
-    background: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.7);
     text-align: right;
     margin-top: 0px;
     padding-right: 20px;
@@ -27,6 +33,13 @@
     padding-bottom: 0.5em;
     font-family: 'AmaticSCBold', sans-serif;
     font-weight: 500;
+
+    border-bottom-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-bottom-left-radius: 10px;
+    -o-border-bottom-left-radius: 10px;
+
+
 }
 
 .slides > article.level-1 .caption {
