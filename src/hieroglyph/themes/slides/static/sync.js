@@ -91,7 +91,7 @@ var SlideSync = (
             switch (event.keyCode) {
 
             case 27: // ESC
-                toggleView();
+                slides.toggleView && slides.toggleView();
                 break;
 
             case 67: // c

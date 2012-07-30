@@ -550,6 +550,8 @@ function handleDomLoaded() {
             location: getLocation,
             setLocation: setLocation,
 
+            toggleView: toggleView,
+
             length: getLength,
 
             getSlideEl: getSlideEl,
