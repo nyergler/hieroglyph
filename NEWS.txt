@@ -12,6 +12,7 @@ News
 * Initial implementation of Presenter Console
 * Themes and docs include font files locally
 * Changed interlink configuration keys to be more consistent.
+* Support for file-specific theme configuration
 
 0.3.2
 -----

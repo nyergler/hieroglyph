@@ -35,6 +35,8 @@ def setup(app):
     app.add_directive('notslides', directives.Slides)
     app.add_directive('slides', directives.Slides)
     app.connect('doctree-resolved', directives.process_slide_nodes)
+    app.add_directive('slideconf', directives.SlideConf)
+    app.connect('doctree-resolved', directives.process_slideconf_nodes)
 
     app.connect('builder-inited', html.inspect_config)
     app.connect('html-page-context', html.add_link)

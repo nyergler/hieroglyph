@@ -71,3 +71,19 @@ should begin with::
 See the Sphinx documentation for `themes`_ for more information.
 
 .. _`themes`: http://sphinx.pocoo.org/theming.html
+
+
+Per-File Configuration
+======================
+
+When working with multi-file projects, there may be cases when it is
+desirable to override the theme or set configuration value for
+specific files. This can be accomplished using the ``slideconf``
+directive::
+
+  .. slideconf::
+     :theme: single-level
+
+Values specified in a ``slideconf`` directive override defaults
+specified in ``conf.py``. If more than one ``slideconf`` appears in a
+document, only the last one is used.

@@ -47,6 +47,12 @@ class SlideTranslator(HTMLTranslator):
 
         self.section_count = 0
 
+    def visit_slideconf(self, node):
+        pass
+
+    def depart_slideconf(self, node):
+        pass
+
     def visit_section(self, node):
 
         self.section_count += 1
