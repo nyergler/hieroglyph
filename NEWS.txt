@@ -13,6 +13,7 @@ News
 * Themes and docs include font files locally
 * Changed interlink configuration keys to be more consistent.
 * Support for file-specific theme configuration
+* Support for slide numbering
 
 0.3.2
 -----

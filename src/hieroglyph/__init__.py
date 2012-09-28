@@ -18,6 +18,7 @@ def setup(app):
     app.add_config_value('slide_levels', 3, 'html')
     app.add_config_value('slide_theme_options', {}, 'html')
     app.add_config_value('slide_theme_path', [], 'html')
+    app.add_config_value('slide_numbers', False, 'html')
 
     # support for linking html output to slides
     app.add_config_value('slide_link_html_to_slides', False, 'html')

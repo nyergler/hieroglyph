@@ -33,3 +33,10 @@ div.figure p.caption {
     bottom: 0;
     font-size: 0.5em;
 }
+
+.slide-no {
+    position: absolute;
+    bottom: 1ex;
+    right: 1em;
+    font-size: 66%;
+}

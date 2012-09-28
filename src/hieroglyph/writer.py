@@ -53,6 +53,14 @@ class SlideTranslator(HTMLTranslator):
     def depart_slideconf(self, node):
         pass
 
+    def _add_slide_number(self, slide_no):
+        """Add the slide number to the output if enabled."""
+
+        if self.builder.config.slide_numbers:
+            self.body.append(
+                '\n<div class="slide-no">%s</div>\n' % (slide_no,),
+            )
+
     def visit_section(self, node):
 
         self.section_count += 1
@@ -68,6 +76,11 @@ class SlideTranslator(HTMLTranslator):
             if self.section_level > 1 and not getattr(node.parent, 'closed', False):
                 # close the previous slide
                 node.parent.closed = True
+
+                # substract 1 from the section count since we had an
+                # implicit start to the next section (usually from
+                # sub-sections being made into slides).
+                self._add_slide_number(self.section_count - 1)
                 self.body.append('\n</article>\n')
 
             node.closed = False
@@ -81,6 +94,7 @@ class SlideTranslator(HTMLTranslator):
             self.body.append('</div>')
         else:
             if not getattr(node, 'closed', False):
+                self._add_slide_number(self.section_count)
                 self.body.append('</article>\n')
 
         self.section_level -= 1

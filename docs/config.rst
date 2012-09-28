@@ -26,6 +26,14 @@ Basic Configuration
 
   Default: 3
 
+Slide Numbers
+=============
+
+``slide_numbers``
+
+  If set to ``True``, slide numbering will be added. Default:
+  ``False``
+
 Themes
 ======
 
