@@ -36,6 +36,11 @@ Enumerated Lists
 #. Second Point
 #. Third Point
 
+
+A. First Point
+B. Second Point
+#. Third Point
+
 Code Highlighting
 =================
 
