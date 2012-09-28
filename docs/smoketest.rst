@@ -32,10 +32,13 @@ Another notation:
 Enumerated Lists
 ================
 
+This list will be numbered:
+
 #. First Point
 #. Second Point
 #. Third Point
 
+This list will be lettered:
 
 A. First Point
 B. Second Point
