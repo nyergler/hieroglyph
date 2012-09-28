@@ -93,7 +93,7 @@ class SlideTranslator(HTMLTranslator):
             self.body.append(self.starttag(node, tag, ''))
             self.context.append('</%s>\n' % tag)
         else:
-            HTMLTranslator.visit_subtitle(self, node)
+            HTMLTranslator.visit_title(self, node)
 
     def depart_title(self, node):
 

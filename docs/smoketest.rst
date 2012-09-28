@@ -69,6 +69,13 @@ This block will not be highlighted:
    def func(a):
        """I am not highlighted."""
 
+Admonitions
+===========
+
+.. note::
+
+   This is a *note* admonition.
+
 Hieroglyph Features
 ===================
 
