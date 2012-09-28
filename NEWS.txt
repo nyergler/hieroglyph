@@ -4,7 +4,7 @@ News
 0.4
 ---
 
-*Release date: UNRELEASED*
+*Release date: 27 September 2012*
 
 * Print-specific styling for printing slides
 * Template and javascript clean-up/reorganization
