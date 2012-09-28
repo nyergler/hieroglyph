@@ -437,7 +437,7 @@ li {
 
   margin-bottom: .5em;
 }
-li::before {
+ul li::before {
   content: '·';
 
   width: .75em;
