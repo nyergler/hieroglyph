@@ -44,6 +44,16 @@ A. First Point
 B. Second Point
 #. Third Point
 
+Nested Lists
+------------
+
+* First
+* Second
+
+  * Sub Item 1
+  * Sub Item 2
+
+
 Code Highlighting
 =================
 
