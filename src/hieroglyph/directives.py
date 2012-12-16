@@ -8,7 +8,7 @@ class slides(nodes.Element):
     pass
 
 
-class Slides(Directive):
+class IfBuildingSlides(Directive):
 
     has_content = True
     required_arguments = 0
@@ -28,7 +28,7 @@ class Slides(Directive):
         return [node]
 
 
-def process_slide_nodes(app, doctree, docname):
+def process_slidecond_nodes(app, doctree, docname):
 
     from hieroglyph import builder
 

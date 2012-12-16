@@ -33,9 +33,9 @@ def setup(app):
 
     # slide-related directives
     app.add_node(directives.slides)
-    app.add_directive('notslides', directives.Slides)
-    app.add_directive('slides', directives.Slides)
-    app.connect('doctree-resolved', directives.process_slide_nodes)
+    app.add_directive('notslides', directives.IfBuildingSlides)
+    app.add_directive('slides', directives.IfBuildingSlides)
+    app.connect('doctree-resolved', directives.process_slidecond_nodes)
     app.add_directive('slideconf', directives.SlideConf)
     app.connect('doctree-resolved', directives.process_slideconf_nodes)
 
