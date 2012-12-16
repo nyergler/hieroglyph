@@ -4,7 +4,8 @@ from sphinx.util.nodes import set_source_info
 from docutils.parsers.rst import Directive, directives
 
 
-class slides(nodes.Element): pass
+class slides(nodes.Element):
+    pass
 
 
 class Slides(Directive):
@@ -59,6 +60,7 @@ class slideconf(nodes.Element):
         """Restore the previous Slide Configuration for the Builder."""
 
         builder.pop_theme()
+
 
 class SlideConf(Directive):
 

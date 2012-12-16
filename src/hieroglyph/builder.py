@@ -1,4 +1,4 @@
-import os.path
+import os
 
 from docutils import nodes
 from sphinx.theming import Theme
@@ -10,6 +10,7 @@ from sphinx.util import copy_static_entry
 
 from hieroglyph import writer
 from hieroglyph import directives
+
 
 def building_slides(app):
     """Returns True if building Slides."""
@@ -26,9 +27,9 @@ class AbstractSlideBuilder(object):
 
     def get_builtin_theme_dirs(self):
 
-        return [os.path.join(
-            os.path.dirname(__file__), 'themes',
-            )]
+        return [
+            os.path.join(os.path.dirname(__file__), 'themes',)
+        ]
 
     def get_theme_config(self):
         """Return the configured theme name and options."""
@@ -37,7 +38,8 @@ class AbstractSlideBuilder(object):
 
     def init_templates(self):
         Theme.init_themes(self.confdir,
-                          self.get_builtin_theme_dirs() + self.config.slide_theme_path,
+                          self.get_builtin_theme_dirs() +
+                          self.config.slide_theme_path,
                           warn=self.warn)
         themename, themeoptions = self.get_theme_config()
 
@@ -76,7 +78,7 @@ class AbstractSlideBuilder(object):
 
         if self.theme:
             context.update(dict(
-                style = self.theme.get_confstr('theme', 'stylesheet'),
+                style=self.theme.get_confstr('theme', 'stylesheet'),
             ))
 
         return context
@@ -93,6 +95,8 @@ class AbstractSlideBuilder(object):
         if slideconf:
             # restore the previous theme configuration
             slideconf.restore(self)
+
+        return result
 
     def post_process_images(self, doctree):
         """Pick the best candidate for all image URIs."""

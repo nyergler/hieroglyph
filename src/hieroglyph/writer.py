@@ -16,7 +16,7 @@ def depart_title(self, node):
     close_tag = self.context[-1]
 
     if (self.permalink_text and self.builder.add_permalinks and
-        node.parent.hasattr('ids') and node.parent['ids']):
+            node.parent.hasattr('ids') and node.parent['ids']):
         aname = node.parent['ids'][0]
 
         if close_tag.startswith('</a></h'):
@@ -27,11 +27,15 @@ def depart_title(self, node):
                          _('Permalink to this headline'),
                          self.permalink_text))
 
-        self.body.append(u'<a class="headerlink" href="%s#%s" ' % (
-                                html.slide_path(self.builder), aname,) +
-                         u'title="%s">%s' % (
-                         _('Slides'),
-                         self.builder.app.config.slide_html_slide_link_symbol))
+        self.body.append(
+            u'<a class="headerlink" href="%s#%s" ' % (
+                html.slide_path(self.builder),
+                aname,
+            ) +
+            u'title="%s">%s' % (
+                _('Slides'),
+                self.builder.app.config.slide_html_slide_link_symbol,
+            ))
 
         if not close_tag.startswith('</a></h'):
             self.body.append('</a>')
@@ -73,7 +77,9 @@ class SlideTranslator(HTMLTranslator):
                     node, 'div', CLASS='section level-%s' % self.section_level)
             )
         else:
-            if self.section_level > 1 and not getattr(node.parent, 'closed', False):
+            if (self.section_level > 1 and
+                    not getattr(node.parent, 'closed', False)):
+
                 # close the previous slide
                 node.parent.closed = True
 
@@ -86,7 +92,10 @@ class SlideTranslator(HTMLTranslator):
             node.closed = False
             self.body.append(
                 self.starttag(
-                    node, 'article', CLASS='slide level-%s' % self.section_level))
+                    node, 'article',
+                    CLASS='slide level-%s' % self.section_level
+                )
+            )
 
     def depart_section(self, node):
 
@@ -115,10 +124,14 @@ class SlideTranslator(HTMLTranslator):
             aname = node.parent['ids'][0]
 
             if self.builder.app.config.slide_link_to_html:
-                self.body.append(u'<a class="headerlink" href="%s#%s" ' % (
-                                        html.html_path(self.builder), aname,) +
-                                 u'title="%s">%s</a>' % (
-                                 _('View HTML'),
-                                 self.builder.app.config.slide_html_slide_link_symbol))
+                self.body.append(
+                    u'<a class="headerlink" href="%s#%s" ' % (
+                        html.html_path(self.builder),
+                        aname,
+                    ) +
+                    u'title="%s">%s</a>' % (
+                        _('View HTML'),
+                        self.builder.app.config.slide_html_slide_link_symbol,
+                    ))
 
         HTMLTranslator.depart_title(self, node)
