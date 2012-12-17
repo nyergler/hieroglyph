@@ -65,19 +65,19 @@ class SlideTranslator(HTMLTranslator):
                 '\n<div class="slide-no">%s</div>\n' % (slide_no,),
             )
 
-    def visit_section(self, node):
+    def visit_slide(self, node):
 
         self.section_count += 1
-        self.section_level += 1
+        slide_level = node.attributes.get('level', self.section_level)
 
-        if self.section_level > self.builder.config.slide_levels:
+        if slide_level > self.builder.config.slide_levels:
             # dummy for matching div's
             self.body.append(
                 self.starttag(
-                    node, 'div', CLASS='section level-%s' % self.section_level)
+                    node, 'div', CLASS='section level-%s' % slide_level)
             )
         else:
-            if (self.section_level > 1 and
+            if (slide_level > 1 and
                     not getattr(node.parent, 'closed', False)):
 
                 # close the previous slide
@@ -93,18 +93,27 @@ class SlideTranslator(HTMLTranslator):
             self.body.append(
                 self.starttag(
                     node, 'article',
-                    CLASS='slide level-%s' % self.section_level
+                    CLASS='slide level-%s' % slide_level
                 )
             )
+
+    def depart_slide(self, node):
+
+        if not getattr(node, 'closed', False):
+            self._add_slide_number(self.section_count)
+            self.body.append('</article>\n')
+
+    def visit_section(self, node):
+
+        self.section_level += 1
+        self.visit_slide(node)
 
     def depart_section(self, node):
 
         if self.section_level > self.builder.config.slide_levels:
             self.body.append('</div>')
         else:
-            if not getattr(node, 'closed', False):
-                self._add_slide_number(self.section_count)
-                self.body.append('</article>\n')
+            self.depart_slide(node)
 
         self.section_level -= 1
 

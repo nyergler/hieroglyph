@@ -99,3 +99,20 @@ Incremental Slides
 - Adding the ``build`` class to a container
 - To incrementally show its contents
 - Remember that *Sphinx* maps the basic ``class`` directive to ``rst-class``
+
+
+.. slide:: The ``slide`` Directive
+   :level: 1
+
+   In addition to headings, you can use the ``..slide::`` directive to
+   define a slide.
+
+   A recursive example::
+
+   .. slide:: The ``slide`` Directive
+      :level: 1
+
+      In addition to headings, you can use the ``..slide::`` directive to
+      define a slide.
+
+      A recursive example:

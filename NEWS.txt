@@ -6,6 +6,8 @@ News
 
 *Release date: UNRELEASED*
 
+* Added support for ``slide`` directive
+
 0.4
 ---
 

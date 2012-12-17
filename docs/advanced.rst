@@ -9,6 +9,23 @@
 
       CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
 
+.. _slide-directive:
+
+The ``slide`` directive
+=======================
+
+Instead of (or in addition to) section headings, Hieroglyph also
+includes a directive that may be used to indicate a Slide should be
+created. The directive may have a title specified, as well as a level
+parameter.
+
+For example::
+
+  .. slide:: The Slide Title
+     :level: 2
+
+     This Slide would appear as a level two slide.
+
 
 .. _interlinking-html:
 

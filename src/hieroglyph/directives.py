@@ -2,6 +2,10 @@ from docutils import nodes
 
 from sphinx.util.nodes import set_source_info
 from docutils.parsers.rst import Directive, directives
+from docutils.parsers.rst.directives import (
+    admonitions,
+)
+from docutils.parsers.rst.roles import set_classes
 
 
 class slides(nodes.Element):
@@ -93,3 +97,39 @@ def process_slideconf_nodes(app, doctree, docname):
     for node in doctree.traverse(slideconf):
 
         node.replace_self([])
+
+
+class slide(nodes.admonition):
+    pass
+
+
+class SlideDirective(admonitions.Admonition):
+
+    node_class = slide
+    option_spec = {
+        'class': directives.class_option,
+        'name': directives.unchanged,
+        'level': directives.nonnegative_int,
+    }
+
+    def run(self):
+
+        # largely lifted from the superclass in order to make titles work
+        set_classes(self.options)
+        self.assert_has_content()
+        text = '\n'.join(self.content)
+        admonition_node = self.node_class(text, **self.options)
+        self.add_name(admonition_node)
+
+        title_text = self.arguments[0]
+        textnodes, messages = self.state.inline_text(title_text,
+                                                     self.lineno)
+        admonition_node += nodes.title(title_text, '', *textnodes)
+        admonition_node += messages
+        if not 'classes' in self.options:
+            admonition_node['classes'] += ['admonition-' +
+                                           nodes.make_id(title_text)]
+        self.state.nested_parse(self.content, self.content_offset,
+                                admonition_node)
+
+        return [admonition_node]
