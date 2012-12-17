@@ -6,6 +6,7 @@ from docutils.writers.html4css1 import HTMLTranslator as BaseTranslator
 from sphinx.writers.html import HTMLTranslator
 
 from hieroglyph import html
+from hieroglyph.directives import slideconf
 
 
 def depart_title(self, node):
@@ -80,14 +81,7 @@ class SlideTranslator(HTMLTranslator):
             if (slide_level > 1 and
                     not getattr(node.parent, 'closed', False)):
 
-                # close the previous slide
-                node.parent.closed = True
-
-                # substract 1 from the section count since we had an
-                # implicit start to the next section (usually from
-                # sub-sections being made into slides).
-                self._add_slide_number(self.section_count - 1)
-                self.body.append('\n</article>\n')
+                self.depart_slide(node.parent)
 
             node.closed = False
             self.body.append(
@@ -100,22 +94,28 @@ class SlideTranslator(HTMLTranslator):
     def depart_slide(self, node):
 
         if not getattr(node, 'closed', False):
-            self._add_slide_number(self.section_count)
-            self.body.append('</article>\n')
+
+            # mark the slide closed
+            node.closed = True
+
+            self._add_slide_number(self.section_count - 1)
+            self.body.append('\n</article>\n')
 
     def visit_section(self, node):
 
-        self.section_level += 1
-        self.visit_slide(node)
+        if slideconf.get_conf(self.builder, node.document)['autoslides']:
+            self.section_level += 1
+            return self.visit_slide(node)
 
     def depart_section(self, node):
 
-        if self.section_level > self.builder.config.slide_levels:
-            self.body.append('</div>')
-        else:
-            self.depart_slide(node)
+        if slideconf.get_conf(self.builder, node.document)['autoslides']:
+            if self.section_level > self.builder.config.slide_levels:
+                self.body.append('</div>')
+            else:
+                self.depart_slide(node)
 
-        self.section_level -= 1
+            self.section_level -= 1
 
     def visit_title(self, node):
         if isinstance(node.parent, nodes.section):

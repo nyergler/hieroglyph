@@ -14,6 +14,13 @@
 Basic Configuration
 ===================
 
+``autoslides``
+
+  If True, generate slides from the document sections. If False, only
+  generate slides from the ``slide`` directive. Default: ``True``
+
+  See :ref:`slide-directive` for more information.
+
 ``slide_theme``
 
   The theme to use when generating slides. Default: ``slides``

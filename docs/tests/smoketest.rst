@@ -1,3 +1,7 @@
+.. slideconf::
+   :autoslides: True
+   :theme: single-level
+
 =======================
  Hieroglyph Smoke Test
 =======================
@@ -102,7 +106,7 @@ Incremental Slides
 
 
 .. slide:: The ``slide`` Directive
-   :level: 1
+   :level: 2
 
    In addition to headings, you can use the ``..slide::`` directive to
    define a slide.

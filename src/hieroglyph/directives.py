@@ -65,6 +65,35 @@ class slideconf(nodes.Element):
 
         builder.pop_theme()
 
+    @classmethod
+    def get(cls, doctree):
+        """Return the first slideconf node for the doctree."""
+
+        conf_nodes = doctree.traverse(cls)
+        if conf_nodes:
+            return conf_nodes[0]
+
+    @classmethod
+    def get_conf(cls, builder, doctree=None):
+        """Return a dictionary of slide configuration for this doctree."""
+
+        result = {
+            'theme': builder.config.slide_theme,
+            'autoslides': builder.config.autoslides,
+        }
+
+        if doctree:
+            conf_node = cls.get(doctree)
+            if conf_node:
+                result.update(conf_node.attributes)
+
+        return result
+
+
+def boolean_option(argument):
+
+    return str(argument.strip().lower()) in ('true', 'yes', '1')
+
 
 class SlideConf(Directive):
 
@@ -74,6 +103,7 @@ class SlideConf(Directive):
     final_argument_whitespace = True
     option_spec = {
         'theme': directives.unchanged,
+        'autoslides': boolean_option,
     }
 
     def run(self):
@@ -90,13 +120,19 @@ def process_slideconf_nodes(app, doctree, docname):
 
     is_slides = builder.building_slides(app)
 
-    if is_slides:
-        return
+    if (is_slides and
+            not slideconf.get_conf(app.builder, doctree)['autoslides']):
 
-    # if we're not building slides, remove slideconf
-    for node in doctree.traverse(slideconf):
+        for child in doctree.children:
+            try:
+                child.replace_self(child.traverse(slide))
+            except:
+                continue
 
-        node.replace_self([])
+    if not is_slides:
+        # if we're not building slides, remove slideconf
+        for node in doctree.traverse(slideconf):
+            node.replace_self([])
 
 
 class slide(nodes.admonition):

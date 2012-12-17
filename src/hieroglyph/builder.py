@@ -85,9 +85,8 @@ class AbstractSlideBuilder(object):
 
     def write_doc(self, docname, doctree):
 
-        slideconf = doctree.traverse(directives.slideconf)
+        slideconf = directives.slideconf.get(doctree)
         if slideconf:
-            slideconf = slideconf[-1]
             slideconf.apply(self)
 
         result = super(AbstractSlideBuilder, self).write_doc(docname, doctree)
