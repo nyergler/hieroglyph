@@ -138,3 +138,40 @@ class DirectorySlideBuilder(AbstractSlideBuilder, DirectoryHTMLBuilder):
 class SlideBuilder(AbstractSlideBuilder, StandaloneHTMLBuilder):
 
     name = 'slides'
+
+
+class AbstractInlineSlideBuilder(object):
+
+    name = 'inlineslides'
+
+    def __init__(self, *args, **kwargs):
+        super(AbstractInlineSlideBuilder, self).__init__(*args, **kwargs)
+
+        self.config.html_static_path.append(
+            os.path.relpath(
+                os.path.join(
+                    os.path.dirname(__file__),
+                    'themes',
+                    'inline-slides',
+                    'static',
+                ),
+                self.confdir,
+            )
+        )
+
+        self.css_files.append('_static/slides.css')
+
+    def init_translator_class(self):
+        self.translator_class = writer.BaseSlideTranslator
+
+
+class DirectoryInlineSlideBuilder(
+        AbstractInlineSlideBuilder,
+        DirectoryHTMLBuilder):
+
+    name = 'dirinlineslides'
+
+
+class InlineSlideBuilder(AbstractInlineSlideBuilder, StandaloneHTMLBuilder):
+
+    name = 'inlineslides'

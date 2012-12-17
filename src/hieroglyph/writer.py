@@ -6,7 +6,10 @@ from docutils.writers.html4css1 import HTMLTranslator as BaseTranslator
 from sphinx.writers.html import HTMLTranslator
 
 from hieroglyph import html
-from hieroglyph.directives import slideconf
+from hieroglyph.directives import (
+    slide,
+    slideconf,
+)
 
 
 def depart_title(self, node):
@@ -44,7 +47,7 @@ def depart_title(self, node):
     BaseTranslator.depart_title(self, node)
 
 
-class SlideTranslator(HTMLTranslator):
+class BaseSlideTranslator(HTMLTranslator):
 
     def __init__(self, *args, **kwargs):
 
@@ -68,6 +71,8 @@ class SlideTranslator(HTMLTranslator):
 
     def visit_slide(self, node):
 
+        from hieroglyph import builder
+
         self.section_count += 1
         slide_level = node.attributes.get('level', self.section_level)
 
@@ -77,10 +82,16 @@ class SlideTranslator(HTMLTranslator):
                 self.starttag(
                     node, 'div', CLASS='section level-%s' % slide_level)
             )
+            node.tag_name = 'div'
         else:
-            if (slide_level > 1 and
+            slide_conf = slideconf.get_conf(self.builder, node.document)
+            if (builder.building_slides(self.builder.app) and
+                    slide_conf['autoslides'] and
+                    isinstance(node.parent, nodes.section) and
                     not getattr(node.parent, 'closed', False)):
 
+                # we're building slides and creating slides from
+                # sections; close the previous section, if needed
                 self.depart_slide(node.parent)
 
             node.closed = False
@@ -90,6 +101,7 @@ class SlideTranslator(HTMLTranslator):
                     CLASS='slide level-%s' % slide_level
                 )
             )
+            node.tag_name = 'article'
 
     def depart_slide(self, node):
 
@@ -99,7 +111,24 @@ class SlideTranslator(HTMLTranslator):
             node.closed = True
 
             self._add_slide_number(self.section_count - 1)
-            self.body.append('\n</article>\n')
+            self.body.append(
+                '\n</%s>\n' % getattr(node, 'tag_name', 'article')
+            )
+
+    def visit_title(self, node):
+
+        if isinstance(node.parent, slide):
+            slide_level = node.attributes.get('level', self.section_level)
+            level = slide_level + self.initial_header_level - 1
+
+            tag = 'h%s' % level
+            self.body.append(self.starttag(node, tag, ''))
+            self.context.append('</%s>\n' % tag)
+        else:
+            HTMLTranslator.visit_title(self, node)
+
+
+class SlideTranslator(BaseSlideTranslator):
 
     def visit_section(self, node):
 
@@ -116,16 +145,6 @@ class SlideTranslator(HTMLTranslator):
                 self.depart_slide(node)
 
             self.section_level -= 1
-
-    def visit_title(self, node):
-        if isinstance(node.parent, nodes.section):
-            level = self.section_level + self.initial_header_level - 1
-
-            tag = 'h%s' % level
-            self.body.append(self.starttag(node, tag, ''))
-            self.context.append('</%s>\n' % tag)
-        else:
-            HTMLTranslator.visit_title(self, node)
 
     def depart_title(self, node):
 

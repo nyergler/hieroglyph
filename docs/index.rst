@@ -63,23 +63,22 @@ You make optionally want to add the following to your ``Makefile``::
           $(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
           @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
-You can also build using directories.
-
 .. notslides::
 
    The directory builder is analogous to Sphinx's `HTML Directory
    builder`_ . Each document is placed in its own directory as
    index.html, which allows you to omit the file from the URL.
 
-   You can add this to the ``Makefile`` with the following.
+   You can add this to the ``Makefile`` with the following::
 
-::
-
-  dirslides:
-          $(SPHINXBUILD) -b dirslides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
-          @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
+     dirslides:
+             $(SPHINXBUILD) -b dirslides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
+             @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
 (Don't forget, ``Makefiles`` love tabs!)
+
+You can also include your slides inline with HTML. See :ref:`builders`
+for details.
 
 .. _`HTML Directory Builder`: http://sphinx.pocoo.org/builders.html#sphinx.builders.html.DirectoryHTMLBuilder
 

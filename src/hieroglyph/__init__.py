@@ -8,8 +8,12 @@ from hieroglyph import slides
 
 def setup(app):
 
+    # Register Builders
     app.add_builder(builder.SlideBuilder)
     app.add_builder(builder.DirectorySlideBuilder)
+    app.add_builder(builder.InlineSlideBuilder)
+    app.add_builder(builder.DirectoryInlineSlideBuilder)
+
     app.connect('html-page-context', slides.slide_context)
     app.connect('html-collect-pages', slides.get_pages)
 
@@ -43,6 +47,7 @@ def setup(app):
 
     app.add_node(directives.slide)
     app.add_directive('slide', directives.SlideDirective)
+    app.connect('doctree-resolved', directives.process_slide_nodes)
 
     app.connect('builder-inited', html.inspect_config)
     app.connect('html-page-context', html.add_link)

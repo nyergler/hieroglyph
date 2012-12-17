@@ -156,6 +156,11 @@ slides:
 	$(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
 	@echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
+inlineslides:
+	$(SPHINXBUILD) -b inlineslides $(ALLSPHINXOPTS) $(BUILDDIR)/inlineslides
+	@echo "Build finished. The HTML with inline slides is " \
+	      "in $(BUILDDIR)/inlineslides."
+
 html+slides:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/
 	$(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides

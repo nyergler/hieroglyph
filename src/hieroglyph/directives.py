@@ -169,3 +169,20 @@ class SlideDirective(admonitions.Admonition):
                                 admonition_node)
 
         return [admonition_node]
+
+
+def process_slide_nodes(app, doctree, docname):
+
+    from hieroglyph import builder
+
+    supports_slide_nodes = (
+        builder.building_slides(app) or
+        isinstance(app.builder, builder.AbstractInlineSlideBuilder)
+    )
+
+    if supports_slide_nodes:
+        return
+
+    # this builder does not understand slide nodes; remove them
+    for node in doctree.traverse(slide):
+        node.replace_self(nodes.inline())

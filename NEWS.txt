@@ -9,6 +9,7 @@ News
 * Added support for ``slide`` directive
 * Added ``autoslides`` config parameter to allow disabling automatic
   generation of slides from document text.
+* Added inline slide builder.
 
 0.4
 ---
