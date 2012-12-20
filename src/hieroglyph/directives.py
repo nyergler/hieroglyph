@@ -25,7 +25,7 @@ class IfBuildingSlides(Directive):
         node.document = self.state.document
         set_source_info(self, node)
 
-        node.slides = self.name == 'slides'
+        node.attributes['ifslides'] = self.name == 'slides'
 
         self.state.nested_parse(self.content, self.content_offset,
                                 node, match_titles=1)
@@ -41,7 +41,7 @@ def process_slidecond_nodes(app, doctree, docname):
     # this is a slide builder, remove notslides nodes
     for node in doctree.traverse(slides):
 
-        keep_content = is_slides == node.slides
+        keep_content = is_slides == node.attributes.get('ifslides', False)
 
         if keep_content:
             node.replace_self(node.children)
