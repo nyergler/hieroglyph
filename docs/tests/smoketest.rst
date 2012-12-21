@@ -16,7 +16,7 @@
 This is the Hieroglyph Smoke Test. It contains visual tests for
 verifying Hieroglyph functionality.
 
-.. notslides::
+.. ifnotslides::
 
    This section should not be included in slides.
 

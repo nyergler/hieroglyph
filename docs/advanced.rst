@@ -2,7 +2,7 @@
  Advanced Usage
 ================
 
-.. slides::
+.. ifslides::
 
    .. figure:: /_static/hieroglyphs.jpg
       :class: fill
@@ -32,14 +32,14 @@ For example::
 Interlinking HTML Output
 ========================
 
-.. slides::
+.. ifslides::
 
    - If you build both slides and HTML output, Hieroglyph can create
      links between them.
    - You need to use the corresponding builders: i.e.,
      ``SlideBuilder`` and ``StandaloneHTMLBuilder``
 
-.. notslides::
+.. ifnotslides::
 
    Hieroglyph supports linking between slides and HTML output, such as
    from the Sphinx HTML builders. In order to do this successfully,

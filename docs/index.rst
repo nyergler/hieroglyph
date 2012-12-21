@@ -2,7 +2,7 @@
  Hieroglyph
 ============
 
-.. slides::
+.. ifslides::
 
    .. figure:: /_static/hieroglyphs.jpg
       :class: fill
@@ -12,7 +12,7 @@
 Hieroglyph is an extension for `Sphinx`_ which builds HTML slides from
 `ReStructured Text`_ documents.
 
-.. notslides::
+.. ifnotslides::
 
    This document provides a basic overview of Hieroglyph; dive deeper
    with the following documents:
@@ -23,6 +23,7 @@ Hieroglyph is an extension for `Sphinx`_ which builds HTML slides from
       config
       styling
       advanced
+      builders
       ref-index
 
 Why?
@@ -63,7 +64,7 @@ You make optionally want to add the following to your ``Makefile``::
           $(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
           @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
-.. notslides::
+.. ifnotslides::
 
    The directory builder is analogous to Sphinx's `HTML Directory
    builder`_ . Each document is placed in its own directory as
@@ -103,10 +104,22 @@ Slide-Only (and non-slide) Content
 
 Two directives let you restrict whether content is included::
 
-  .. slides::
+  .. ifslides::
 
 
-  .. notslides::
+  .. ifnotslides::
+
+
+.. ifnotslides::
+
+   .. note::
+
+      These directives were originally named ``slides`` and
+      ``notslides``, respectively. They were renamed prior to the
+      addition of the ``slide`` directive, to be more explicit.
+
+      The old names work, but will show a warning during the build
+      process. Expect the old names to be removed in some future version.
 
 
 Styling Slides

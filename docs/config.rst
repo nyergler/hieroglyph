@@ -4,7 +4,7 @@
  Hieroglyph Configuration
 ==========================
 
-.. slides::
+.. ifslides::
 
    .. figure:: /_static/hieroglyphs.jpg
       :class: fill
@@ -77,7 +77,7 @@ Interlinking HTML Output
 
   Link individual HTML sections to specific slides; default: ``False``
 
-  .. notslides::
+  .. ifnotslides::
 
      Note that ``slide_link_html_to_slides`` must be enabled for this
      to have any effect.

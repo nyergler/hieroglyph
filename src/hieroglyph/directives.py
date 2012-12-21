@@ -8,7 +8,7 @@ from docutils.parsers.rst.directives import (
 from docutils.parsers.rst.roles import set_classes
 
 
-class slides(nodes.Element):
+class if_slides(nodes.Element):
     pass
 
 
@@ -21,11 +21,22 @@ class IfBuildingSlides(Directive):
     option_spec = {}
 
     def run(self):
-        node = slides()
+        if self.name in ('slides', 'notslides',):
+            import warnings
+
+            # these are deprecated, print a warning
+            warnings.warn(
+                "The %s directive has been deprecated; replace with if%s" % (
+                    self.name, self.name,
+                ),
+                stacklevel=2,
+            )
+
+        node = if_slides()
         node.document = self.state.document
         set_source_info(self, node)
 
-        node.attributes['ifslides'] = self.name == 'slides'
+        node.attributes['ifslides'] = self.name in ('slides', 'ifslides',)
 
         self.state.nested_parse(self.content, self.content_offset,
                                 node, match_titles=1)
@@ -39,7 +50,7 @@ def process_slidecond_nodes(app, doctree, docname):
     is_slides = builder.building_slides(app)
 
     # this is a slide builder, remove notslides nodes
-    for node in doctree.traverse(slides):
+    for node in doctree.traverse(if_slides):
 
         keep_content = is_slides == node.attributes.get('ifslides', False)
 

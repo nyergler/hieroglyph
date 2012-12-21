@@ -37,7 +37,9 @@ def setup(app):
     app.add_config_value('slide_html_relative_path', '../html/', 'html')
 
     # slide-related directives
-    app.add_node(directives.slides)
+    app.add_node(directives.if_slides)
+    app.add_directive('ifnotslides', directives.IfBuildingSlides)
+    app.add_directive('ifslides', directives.IfBuildingSlides)
     app.add_directive('notslides', directives.IfBuildingSlides)
     app.add_directive('slides', directives.IfBuildingSlides)
     app.connect('doctree-resolved', directives.process_slidecond_nodes)
