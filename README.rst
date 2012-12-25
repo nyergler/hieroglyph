@@ -31,6 +31,8 @@ Build your slides::
 Where ``sourcedir`` is the directory containing the Sphinx ``conf.py``
 file and ``outdir`` is where you want your slides to output to.
 
+`Read the documentation`_ for all the details about using,
+configuring, and extending Hieroglyph.
 
 License
 =======
@@ -44,3 +46,4 @@ licensed under the Apache Public License.
 .. _`Sphinx`: http://sphinx.pocoo.org/
 .. _`latest development version`: https://github.com/nyergler/hieroglyph/tarball/master#egg=hieroglyph-dev
 .. _`HTML 5 Slides`: http://code.google.com/p/html5slides/
+.. _`Read the documentation`: https://hieroglyph.readthedocs.org/

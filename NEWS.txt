@@ -10,6 +10,12 @@ News
 * Added ``autoslides`` config parameter to allow disabling automatic
   generation of slides from document text.
 * Added inline slide builder.
+* Renamed ``slides`` and ``notslides`` directives to ``ifslides`` and
+  ``ifnotslides``, respectively. The old names will continue to work
+  for a while, the rename just makes them more expressive.
+* Changed key for toggling slide table view to ``t`` (was ``ESC``).
+* Fixed problems with styling nested lists
+* Fixed incompatibility with latex-pdf builder
 
 0.4
 ---
