@@ -31,6 +31,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
+    'sphinxcontrib.googleanalytics',
     'hieroglyph',
 ]
 
@@ -263,3 +264,6 @@ texinfo_documents = [
 
 # How to display URL addresses: 'footnote', 'no', or 'inline'.
 #texinfo_show_urls = 'footnote'
+
+googleanalytics_enabled = True
+googleanalytics_id = 'UA-188298-8'
