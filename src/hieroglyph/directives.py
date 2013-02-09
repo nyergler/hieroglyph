@@ -1,11 +1,16 @@
 from docutils import nodes
 
 from sphinx.util.nodes import set_source_info
+from docutils.nodes import SkipNode
 from docutils.parsers.rst import Directive, directives
 from docutils.parsers.rst.directives import (
     admonitions,
 )
 from docutils.parsers.rst.roles import set_classes
+
+
+def raiseSkip(self, node):
+    raise SkipNode()
 
 
 class if_slides(nodes.Element):
@@ -131,6 +136,8 @@ def process_slideconf_nodes(app, doctree, docname):
 
     is_slides = builder.building_slides(app)
 
+    # if autoslides is disabled and we're building slides,
+    # replace the document tree with only explicit slide nodes
     if (is_slides and
             not slideconf.get_conf(app.builder, doctree)['autoslides']):
 
@@ -139,11 +146,6 @@ def process_slideconf_nodes(app, doctree, docname):
                 child.replace_self(child.traverse(slide))
             except:
                 continue
-
-    if not is_slides:
-        # if we're not building slides, remove slideconf
-        for node in doctree.traverse(slideconf):
-            node.replace_self([])
 
 
 class slide(nodes.admonition):

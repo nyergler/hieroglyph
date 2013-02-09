@@ -44,6 +44,13 @@ def setup(app):
     app.add_directive('slides', directives.IfBuildingSlides)
     app.connect('doctree-resolved', directives.process_slidecond_nodes)
 
+    app.add_node(directives.slideconf,
+                 html=(directives.raiseSkip, None),
+                 latex=(directives.raiseSkip, None),
+                 text=(directives.raiseSkip, None),
+                 man=(directives.raiseSkip, None),
+                 texinfo=(directives.raiseSkip, None),
+    )
     app.add_directive('slideconf', directives.SlideConf)
     app.connect('doctree-resolved', directives.process_slideconf_nodes)
 
