@@ -130,6 +130,11 @@ class SlideConf(Directive):
         return [node]
 
 
+def no_autoslides_filter(node):
+
+    return isinstance(node, (if_slides, slideconf, slide))
+
+
 def process_slideconf_nodes(app, doctree, docname):
 
     from hieroglyph import builder
@@ -142,10 +147,9 @@ def process_slideconf_nodes(app, doctree, docname):
             not slideconf.get_conf(app.builder, doctree)['autoslides']):
 
         for child in doctree.children:
-            try:
-                child.replace_self(child.traverse(slide))
-            except:
-                continue
+            child.replace_self(
+                child.traverse(no_autoslides_filter)
+            )
 
 
 class slide(nodes.admonition):
