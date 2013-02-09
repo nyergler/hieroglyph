@@ -118,8 +118,13 @@ class BaseSlideTranslator(HTMLTranslator):
     def visit_title(self, node):
 
         if isinstance(node.parent, slide):
-            slide_level = node.attributes.get('level', self.section_level)
-            level = slide_level + self.initial_header_level - 1
+            slide_level = node.parent.attributes.get(
+                'level',
+                self.section_level)
+            level = max(
+                slide_level + self.initial_header_level - 1,
+                1,
+            )
 
             tag = 'h%s' % level
             self.body.append(self.starttag(node, tag, ''))
