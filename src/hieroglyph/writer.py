@@ -117,7 +117,8 @@ class BaseSlideTranslator(HTMLTranslator):
 
     def visit_title(self, node):
 
-        if isinstance(node.parent, slide):
+        if (isinstance(node.parent, slide) or
+                node.parent.attributes.get('include-as-slide', False)):
             slide_level = node.parent.attributes.get(
                 'level',
                 self.section_level)
@@ -137,13 +138,20 @@ class SlideTranslator(BaseSlideTranslator):
 
     def visit_section(self, node):
 
-        if slideconf.get_conf(self.builder, node.document)['autoslides']:
+        # XXX: We're actually removing content that's not in slide
+        # nodes with autoslides is false, so it's not clear that we
+        # even need this guard.
+        if (slideconf.get_conf(self.builder, node.document)['autoslides'] or
+                node.attributes.get('include-as-slide', False)):
+
             self.section_level += 1
             return self.visit_slide(node)
 
     def depart_section(self, node):
 
-        if slideconf.get_conf(self.builder, node.document)['autoslides']:
+        if (slideconf.get_conf(self.builder, node.document)['autoslides'] or
+                node.attributes.get('include-as-slide', False)):
+
             if self.section_level > self.builder.config.slide_levels:
                 self.body.append('</div>')
             else:

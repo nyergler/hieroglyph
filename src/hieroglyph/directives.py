@@ -133,7 +133,26 @@ class SlideConf(Directive):
 
 def no_autoslides_filter(node):
 
-    return isinstance(node, (if_slides, slideconf, slide))
+    if isinstance(node, (if_slides, slideconf, slide)):
+        return True
+
+    if (isinstance(node, nodes.section) and
+            'include-as-slide' in node.attributes.get('classes', [])):
+        node.attributes['include-as-slide'] = True
+
+        remove_classes = ['include-as-slide']
+        # see if there's a slide-level class, too
+        for cls_name in node.attributes['classes']:
+            if cls_name.startswith('slide-level-'):
+                node.attributes['level'] = int(cls_name.rsplit('-', 1)[-1])
+                remove_classes.append(cls_name)
+
+        ## for cls_name in remove_classes:
+        ##     node.attributes['classes'].remove(cls_name)
+
+        return True
+
+    return False
 
 
 def process_slideconf_nodes(app, doctree, docname):
