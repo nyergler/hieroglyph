@@ -102,6 +102,13 @@ class AbstractSlideBuilder(object):
 
         super(AbstractSlideBuilder, self).post_process_images(doctree)
 
+        # figure out where this doctree is in relation to the srcdir
+        relative_base = ['..'] * len(
+            os.path.dirname(
+                doctree.attributes.get('source')[len(self.srcdir) + 1:]
+                ).split('/')
+            )
+
         for node in doctree.traverse(nodes.image):
 
             if node.get('candidates') is None:
@@ -109,7 +116,11 @@ class AbstractSlideBuilder(object):
 
             # fix up images with absolute paths
             if node['uri'].startswith(self.outdir):
-                node['uri'] = node['uri'][len(self.outdir) + 1:]
+                node['uri'] = '/'.join(
+                    relative_base + [
+                        node['uri'][len(self.outdir) + 1:]
+                    ]
+                )
 
     def copy_static_files(self):
 
