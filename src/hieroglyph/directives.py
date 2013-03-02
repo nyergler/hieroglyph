@@ -79,7 +79,8 @@ class slideconf(nodes.Element):
     def restore(self, builder):
         """Restore the previous Slide Configuration for the Builder."""
 
-        builder.pop_theme()
+        if 'theme' in self.attributes:
+            builder.pop_theme()
 
     @classmethod
     def get(cls, doctree):
