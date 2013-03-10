@@ -183,6 +183,7 @@ class SlideDirective(admonitions.Admonition):
         'class': directives.class_option,
         'name': directives.unchanged,
         'level': directives.nonnegative_int,
+        'inline-contents': boolean_option,
     }
 
     def run(self):
@@ -222,4 +223,7 @@ def process_slide_nodes(app, doctree, docname):
 
     # this builder does not understand slide nodes; remove them
     for node in doctree.traverse(slide):
-        node.replace_self(nodes.inline())
+        if node.attributes.get('inline-contents', False):
+            node.replace_self(node.children[1:])
+        else:
+            node.replace_self(nodes.inline())
