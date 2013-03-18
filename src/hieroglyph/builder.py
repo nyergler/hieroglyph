@@ -1,3 +1,5 @@
+"""Available slide building classes."""
+
 import os
 
 from docutils import nodes
@@ -52,6 +54,11 @@ class AbstractSlideBuilder(object):
         self.apply_theme(themename, themeoptions)
 
     def apply_theme(self, themename, themeoptions):
+        """Apply a new theme to the document.
+
+        This will store the existing theme configuration and apply a new one.
+
+        """
 
         # push the existing values onto the Stack
         self._theme_stack.append(
@@ -65,6 +72,7 @@ class AbstractSlideBuilder(object):
         self._additional_themes.append(self.theme)
 
     def pop_theme(self):
+        """Disable the most recent theme, and restore its predecessor."""
 
         self.theme, self.theme_options = self._theme_stack.pop()
 
@@ -142,11 +150,35 @@ class AbstractSlideBuilder(object):
 
 
 class DirectorySlideBuilder(AbstractSlideBuilder, DirectoryHTMLBuilder):
+    """This is the standard Directory Slide HTML builder.
+
+    Its output is a directory with HTML files, where each file is
+    called ``index.html`` and placed in a subdirectory named like its
+    page name. For example, the document ``markup/rest.rst`` will not
+    result in an output file ``markup/rest.html``, but
+    ``markup/rest/index.html``. When generating links between pages,
+    the ``index.html`` is omitted, so that the URL would look like
+    ``markup/rest/``.
+
+    The output directry will include any needed style sheets, slide
+    table, and presenter's console JavaScript.
+
+    Its name is ``dirslides``.
+
+    """
 
     name = 'dirslides'
 
 
 class SlideBuilder(AbstractSlideBuilder, StandaloneHTMLBuilder):
+    """This is the standard Slide HTML builder.
+
+    Its output is a directory with HTML, along with the needed style
+    sheets, slide table, and presenter's console JavaScript.
+
+    Its name is ``slides``.
+
+    """
 
     name = 'slides'
 
@@ -179,10 +211,36 @@ class AbstractInlineSlideBuilder(object):
 class DirectoryInlineSlideBuilder(
         AbstractInlineSlideBuilder,
         DirectoryHTMLBuilder):
+    """This is the Inline Slide Directory HTML builder.
+
+    The inline slide builder add support for the ``slide`` directive
+    to Sphinx's :py:class:`DirectoryHTMLBuilder`, and adds an
+    additional stylesheet to the output for basic inline display.
+
+    When using an inline builder :confval:`autoslides` is disabled.
+
+    Its name is ``dirinlineslides``.
+
+    .. versionadded:: 0.5
+
+    """
 
     name = 'dirinlineslides'
 
 
 class InlineSlideBuilder(AbstractInlineSlideBuilder, StandaloneHTMLBuilder):
+    """This is the Inline Slide HTML builder.
+
+    The inline slide builder add support for the ``slide`` directive
+    to Sphinx's :py:class:`StandaloneHTMLBuilder`, and adds an
+    additional stylesheet to the output for basic inline display.
+
+    When using an inline builder :confval:`autoslides` is disabled.
+
+    Its name is ``inlineslides``.
+
+    .. versionadded:: 0.5
+
+    """
 
     name = 'inlineslides'

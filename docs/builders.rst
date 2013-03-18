@@ -5,56 +5,46 @@
 =====================
 
 In Sphinx parlance, a "builder" is an output target. Sphinx includes
-several of its own, including ones for HTML pages, ePub documents, and
-PDF. Hieroglyph adds two types of additional builders: slides and
-inline slides. Each supports building HTML documents or
-``index.html`` documents in directories (useful if you prefer URLs
-without ".html" in them).
+`several of its own`_, including ones for HTML pages, ePub documents,
+and PDF.
 
+.. _`several of its own`: http://sphinx-doc.org/builders.html
 
-Slide Builder
-=============
+Hieroglyph adds additional builders for generating slides. The
+builder's "name" must be given to the **-b** command-line option of
+:program:`sphinx-build` to select a builder.
 
-The slide builders, ``slides``, and ``dirslides``, create slide show
-documents for each of the source files.
+You may want to add one (or more) of the Hieroglyph builders to your
+``Makefile`` to make it easier to run the Sphinx builder.
 
-You may add one (or both) of the following targets to your
-``Makefile`` to enabled one of these targets::
+For example, to add the ``slides`` builder to your Makefile, add the
+following target::
 
   slides:
           $(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
           @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
-  dirslides:
-          $(SPHINXBUILD) -b dirslides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
-          @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
+(Remember, makefiles are indented using tabs, not spaces.)
 
+.. automodule:: hieroglyph.builder
 
-The output of these builders includes support for the slide table and
-presenter's console. If ``autoslides`` is enabled, sections in the
-source files will be transformed into slides. If ``autoslides`` is not
-enabled, only content found in ``slide`` directives will be in the output.
+.. autoclass:: SlideBuilder
 
-See :ref:`slide-directive` for more information.
+.. autoclass:: DirectorySlideBuilder
 
-Inline Slide Builder
-====================
+.. autoclass:: InlineSlideBuilder
 
-The inline slide builders add support for the ``slide`` directive to
-the stock HTML builders, and add an additional stylesheet to the
-output for basic inline display.
+.. autoclass:: DirectoryInlineSlideBuilder
 
-You may add one (or both) of the following targets to your
-``Makefile`` to enabled one of these targets::
+Abstract Builders
+=================
 
-  inlineslides:
-          $(SPHINXBUILD) -b inlineslides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
-          @echo "Build finished. The HTML output is in $(BUILDDIR)/slides."
+Hieroglyph also defines two abstract builders. These classes are not
+capable of building slides on their own, but encapsulate most of the
+slide-specific functionality.
 
-  dirinlineslides:
-          $(SPHINXBUILD) -b dirinlineslides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
-          @echo "Build finished. The HTML output is in $(BUILDDIR)/slides."
+.. autoclass:: AbstractSlideBuilder
+   :members:
 
-
-When using one of the inline builders, ``autoslides`` functionality is
-disabled.
+.. autoclass:: AbstractInlineSlideBuilder
+   :members:

@@ -32,6 +32,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
+    'sphinx.ext.intersphinx',
     'sphinxcontrib.googleanalytics',
     'hieroglyph',
 ]
@@ -265,6 +266,10 @@ texinfo_documents = [
 
 # How to display URL addresses: 'footnote', 'no', or 'inline'.
 #texinfo_show_urls = 'footnote'
+
+intersphinx_map = {
+    'sphinx': ('http://sphinx-doc.org/', 'objects.inv'),
+}
 
 googleanalytics_enabled = True
 googleanalytics_id = 'UA-188298-8'
