@@ -57,39 +57,6 @@ Will generate HTML and slides if interlinking is enabled. See
 interlinking in the configuration.
 
 
-.. _custom-themes:
-
-Custom Themes
-=============
-
-Hieroglyph themes are based on Sphinx's HTML `themes`_. Themes are
-either a directory or zipfile, which contains a ``theme.conf`` file,
-templates you wish to override, and a ``static/`` directory which
-contains images, CSS, etc.
-
-When defining a slide theme, inherit from the ``slides`` theme for
-basic support. For example, the ``single-level`` them has the
-following ``theme.conf``::
-
-  [theme]
-  inherit = slides
-  stylesheet = single.css
-
-  [options]
-  custom_css =
-
-In order to include the base slide styling, your theme's stylesheet
-should begin with::
-
-  @import url(slides.css);
-
-``slides.css`` will be supplied by the base theme (``slides``).
-
-See the Sphinx documentation for `themes`_ for more information.
-
-.. _`themes`: http://sphinx.pocoo.org/theming.html
-
-
 Per-File Configuration
 ======================
 
