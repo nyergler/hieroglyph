@@ -1,8 +1,8 @@
 .. _hieroglyph-configuration:
 
-==========================
- Hieroglyph Configuration
-==========================
+=======================
+ Configuration Options
+=======================
 
 .. ifslides::
 
@@ -11,48 +11,76 @@
 
       CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
 
+.. ifnotslides::
+
+   Hieroglyph supports several configuration settings, which can be set
+   in the project's `Sphinx configuration file`_. If you used
+   ``sphinx-quickstart`` to begin your project, this will be ``conf.py``
+   in the project directory.
+
+   .. _`Sphinx configuration file`: http://sphinx-doc.org/config.html
+
 Basic Configuration
 ===================
 
-``autoslides``
+.. confval:: autoslides
 
-  If True, generate slides from the document sections. If False, only
-  generate slides from the ``slide`` directive. Default: ``True``
+   Default: ``True``
 
-  See :ref:`slide-directive` for more information.
+   When ``autoslides`` is True, Hieroglyph will generate slides from
+   the document sections. If autoslides is set to False, only generate
+   slides from the :rst:dir:`slide` directive.
 
-``slide_theme``
+   This can be overridden on a per-document basis using the
+   :rst:dir:`slideconf` directive.
 
-  The theme to use when generating slides. Default: ``slides``
+.. confval:: slide_theme
 
-``slide_levels``
+   Default: ``slides``
 
-  Number of heading levels to convert to slides; note that the
-  document title is level 1. Heading levels greater than slide levels
-  will simply be treated as slide content.
+   The theme to use when generating slides. Hieroglyph includes two
+   themes, ``slides`` and ``single-level``.
 
-  Default: 3
+   This can be overridden on a per-document basis using the
+   :rst:dir:`slideconf` directive.
+
+   See :ref:`hieroglyph-themes` for more information.
+
+.. confval:: slide_levels
+
+   Default: ``3``
+
+   Number of Sphinx section_ levels to convert to slides; note that the
+   document title is level 1. Heading levels greater than slide levels
+   will simply be treated as slide content.
+
+.. _section: http://sphinx-doc.org/rest.html#sections
 
 Slide Numbers
 =============
 
-``slide_numbers``
+.. confval:: slide_numbers
 
-  If set to ``True``, slide numbering will be added. Default:
-  ``False``
+   Default: ``False``
+
+   If set to ``True``, slide numbers will be added to the HTML output.
 
 Themes
 ======
 
-``slide_theme_options``
+.. confval:: slide_theme_options
 
-  Theme specific options as a ``dict``; default: ``{}``
+   Default: ``{}``
 
-  See :ref:`custom-css` for more information.
+   Theme specific options as a ``dict``.
 
-``slide_theme_path``
+   See :ref:`custom-css` for more information.
 
-  The path to look for themes in; default: ``[]``.
+.. confval:: slide_theme_path
+
+   Default: ``[]``.
+
+   A list of paths to look for themes in.
 
 For more information on styling and themes, see
 :ref:`hieroglyph-themes`.
@@ -65,22 +93,28 @@ Interlinking HTML Output
 
 :ref:`interlinking-html` can be enabled for slides, HTML, or both.
 
-``slide_link_to_html``
+.. confval:: slide_link_to_html
 
-  Link from slides to HTML; default: ``False``.
+   Default: ``False``
 
-``slide_link_html_to_slides``
+   Link from slides to HTML.
 
-  Link from HTML to slides; default: ``False``
+.. confval:: slide_link_html_to_slides
 
-``slide_link_html_sections_to_slides``
+   Default: ``False``
 
-  Link individual HTML sections to specific slides; default: ``False``
+   Link from HTML to slides.
 
-  .. ifnotslides::
+.. confval:: slide_link_html_sections_to_slides
 
-     Note that ``slide_link_html_to_slides`` must be enabled for this
-     to have any effect.
+   Default: ``False``
+
+   Link individual HTML sections to specific slides.
+
+   .. ifnotslides::
+
+      Note that :confval:`slide_link_html_to_slides` must be enabled
+      for this to have any effect.
 
 Relative Paths
 --------------
@@ -91,22 +125,22 @@ parameters for this. They're configured to work with Sphinx and
 Hieroglyph's standard configuration (output in sub-directories of a
 common build directory) by default .
 
-``slide_relative_path``
+.. confval:: slide_relative_path
 
-  Relative path from HTML to slides; default: ``../slides/``
+   Relative path from HTML to slides; default: ``../slides/``
 
-``slide_html_relative_path``
+.. confval:: slide_html_relative_path
 
-  Relative path from slides to HTML; default: ``../html/``
+   Relative path from slides to HTML; default: ``../html/``
 
 Additional Parameters
 ---------------------
 
-``slide_html_slide_link_symbol``
+.. confval:: slide_html_slide_link_symbol
 
-  Text used to link between HTML sections and slides.
+   Default: §
 
-  This text is appended to the headings, similar to the section links
-  in HTML output.
+   Text used to link between HTML sections and slides.
 
-  Default: §
+   This text is appended to the headings, similar to the section links
+   in HTML output.

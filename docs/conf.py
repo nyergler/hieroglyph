@@ -31,6 +31,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
+    'sphinx.ext.autosummary',
     'sphinxcontrib.googleanalytics',
     'hieroglyph',
 ]
@@ -267,3 +268,10 @@ texinfo_documents = [
 
 googleanalytics_enabled = True
 googleanalytics_id = 'UA-188298-8'
+
+
+def setup(app):
+
+    app.add_object_type('confval', 'confval',
+                        objname='configuration value',
+                        indextemplate='pair: %s; configuration value')
