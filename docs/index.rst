@@ -14,8 +14,10 @@ Hieroglyph is an extension for `Sphinx`_ which builds HTML slides from
 
 .. ifnotslides::
 
-   This document provides a basic overview of Hieroglyph; dive deeper
-   with the following documents:
+   Whether you're already writing documentation with Sphinx, or just
+   want to create presentations from easy to manage plain text source
+   files, Hieroglyph can help. Check out :ref:`getting-started` for a
+   walk through using Hieroglyph.
 
    .. toctree::
       :maxdepth: 2
@@ -28,156 +30,6 @@ Hieroglyph is an extension for `Sphinx`_ which builds HTML slides from
       builders
       ref-index
 
-Why?
-====
-
-- You're already writing documentation using Sphinx
-- You want to keep your presentation content in sync with other
-  documentation
-- You want slides that look beautiful
-- Why Not?
-
-Using Hieroglyph
-================
-
-Install from `PyPI`_ (or `github`_)::
-
-  pip install hieroglyph
-
-Add **Hieroglyph** as a Sphinx extension to your configuration::
-
-  extensions = [
-      'hieroglyph',
-  ]
-
-Build your slides::
-
-  $ sphinx-build -b slides output/slides
-
-.. _`PyPI`: http://pypi.python.org/pypi/hieroglyph
-.. _`github`: http://github.com/nyergler/hieroglyph
-
-Adding Hieroglyph to your Makefile
-----------------------------------
-
-You make optionally want to add the following to your ``Makefile``::
-
-  slides:
-          $(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
-          @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
-
-.. ifnotslides::
-
-   The directory builder is analogous to Sphinx's `HTML Directory
-   builder`_ . Each document is placed in its own directory as
-   index.html, which allows you to omit the file from the URL.
-
-   You can add this to the ``Makefile`` with the following::
-
-     dirslides:
-             $(SPHINXBUILD) -b dirslides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
-             @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
-
-(Don't forget, ``Makefiles`` love tabs!)
-
-You can also include your slides inline with HTML. See :ref:`builders`
-for details.
-
-.. _`HTML Directory Builder`: http://sphinx.pocoo.org/builders.html#sphinx.builders.html.DirectoryHTMLBuilder
-
-Writing Your Document
-=====================
-
-- First and second level headings become slides
-- Default theme styles these differently for topic breaks
-- Otherwise it's just ReStructured Text!
-
-Incremental Slides
-------------------
-
-.. rst-class:: build
-
-- Adding the ``build`` class to a container
-- To incrementally show its contents
-- Remember that *Sphinx* maps the basic ``class`` directive to ``rst-class``
-
-Slide-Only (and non-slide) Content
-----------------------------------
-
-Two directives let you restrict whether content is included::
-
-  .. ifslides::
-
-
-  .. ifnotslides::
-
-
-.. ifnotslides::
-
-   .. note::
-
-      These directives were originally named ``slides`` and
-      ``notslides``, respectively. They were renamed prior to the
-      addition of the ``slide`` directive, to be more explicit.
-
-      The old names work, but will show a warning during the build
-      process. Expect the old names to be removed in some future version.
-
-
-Styling Slides
-==============
-
-- Slides are just HTML, so you can write CSS to style them, either
-  individually or as a whole
-- You can add a custom CSS file to most themes by adding a
-  ``custom_css`` theme options::
-
-    slide_theme_options = {'custom_css':'custom.css'}
-
-- Custom CSS files are contained in your documentation's static files
-  directory (usually ``_static``)
-
-Themes
-------
-
-Hieroglyph includes two themes_:
-
-``slides``
-
-  Two slides levels: the first level of headers become "section"
-  headers, and the second become the real content.
-
-``single-level``
-
-  Only one style of slide, every slide has a title at the top.
-
-See :ref:`hieroglyph-themes` for more information on using themes and
-writing your own.
-
-.. _themes: http://sphinx.pocoo.org/theming.html
-
-Settings
-========
-
-**Hieroglyph** has some configuration dials you can turn to customize
-the output. In addition to the theme, you can configure:
-
-- The number of heading levels which become slides
-- Linking between slides and HTML documentation
-
-See :ref:`hieroglyph-configuration` for more information.
-
-Presenter Console
-=================
-
-Hieroglyph includes a simple presenter console to make it easier to
-use when presenting slides.
-
-**To activate the console, press "c" when viewing the slides.**
-
-The console will open in a new window. Advancing the slides in either
-window will update the other one, as well.
-
 License
 =======
 
@@ -187,7 +39,7 @@ details.
 Included slide CSS and JavaScript originally based on `HTML 5 Slides`_
 licensed under the Apache Public License.
 
-More Information
+Related Projects
 ================
 
 * `Sphinx`_

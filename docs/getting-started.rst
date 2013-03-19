@@ -1,8 +1,10 @@
 .. slideconf::
    :autoslides: False
 
+.. _getting-started:
+
 =================================
- Getting Started with Hieroglpyh
+ Getting Started with Hieroglyph
 =================================
 
 .. slide:: Getting Started with Hieroglyph
