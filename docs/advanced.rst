@@ -57,6 +57,8 @@ Will generate HTML and slides if interlinking is enabled. See
 interlinking in the configuration.
 
 
+.. _document-configuration:
+
 Per-File Configuration
 ======================
 
