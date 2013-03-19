@@ -1,6 +1,17 @@
+.. slideconf::
+   :autoslides: False
+
 =================================
  Getting Started with Hieroglpyh
 =================================
+
+.. slide:: Getting Started with Hieroglyph
+   :level: 1
+
+   .. figure:: /_static/hieroglyphs.jpg
+      :class: fill
+
+      CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
 
 Hieroglyph is an extension for `Sphinx`_ which builds HTML slides from
 `ReStructured Text`_ documents. Hieroglyph lets you leverage Sphinx
@@ -23,6 +34,16 @@ extensions available through Sphinx.
 Install Hieroglyph and Dependencies
 ===================================
 
+.. slide:: Installing Hieroglyph
+   :level: 2
+
+   Hieroglyph and its dependencies can be installed using pip_ or
+   `easy_install`_::
+
+   $ easy_install hieroglyph
+
+   This will install Sphinx_ and docutils_, if needed.
+
 To get started, you need to install Hieroglyph and its dependencies.
 Hieroglyph is written in Python_, so if you don't have that installed,
 you'll need to install it first.
@@ -44,6 +65,18 @@ Sphinx_ and docutils_, if needed.
 Create a Project
 ================
 
+.. slide:: Create Your Project
+   :level: 2
+
+   Run :program:`sphinx-quickstart` to create a new Sphinx project.
+
+   ::
+
+     $ sphinx-quickstart
+
+   A Sphinx project contains your source files, and a configuration
+   file, ``conf.py``.
+
 After you've installed Hieroglyph and Sphinx, you can create a new
 project. A Sphinx project defines where to look for the source files
 and what extensions to enable. You can start your project using the
@@ -63,6 +96,17 @@ have to specify a project name and version.
 ``conf.py``. ``conf.py`` contains the configuration for your project,
 and you'll need to enable Hieroglyph before going further.
 
+.. slide:: Enable Hieroglyph
+   :level: 2
+
+   After creating the Sphinx project, you need to enable Hieroglyph for
+   it.
+
+   Open ``conf.py`` and add ``hieroglyph`` to the list of
+   ``extensions``::
+
+     extensions = ['hieroglyph']
+
 Open ``conf.py`` and find the ``extensions`` definition::
 
   extensions = []
@@ -75,9 +119,24 @@ to this list::
 
 That enables Hieroglyph for the project.
 
-
 Authoring Slides
 ================
+
+.. slide:: Authoring Slides
+   :level: 2
+
+   * First and second level headings become slides
+   * Otherwise, just normal `ReStructured Text`_.
+   * Two slides: a title slide, and a slide with a sentence on it::
+
+       ====================
+        Presentation Title
+       ====================
+
+       First Slide
+       ===========
+
+       Some content on the first slide.
 
 Once you've enabled Hieroglyph for your Sphinx project, you can begin
 authoring your slides. Hieroglyph uses `ReStructured Text`_ for
@@ -111,6 +170,19 @@ bulleted list.
 Generating Your Slides
 ----------------------
 
+.. slide:: Generating Slides
+   :level: 2
+
+   You can build your slides using :program:`sphinx-build`::
+
+     $ sphinx-build -b slides . ./_build/slides
+
+   * This will place the slides in the ``./_build/slides`` directory.
+   * ``-b slides`` specifies the *builder* to use. Hieroglyph provides
+     two for generating slides: :py:class:`SlideBuilder` and
+     :py:class:`DirectorySlideBuilder`.
+
+
 Now that we've written some simple slides in ReStructured Text, we can
 generate the HTML slides from that. To do that we use of the included
 :ref:`builders`.
@@ -127,6 +199,22 @@ the CSS and Javascript needed to render the slides.
 
 Incremental slides
 ------------------
+
+.. slide:: Incremental Slides
+   :level: 2
+
+   .. rst-class:: build
+
+   - Adding the ``build`` class to a container
+   - To incrementally show its contents
+   - Remember that *Sphinx* maps the basic ``class`` directive to
+     ``rst-class``. For example::
+
+       .. rst-class:: build
+
+       - Bullet 1
+       - Bullet 2
+
 
 It's common to have a slide with a list of items that are shown one at
 a time. Hieroglpyh supports this through the use of the ``build``
@@ -150,6 +238,22 @@ to be built incrementally.
 
 Displaying Images
 -----------------
+
+.. slide:: Displaying Images
+   :level: 2
+
+   * Images and static assets should go in the ``_static`` directory in
+     your project
+   * The :rst:dir:`image` directive lets you display an image
+   * Hieroglyph includes support for showing an image full size in a
+     slide (like the title slide in this deck).
+
+   ::
+
+     .. figure:: /_static/hieroglyphs.jpg
+        :class: fill
+
+        CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
 
 You can include any image in a slide using the :rst:dir:`image`
 directive. Just drop them in the ``_static`` directory in your
@@ -208,6 +312,23 @@ directives. In that case you can disable :confval:`autoslides`.
 Slide-only and non-slide content
 --------------------------------
 
+.. slide:: Slide Only (and non-slide) Content
+   :level: 2
+
+   Hieroglyph includes two directives that let you limit content to
+   slides (:rst:dir:`ifslides`) or exclude it from slides
+   :rst:dir:`ifnotslides`.
+
+   ::
+
+     .. ifslides::
+
+        This content would only appear on slides
+
+     .. ifnotslides::
+
+        This content would not appear on slides
+
 Another useful tool for mixing narrative documentation with slides is
 the ability to exclude content from slides or vice versa. Hieroglyph
 provides two directives for just this purpose. The :rst:dir:`ifslides`
@@ -220,6 +341,16 @@ not include in the slides.
 Viewing Your Slides
 ===================
 
+.. slide:: Viewing Slides
+   :level: 2
+
+   Hieroglyph creates a directory containing the files for your
+   presentation
+
+   .. image:: /_static/slide_show.png
+
+   * Press <space bar> to advance the slides, or <- or ->
+
 When you open the slide HTML in your browser, it looks something like
 this:
 
@@ -227,6 +358,14 @@ this:
 
 You can use the space bar to advance to the next slide, or the left
 and right arrows to move back and forward, respectively.
+
+.. slide:: The Slide Table
+   :level: 2
+
+   .. image:: /_static/slide_table.png
+
+   * Press ``t`` to display the Slide Table, a zoomed out view of your
+     slides
 
 Sometimes you want to skim through your slides quickly to find
 something, or jump ahead or back. You can use the *Slide Table* view
@@ -241,6 +380,14 @@ the slide table.
 Presenter Console
 -----------------
 
+.. slide:: Presenter Console
+   :level: 2
+
+   .. image:: /_static/slide_console.png
+
+   * Press ``c`` to open the Presenter's Console
+   * Moving the slides in either window will update the other.
+
 If you're presenting your slides, it's often helpful to be able to see
 what's coming next. Hieroglyph includes a *Presenter's Console* for
 this purpose. Just press ``c`` when viewing the slides and the console
@@ -253,6 +400,19 @@ other in sync.
 
 Styling Your Slides
 ===================
+
+.. slide:: Styling Slides
+   :level: 2
+
+   - Slides are just HTML, so you can write CSS to style them, either
+     individually or as a whole
+   - You can add a custom CSS file to most themes by adding a
+     ``custom_css`` theme options::
+
+       slide_theme_options = {'custom_css':'custom.css'}
+
+   - Custom CSS files are contained in your documentation's static files
+     directory (usually ``_static``)
 
 The simplest way to style your presentation is to add a custom CSS
 file. There are two steps to adding custom CSS: first, create the CSS
@@ -295,6 +455,14 @@ HTML output. See :reF:`hieroglyph-configuration` for a full list.
 
 Sphinx Extensions
 =================
+
+.. slide:: Sphinx Extensions
+   :level: 2
+
+   * Hieroglyph is built on Sphinx
+   * Most Sphinx extensions work with Hieroglyph
+   * You can `create diagrams`_, `include code`_ snippets, `render
+     mathematical formulas`_, `embed maps`_, and much more with extensions
 
 Hieroglyph is built on Sphinx, which has a wide variety of extensions
 available. These extensions can help you `create diagrams`_, `include
