@@ -46,4 +46,4 @@ licensed under the Apache Public License.
 .. _`Sphinx`: http://sphinx.pocoo.org/
 .. _`latest development version`: https://github.com/nyergler/hieroglyph/tarball/master#egg=hieroglyph-dev
 .. _`HTML 5 Slides`: http://code.google.com/p/html5slides/
-.. _`Read the documentation`: https://hieroglyph.readthedocs.org/
+.. _`Read the documentation`: http://hieroglyph.io/
