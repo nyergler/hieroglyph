@@ -6,7 +6,7 @@
  Hieroglyph Smoke Test
 =======================
 
-.. slides::
+.. ifslides::
 
    .. figure:: /_static/hieroglyphs.jpg
       :class: fill
@@ -113,10 +113,10 @@ Incremental Slides
 
    A recursive example::
 
-   .. slide:: The ``slide`` Directive
-      :level: 2
+     .. slide:: The ``slide`` Directive
+        :level: 2
 
-      In addition to headings, you can use the ``..slide::`` directive to
-      define a slide.
+        In addition to headings, you can use the ``..slide::`` directive to
+        define a slide.
 
-      A recursive example:
+        A recursive example:
