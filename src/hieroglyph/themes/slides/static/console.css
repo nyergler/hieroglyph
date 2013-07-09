@@ -42,3 +42,19 @@ article.placeholder {
 
     margin-top: 60px;
 }
+
+div.presenter_notes {
+	position: absolute;
+	top: 420px;
+	left: 10%;
+	background-color: white;
+	color: black;
+	padding: 1em;
+	width: 80%;
+	font-size: 130%;
+
+	border-radius: 10px;
+	-o-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}

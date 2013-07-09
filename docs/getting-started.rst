@@ -340,6 +340,33 @@ building other targets. The latter, in particular, may be used to
 include notes that you'd like to print with HTML or PDF output, but
 not include in the slides.
 
+Presenter Notes
+---------------
+
+.. slide:: Presenter Notes
+   :level: 2
+
+   Use the :rst:dir:`note` directive to insert "presenter notes" that
+   are only visible on the presenter console.
+
+   ::
+
+      .. note::
+
+         * Make sure to mention the important background story for
+           this slide.
+
+Use the :rst:dir:`note` directive to insert "presenter notes" that are
+only visible on the presenter console. Full reStructuredText
+formatting is supported within the notes.
+
+::
+
+   .. note::
+
+      * Make sure to mention the important background story for
+        this slide.
+
 Viewing Your Slides
 ===================
 
