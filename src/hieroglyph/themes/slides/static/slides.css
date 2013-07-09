@@ -41,6 +41,7 @@ div.figure p.caption {
     font-size: 66%;
 }
 
-div.admonition {
-	visibility: hidden;
+div.admonition.note {
+    visibility: hidden;
+    display: none;
 }
