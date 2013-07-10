@@ -86,9 +86,20 @@ This block will not be highlighted:
 Admonitions
 ===========
 
+The ``note`` admonition is used to create notes in the presenter console.
+
 .. note::
 
-   This is a *note* admonition.
+   This is a *note* admonition. It will not appear in the slides.
+
+.. warning::
+
+   Warnings, however, stay where they belong.
+
+.. note::
+
+   Notes can appear anywhere in the slide content.
+
 
 Hieroglyph Features
 ===================
