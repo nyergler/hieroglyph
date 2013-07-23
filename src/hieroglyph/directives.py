@@ -94,11 +94,14 @@ class slideconf(nodes.Element):
     def get_conf(cls, builder, doctree=None):
         """Return a dictionary of slide configuration for this doctree."""
 
+        # set up the default conf
         result = {
             'theme': builder.config.slide_theme,
             'autoslides': builder.config.autoslides,
+            'slide_classes': [],
         }
 
+        # now look for a slideconf node in the doctree and update the conf
         if doctree:
             conf_node = cls.get(doctree)
             if conf_node:
@@ -121,6 +124,7 @@ class SlideConf(Directive):
     option_spec = {
         'theme': directives.unchanged,
         'autoslides': boolean_option,
+        'slide_classes': directives.class_option,
     }
 
     def run(self):

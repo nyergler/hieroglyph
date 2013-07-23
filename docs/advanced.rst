@@ -64,8 +64,8 @@ Per-File Configuration
 
 When working with multi-file projects, there may be cases when it is
 desirable to override the theme or set configuration value for
-specific files. This can be accomplished using the ``slideconf``
-directive::
+specific files. This can be accomplished using the
+:rst:dir:`slideconf` directive::
 
   .. slideconf::
      :theme: single-level

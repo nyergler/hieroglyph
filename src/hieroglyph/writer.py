@@ -95,10 +95,18 @@ class BaseSlideTranslator(HTMLTranslator):
                 self.depart_slide(node.parent)
 
             node.closed = False
+
+            classes = []
+            if not node.get('classes'):
+                classes = slide_conf['slide_classes']
+
             self.body.append(
                 self.starttag(
                     node, 'article',
-                    CLASS='slide level-%s' % slide_level
+                    CLASS='%s slide level-%s' % (
+                        ' '.join(classes),
+                        slide_level,
+                    ),
                 )
             )
             node.tag_name = 'article'

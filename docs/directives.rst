@@ -39,6 +39,13 @@
    slides will only be created with Sphinx encounters the
    :ref:`slide-directive`.
 
+   The ``slide_classes`` option allows you to specify classes that
+   will be added to slides by default. This allows you, for example,
+   to add a class that applies some styling to the slides. Note that
+   if a slide has an explicit class set (ie, with the
+   :rst:dir:`rst-class` directive), the classes specified here *will
+   not* be applied.
+
    See :ref:`document-configuration` for more information and
    examples.
 

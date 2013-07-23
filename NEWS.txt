@@ -12,6 +12,7 @@ News
 * Allow projects to specify custom Javascript to be included with
   slides.
 * slides.js now fires an event when the slides are resized.
+* Support setting default classes on slides in a document.
 
 0.5.5
 -----
