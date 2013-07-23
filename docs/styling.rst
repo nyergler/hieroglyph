@@ -52,10 +52,24 @@ Custom CSS
 The standard Hieroglyph themes support adding a custom stylesheet with
 the ``slide_theme_options`` dict in ``conf.py``::
 
-  slide_theme_options = {'custom_css':'custom.css'}
+  slide_theme_options = {'custom_css': 'custom.css'}
 
 The custom CSS file should be located in the ``html_static_path``
 (``_static`` by default).
+
+.. _custom-js:
+
+Adding Javascript
+-----------------
+
+In addition to a custom CSS file, it is sometimes useful to include
+some custom Javascript for your slides. You can put this in your
+static directory (``_static`` by default), and then reference it in
+the ``slide_theme_options`` dict in ``conf.py``::
+
+  slide_theme_options = {'custom_js': 'myslides.js'}
+
+
 
 .. _custom-themes:
 

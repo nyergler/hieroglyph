@@ -9,6 +9,8 @@ News
 * The ``note`` directive in a slide now shows up as notes in the
   presenter console. Thanks, Doug Hellmann!
 * Javascript loading is now deferred until the end of the document.
+* Allow projects to specify custom Javascript to be included with
+  slides.
 
 0.5.5
 -----

@@ -42,6 +42,10 @@
     {%- for scriptfile in script_files %}
     <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
     {%- endfor %}
+    {% if theme_custom_js %}
+    <script type="text/javascript" src="{{ pathto('_static/' + theme_custom_js, 1) }}"></script>
+    {% endif %}
+
 {%- endmacro %}
 
 {%- macro css() %}
