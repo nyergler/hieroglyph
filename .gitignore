@@ -12,3 +12,6 @@ dist
 parts
 eggs
 _build
+/lib/
+/include/
+/.Python
