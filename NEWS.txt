@@ -11,6 +11,7 @@ News
 * Javascript loading is now deferred until the end of the document.
 * Allow projects to specify custom Javascript to be included with
   slides.
+* slides.js now fires an event when the slides are resized.
 
 0.5.5
 -----
