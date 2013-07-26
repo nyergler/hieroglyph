@@ -15,6 +15,7 @@ News
 * Support setting default classes on slides in a document.
 * Added ``appear`` and ``fade-in`` slide classes for alternate
   transitions.
+* Added ``sphinx-quickstart`` script.
 
 0.5.5
 -----

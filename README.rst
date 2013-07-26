@@ -18,18 +18,27 @@ contain new features.
 Using Hieroglyph
 ================
 
-Add **Hieroglyph** as a Sphinx extension to your configuration::
+You can start a new **Hieroglyph** presentation using the included
+quickstart script::
+
+  $ hieroglyph-quickstart
+
+This will generate the Sphinx configuration, along with an optional
+Makefile and batch file, with Hieroglyph enabled.
+
+If you're on something UNIX-like (Linux, Mac OS X, etc), you can then
+generate your slides by running ``make``::
+
+  $ make slides
+
+
+You can also add **Hieroglyph** as a Sphinx extension to your
+existiong configuration::
 
   extensions = [
       'hieroglyph',
   ]
 
-Build your slides::
-
-  $ sphinx-build -b slides sourcedir outdir
-
-Where ``sourcedir`` is the directory containing the Sphinx ``conf.py``
-file and ``outdir`` is where you want your slides to output to.
 
 `Read the documentation`_ for all the details about using,
 configuring, and extending Hieroglyph.

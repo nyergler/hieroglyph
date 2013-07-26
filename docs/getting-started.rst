@@ -70,11 +70,12 @@ Create a Project
 .. slide:: Create Your Project
    :level: 2
 
-   Run :program:`sphinx-quickstart` to create a new Sphinx project.
+   Run :program:`hieroglyph-quickstart` to create a new Sphinx project
+   with Hieroglyph enabled.
 
    ::
 
-     $ sphinx-quickstart
+     $ hieroglyph-quickstart
 
    A Sphinx project contains your source files, and a configuration
    file, ``conf.py``.
@@ -82,27 +83,30 @@ Create a Project
 After you've installed Hieroglyph and Sphinx, you can create a new
 project. A Sphinx project defines where to look for the source files
 and what extensions to enable. You can start your project using the
-:program:`sphinx-quickstart` program included with Sphinx.
+:program:`hieroglyph-quickstart` program included with Hieroglyph.
 
 ::
 
-  $ sphinx-quickstart
+  $ hieroglyph-quickstart
 
-:program:`sphinx-quickstart` will ask you questions about your
-project. Not all of these make sense if you're just creating a
-presentation (as opposed to a presentation and other documentation
-simultaneously), so you can usually just accept the defaults. You will
-have to specify a project name and version.
+:program:`hieroglyph-quickstart` will ask you questions about your
+presentation project. Not all of these make sense if you're just
+creating a presentation (as opposed to a presentation and other
+documentation simultaneously), so you can usually just accept the
+defaults.
 
-:program:`sphinx-quickstart` will create several files, including
-``conf.py``. ``conf.py`` contains the configuration for your project,
-and you'll need to enable Hieroglyph before going further.
+Adding Hieroglyph to an Exiting Project
+=======================================
 
-.. slide:: Enable Hieroglyph
+If you have an existing Sphinx project, or you used
+:program:`sphinx-quickstart` instead of
+:program:`hieroglyph-quickstart`, you'll need to enable Hieroglyph in
+the ``conf.py`` configuration file.
+
+.. slide:: Enable Hieroglyph in Existing Projects
    :level: 2
 
-   After creating the Sphinx project, you need to enable Hieroglyph for
-   it.
+   You can also add Hieroglyph to an existing Sphinx project.
 
    Open ``conf.py`` and add ``hieroglyph`` to the list of
    ``extensions``::

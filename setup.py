@@ -32,4 +32,9 @@ setup(name='hieroglyph',
       include_package_data=True,
       zip_safe=False,
       install_requires=install_requires,
+      entry_points={
+          'console_scripts': [
+              'hieroglyph-quickstart=hieroglyph.quickstart:main',
+          ],
+      },
 )
