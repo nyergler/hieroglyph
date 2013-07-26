@@ -44,6 +44,83 @@ in for themes::
 
   slide_theme_path = '...'
 
+
+Incremental slides
+------------------
+
+.. slide:: Incremental Slides
+   :level: 2
+
+   .. rst-class:: build
+
+   - Adding the ``build`` class to a container
+   - To incrementally show its contents
+   - Remember that *Sphinx* maps the basic ``class`` directive to
+     ``rst-class``. For example::
+
+       .. rst-class:: build
+
+       - Bullet 1
+       - Bullet 2
+
+
+It's common to have a slide with a list of items that are shown one at
+a time. Hieroglpyh supports this through the use of the ``build``
+class. Let's add a third slide to ``index.rst`` that incrementally
+displays a bulleted list.
+
+::
+
+  Show Bullets Incrementally
+  ==========================
+
+  .. rst-class:: build
+
+  - Adding the ``build`` class to a container
+  - To incrementally show its contents
+  - Remember that *Sphinx* maps the basic ``class`` directive to
+    ``rst-class``
+
+Here the :rst:dir:`rst-class` directive causes the next element
+to be built incrementally.
+
+Displaying Images
+-----------------
+
+.. slide:: Displaying Images
+   :level: 2
+
+   * Images and static assets should go in the ``_static`` directory in
+     your project
+   * The :rst:dir:`image` directive lets you display an image
+   * Hieroglyph includes support for showing an image full size in a
+     slide (like the title slide in this deck).
+
+   ::
+
+     .. figure:: /_static/hieroglyphs.jpg
+        :class: fill
+
+        CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
+
+You can include any image in a slide using the :rst:dir:`image`
+directive. Just drop them in the ``_static`` directory in your
+project.
+
+Hieroglyph also includes some support for showing an image as the full
+slide using the :rst:dir:`figure` directive. For example, the
+Hieroglyph introductory slide deck uses the following markup::
+
+  .. figure:: /_static/hieroglyphs.jpg
+     :class: fill
+
+     CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
+
+The caption (license information above) is styled as an overlay on the
+image.
+
+
+
 .. _custom-css:
 
 Custom CSS
@@ -68,7 +145,6 @@ static directory (``_static`` by default), and then reference it in
 the ``slide_theme_options`` dict in ``conf.py``::
 
   slide_theme_options = {'custom_js': 'myslides.js'}
-
 
 
 .. _custom-themes:
