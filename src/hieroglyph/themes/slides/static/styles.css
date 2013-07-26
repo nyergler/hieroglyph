@@ -102,6 +102,19 @@ body {
   background-position-x: 0, 840px;
 }
 
+.slides > article.appear {
+    transition: none;
+    display: none;
+}
+
+.slides > article.fade-in {
+    transition: opacity 0.2s;
+}
+
+.slides > article.fade-in.current {
+    z-index: 100;
+}
+
 .slides .handout {
     display: none;
 }
@@ -234,6 +247,7 @@ body {
 }
 .slides > article.current {
   display: block;
+  opacity: 1;
   transform: translate(0);
   -o-transform: translate(0);
   -moz-transform: translate(0);
@@ -294,6 +308,29 @@ body {
   -moz-transform: translate(2260px);
   -webkit-transform: translate3d(2260px, 0, 0);
 }
+
+.slides > article.fade-in.next,
+.slides > article.fade-in.far-past,
+.slides > article.fade-in.past,
+.slides > article.fade-in.far-next {
+    opacity: 0;
+    transform: translate(0px);
+    -o-transform: translate(0px);
+    -moz-transform: translate(0px);
+    -webkit-transform: translate(0px);
+}
+
+.slides > article.appear.next,
+.slides > article.appear.far-past,
+.slides > article.appear.past,
+.slides > article.appear.far-next {
+    display: none;
+    transform: translate(0px);
+    -o-transform: translate(0px);
+    -moz-transform: translate(0px);
+    -webkit-transform: translate(0px);
+}
+
 
 /* Styles for slides */
 

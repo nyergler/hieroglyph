@@ -120,6 +120,39 @@ The caption (license information above) is styled as an overlay on the
 image.
 
 
+Setting a Class on Slides
+-------------------------
+
+You can set the CSS class on a slide using the normal
+:rst:dir:`rst-class` directive. (Sphinx remaps ``class`` to
+:rst:dir:`rst-class` to avoid conflicts.) For example::
+
+   .. rst-class:: myclass
+
+   Slide Heading
+   -------------
+
+The :rst:dir:`rst-class` directive applies to the *next* following
+element (the heading ``Slide Heading`` in this example).
+
+You can also set a default class on slides using the
+``slide_classes`` option of the :rst:dir:`slideconf` directive. Note
+that specifying an explicit class will override the ``slide_classes``.
+
+Included Styles
+---------------
+
+Hieroglyph includes some classes that for styling slides:
+
+* ``appear``
+
+   Case the slide to just appear, replacing the previous slide,
+   instead of sliding from the right to left.
+
+* ``fade-in``
+
+   Causes the slide to quickly fade in and out, instead of sliding
+   from the right to left.
 
 .. _custom-css:
 
@@ -133,6 +166,7 @@ the ``slide_theme_options`` dict in ``conf.py``::
 
 The custom CSS file should be located in the ``html_static_path``
 (``_static`` by default).
+
 
 .. _custom-js:
 
