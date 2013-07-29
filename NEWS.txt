@@ -21,6 +21,8 @@ News
   disabled
 * Slides created with the slide directive may omit have only a title,
   or only content (Issue #30)
+* Slide numbering was often incorrect when dealing with multiple slide
+  levels; this has been correct (Issue #26)
 
 0.5.5
 -----

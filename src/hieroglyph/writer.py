@@ -73,7 +73,6 @@ class BaseSlideTranslator(HTMLTranslator):
 
         from hieroglyph import builder
 
-        self.section_count += 1
         slide_level = node.attributes.get('level', self.section_level)
 
         if slide_level > self.builder.config.slide_levels:
@@ -93,6 +92,10 @@ class BaseSlideTranslator(HTMLTranslator):
                 # we're building slides and creating slides from
                 # sections; close the previous section, if needed
                 self.depart_slide(node.parent)
+
+            # don't increment section_count until we've (potentially)
+            # closed the previous slide
+            self.section_count += 1
 
             node.closed = False
 
@@ -118,7 +121,7 @@ class BaseSlideTranslator(HTMLTranslator):
             # mark the slide closed
             node.closed = True
 
-            self._add_slide_number(self.section_count - 1)
+            self._add_slide_number(self.section_count)
             self.body.append(
                 '\n</%s>\n' % getattr(node, 'tag_name', 'article')
             )
