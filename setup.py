@@ -37,4 +37,5 @@ setup(name='hieroglyph',
               'hieroglyph-quickstart=hieroglyph.quickstart:main',
           ],
       },
+      test_suite='hieroglyph.tests',
 )

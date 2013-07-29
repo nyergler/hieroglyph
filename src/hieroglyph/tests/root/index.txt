@@ -1,0 +1,10 @@
+===================
+ Tut Test Document
+===================
+
+Test Document
+
+.. checkpoint:: step_one
+   :path: /src
+
+Further content
