@@ -159,6 +159,15 @@ def no_autoslides_filter(node):
     return False
 
 
+def filter_doctree_for_slides(doctree):
+    """Given a doctree, remove all non-slide related elements from it."""
+
+    for child in doctree.children:
+        child.replace_self(
+            child.traverse(no_autoslides_filter)
+        )
+
+
 def process_slideconf_nodes(app, doctree, docname):
 
     from hieroglyph import builder
@@ -170,10 +179,7 @@ def process_slideconf_nodes(app, doctree, docname):
     if (is_slides and
             not slideconf.get_conf(app.builder, doctree)['autoslides']):
 
-        for child in doctree.children:
-            child.replace_self(
-                child.traverse(no_autoslides_filter)
-            )
+        filter_doctree_for_slides(doctree)
 
 
 class slide(nodes.admonition):
