@@ -131,3 +131,9 @@ Incremental Slides
         define a slide.
 
         A recursive example:
+
+.. slide:: Only a title here.
+
+.. slide::
+
+   This slide has only Content, no Title.

@@ -199,6 +199,8 @@ class slide(nodes.admonition):
 
 class SlideDirective(admonitions.Admonition):
 
+    required_arguments = 0
+    optional_arguments = 1
     node_class = slide
     option_spec = {
         'class': directives.class_option,
@@ -211,16 +213,21 @@ class SlideDirective(admonitions.Admonition):
 
         # largely lifted from the superclass in order to make titles work
         set_classes(self.options)
-        self.assert_has_content()
+        # self.assert_has_content()
         text = '\n'.join(self.content)
         admonition_node = self.node_class(text, **self.options)
         self.add_name(admonition_node)
 
-        title_text = self.arguments[0]
-        textnodes, messages = self.state.inline_text(title_text,
-                                                     self.lineno)
-        admonition_node += nodes.title(title_text, '', *textnodes)
-        admonition_node += messages
+        if self.arguments:
+            title_text = self.arguments[0]
+            textnodes, messages = self.state.inline_text(title_text,
+                                                         self.lineno)
+            admonition_node += nodes.title(title_text, '', *textnodes)
+            admonition_node += messages
+        else:
+            # no title, make something up so we have an ID
+            title_text = str(hash(' '.join(self.content)))
+
         if not 'classes' in self.options:
             admonition_node['classes'] += ['admonition-' +
                                            nodes.make_id(title_text)]

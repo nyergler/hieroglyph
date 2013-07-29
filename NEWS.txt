@@ -19,6 +19,8 @@ News
 * Added testing framework, initial tests for directives
 * Fixed bug where content was not removed with autoslides was
   disabled
+* Slides created with the slide directive may omit have only a title,
+  or only content (Issue #30)
 
 0.5.5
 -----
