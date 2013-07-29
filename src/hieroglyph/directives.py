@@ -162,10 +162,21 @@ def no_autoslides_filter(node):
 def filter_doctree_for_slides(doctree):
     """Given a doctree, remove all non-slide related elements from it."""
 
-    for child in doctree.children:
+    current = 0
+    num_children = len(doctree.children)
+    while current < num_children:
+
+        child = doctree.children[current]
         child.replace_self(
             child.traverse(no_autoslides_filter)
         )
+
+        if len(doctree.children) == num_children:
+            # nothing removed, increment current
+            current += 1
+        else:
+            # a node was removed; retain current and update length
+            num_children = len(doctree.children)
 
 
 def process_slideconf_nodes(app, doctree, docname):

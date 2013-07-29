@@ -16,6 +16,9 @@ News
 * Added ``appear`` and ``fade-in`` slide classes for alternate
   transitions.
 * Added ``sphinx-quickstart`` script.
+* Added testing framework, initial tests for directives
+* Fixed bug where content was not removed with autoslides was
+  disabled
 
 0.5.5
 -----
