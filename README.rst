@@ -2,6 +2,8 @@
  Hieroglyph
 ============
 
+.. image:: https://travis-ci.org/nyergler/hieroglyph.png
+
 **Hieroglyph** is an extension for `Sphinx`_ which builds HTML5 slides
 from ReStructured Text documents.
 
