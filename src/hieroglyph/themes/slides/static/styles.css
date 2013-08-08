@@ -712,6 +712,7 @@ article.smaller q::after {
 
         margin: auto;
         page-break-after: always;
+        page-break-inside: avoid;
 
         transform: none;
         -o-transform: none;
