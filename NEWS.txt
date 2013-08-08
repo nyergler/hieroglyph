@@ -4,7 +4,7 @@ News
 0.6
 ---
 
-*Release date: UNRELEASED*
+*Release date: 8 August 2013 *
 
 * The ``note`` directive in a slide now shows up as notes in the
   presenter console. Thanks, Doug Hellmann!
