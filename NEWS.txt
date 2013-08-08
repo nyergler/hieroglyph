@@ -23,6 +23,8 @@ News
   or only content (Issue #30)
 * Slide numbering was often incorrect when dealing with multiple slide
   levels; this has been correct (Issue #26)
+* Better page break handling when printing slides (PR #31). Thanks,
+  tjadevries!
 
 0.5.5
 -----
