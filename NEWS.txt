@@ -5,6 +5,7 @@ News
 -----
 
 *Release date: UNRELEASED*
+
 0.6
 ---
 
