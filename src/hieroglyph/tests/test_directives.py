@@ -70,7 +70,7 @@ Second Level
 
         self.assertFalse(
             'TESTING_SENTINEL' in
-            file(sphinx_app.builddir/'slides'/'index.html').read(),
+            open(sphinx_app.builddir/'slides'/'index.html').read(),
             'The sentinel paragraph should have been filtered.',
         )
 

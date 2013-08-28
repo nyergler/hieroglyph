@@ -17,7 +17,7 @@
 """
 
 import sys
-import StringIO
+from six import StringIO
 import tempfile
 import shutil
 import re
@@ -33,7 +33,7 @@ from sphinx import application
 from sphinx.theming import Theme
 from sphinx.ext.autodoc import AutoDirective
 
-from path import path
+from hieroglyph.tests.path import path
 
 # from nose import tools, SkipTest
 
@@ -76,7 +76,7 @@ def raises_msg(exc, msg, func, *args, **kwds):
     """
     try:
         func(*args, **kwds)
-    except exc, err:
+    except exc as err:
         assert msg in str(err), "\"%s\" not in \"%s\"" % (msg, err)
     else:
         raise AssertionError('%s did not raise %s' %
@@ -178,7 +178,7 @@ class TestApp(application.Sphinx):
         if confoverrides is None:
             confoverrides = {}
         if status is None:
-            status = StringIO.StringIO()
+            status = StringIO()
         if warning is None:
             warning = ListOutput('stderr')
         if freshenv is None:

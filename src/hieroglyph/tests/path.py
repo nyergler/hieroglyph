@@ -16,11 +16,12 @@ import sys
 import shutil
 from codecs import open
 
+from six import text_type
 
 FILESYSTEMENCODING = sys.getfilesystemencoding() or sys.getdefaultencoding()
 
 
-class path(unicode):
+class path(text_type):
     """
     Represents a path which behaves like a string.
     """
@@ -182,7 +183,7 @@ class path(unicode):
         """
         return os.path.lexists(self)
 
-    def makedirs(self, mode=0777):
+    def makedirs(self, mode=0o777):
         """
         Recursively create directories.
         """
