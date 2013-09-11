@@ -20,7 +20,7 @@ News
 * Support setting default classes on slides in a document.
 * Added ``appear`` and ``fade-in`` slide classes for alternate
   transitions.
-* Added ``sphinx-quickstart`` script.
+* Added ``hieroglyph-quickstart`` script.
 * Added testing framework, initial tests for directives
 * Fixed bug where content was not removed with autoslides was
   disabled
