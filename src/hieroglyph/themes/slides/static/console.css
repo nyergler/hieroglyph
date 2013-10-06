@@ -58,3 +58,7 @@ div.presenter_notes {
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
+
+div.presenter_notes p.admonition-title {
+	display: none;
+}

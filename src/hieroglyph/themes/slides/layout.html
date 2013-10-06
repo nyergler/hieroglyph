@@ -115,7 +115,11 @@
 
 {% block body %} {% endblock %}
 </section>
+
+<section id="slide_notes">
 {% block presenter_notes %}{% endblock %}
+</section>
+
     {%- if not embedded %}
     {{ script() }}
     {%- endif %}
