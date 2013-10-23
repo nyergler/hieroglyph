@@ -73,13 +73,15 @@ def ask_user(d):
     """Wrap sphinx_quickstart.ask_user, and add additional questions."""
 
     # Print welcome message
-    print bold('Welcome to the Hieroglyph %s quickstart utility.') % (
+    msg = bold('Welcome to the Hieroglyph %s quickstart utility.') % (
         version(),
     )
-    print """
+    print(msg)
+    msg = """
 This will ask questions for creating a Hieroglyph project, and then ask
 some basic Sphinx questions.
 """
+    print(msg)
 
     # set a few defaults that we don't usually care about for Hieroglyph
     d.update({
@@ -104,7 +106,7 @@ The presentation title will be included on the title slide.'''
         sphinx_quickstart.do_prompt(d, 'author', 'Author name(s)')
 
     # slide_theme
-    print """
+    msg = """
 Hieroglyph includes two themes:
 
 * """ + bold("slides") + """
@@ -115,6 +117,7 @@ Hieroglyph includes two themes:
   All slides are styled the same, with the heading at the top.
 
 Which theme would you like to use?"""
+    print(msg)
 
     # XXX make a themes dict that has the keys/descriptions
     sphinx_quickstart.do_prompt(
@@ -123,7 +126,7 @@ Which theme would you like to use?"""
     )
 
     # Ask original questions
-    print
+    print("")
     sphinx_ask_user(d)
 
 
