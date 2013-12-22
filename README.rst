@@ -3,6 +3,11 @@
 ============
 
 .. image:: https://travis-ci.org/nyergler/hieroglyph.png
+   :target: https://travis-ci.org/nyergler/hieroglyph
+
+.. image:: https://coveralls.io/repos/nyergler/hieroglyph/badge.png?branch=master
+   :target: https://coveralls.io/r/nyergler/hieroglyph?branch=master
+
 
 **Hieroglyph** is an extension for `Sphinx`_ which builds HTML5 slides
 from ReStructured Text documents.
