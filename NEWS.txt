@@ -6,6 +6,10 @@ News
 
 *Release date: UNRELEASED*
 
+* Revert "Javascript loading is now deferred until the end of the
+  document." This caused issues with content in ifnotslides blocks.
+  (Issue #33)
+
 0.6
 ---
 
