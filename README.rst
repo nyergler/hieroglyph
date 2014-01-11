@@ -40,7 +40,7 @@ generate your slides by running ``make``::
 
 
 You can also add **Hieroglyph** as a Sphinx extension to your
-existiong configuration::
+existing configuration::
 
   extensions = [
       'hieroglyph',
