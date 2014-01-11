@@ -95,8 +95,8 @@ creating a presentation (as opposed to a presentation and other
 documentation simultaneously), so you can usually just accept the
 defaults.
 
-Adding Hieroglyph to an Exiting Project
-=======================================
+Adding Hieroglyph to an Existing Project
+========================================
 
 If you have an existing Sphinx project, or you used
 :program:`sphinx-quickstart` instead of
@@ -287,7 +287,7 @@ insert a slide at some place other than a heading. This can be useful
 when you're writing a single document that you'll present as slides as
 well as text. For example, if you're writing a narrative tutorial and
 want to include the slides in the same document, the :rst:dir:`slide`
-directive makes this straight-forward.
+directive makes this straightforward.
 
 Let's consider how the example of an incremental slide would look
 using the :rst:dir:`slide` directive::
