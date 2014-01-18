@@ -99,8 +99,8 @@ some basic Sphinx questions.
     })
 
     if 'project' not in d:
-        print '''
-The presentation title will be included on the title slide.'''
+        print('''
+The presentation title will be included on the title slide.''')
         sphinx_quickstart.do_prompt(d, 'project', 'Presentation title')
     if 'author' not in d:
         sphinx_quickstart.do_prompt(d, 'author', 'Author name(s)')
