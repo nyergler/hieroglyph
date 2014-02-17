@@ -111,11 +111,10 @@ class AbstractSlideBuilder(object):
         super(AbstractSlideBuilder, self).post_process_images(doctree)
 
         # figure out where this doctree is in relation to the srcdir
-        relative_base = ['..'] * len(
-            os.path.dirname(
-                doctree.attributes.get('source')[len(self.srcdir) + 1:]
-                ).split('/')
-            )
+        relative_base = (
+            ['..'] *
+            doctree.attributes.get('source')[len(self.srcdir) + 1:].count('/')
+        )
 
         for node in doctree.traverse(nodes.image):
 
