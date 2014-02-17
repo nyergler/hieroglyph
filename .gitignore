@@ -4,6 +4,7 @@
 bin
 develop-eggs
 
+*.egg
 *.egg-info
 
 tmp
