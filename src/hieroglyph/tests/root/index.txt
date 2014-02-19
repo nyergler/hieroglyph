@@ -1,10 +1,10 @@
-===================
- Tut Test Document
-===================
+=================================
+ Getting Started with Hieroglyph
+=================================
 
-Test Document
+This is the title slide
 
-.. checkpoint:: step_one
-   :path: /src
+Another Slide
+=============
 
-Further content
+A Second slide

@@ -69,6 +69,16 @@ class BaseSlideTranslator(HTMLTranslator):
                 '\n<div class="slide-no">%s</div>\n' % (slide_no,),
             )
 
+    def _add_slide_footer(self, slide_no):
+        """Add the slide footer to the output if enabled."""
+
+        if self.builder.config.slide_footer:
+            self.body.append(
+                '\n<div class="slide-footer">%s</div>\n' % (
+                    self.builder.config.slide_footer,
+                ),
+            )
+
     def visit_slide(self, node):
 
         from hieroglyph import builder
@@ -121,6 +131,7 @@ class BaseSlideTranslator(HTMLTranslator):
             # mark the slide closed
             node.closed = True
 
+            self._add_slide_footer(self.section_count)
             self._add_slide_number(self.section_count)
             self.body.append(
                 '\n</%s>\n' % getattr(node, 'tag_name', 'article')

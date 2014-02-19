@@ -65,6 +65,16 @@ Slide Numbers
 
    If set to ``True``, slide numbers will be added to the HTML output.
 
+Slide Footer
+============
+
+.. confval:: slide_footer
+
+   Default: ``None``
+
+   Text that will be added to the bottom of every slide.
+
+
 Themes
 ======
 

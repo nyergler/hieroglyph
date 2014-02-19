@@ -1,0 +1,70 @@
+from __future__ import absolute_import
+
+from unittest import TestCase
+
+from bs4 import BeautifulSoup
+
+from hieroglyph.tests.util import with_sphinx
+from hieroglyph.tests import util
+
+
+class SlideFooterTests(TestCase):
+
+    @with_sphinx(
+        buildername='slides',
+        srcdir=util.test_root,
+        confoverrides={
+            'slide_footer': 'TEST FOOTER',
+        },
+    )
+    def test_footer_added_to_all_slides(self, sphinx_app):
+
+        sphinx_app.build()
+
+        slide_html = BeautifulSoup(
+            file(sphinx_app.builddir/'slides'/'index.html').read()
+        )
+        slides = slide_html.find_all('article', class_='slide')
+
+        # sanity check
+        self.assertEqual(
+            len(slides),
+            2,
+        )
+
+        for slide in slides:
+            self.assertTrue(
+                slide.find('div', class_='slide-footer',),
+            )
+
+            self.assertEqual(
+                slide.find('div', class_='slide-footer',).text,
+                sphinx_app.config.slide_footer,
+            )
+
+    @with_sphinx(
+        buildername='slides',
+        srcdir=util.test_root,
+        confoverrides={
+            'slide_footer': None,
+        },
+    )
+    def test_footer_not_added_when_not_configured(self, sphinx_app):
+
+        sphinx_app.build()
+
+        slide_html = BeautifulSoup(
+            file(sphinx_app.builddir/'slides'/'index.html').read()
+        )
+        slides = slide_html.find_all('article', class_='slide')
+
+        # sanity check
+        self.assertEqual(
+            len(slides),
+            2,
+        )
+
+        for slide in slides:
+            self.assertFalse(
+                slide.find('div', class_='slide-footer',),
+            )

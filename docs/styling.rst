@@ -13,6 +13,8 @@ Styling
   ``styling``).
 - The heading level is added as a class; ie, ``level-2``
 - Slides may be styled using a theme, or custom CSS.
+- You can enable :confval:`slide numbers <slide_numbers>` or a
+  :confval:`slide footer <slide_footer>` with configuration settings.
 
 Included Themes
 ---------------
