@@ -9,6 +9,8 @@ News
 * Revert "Javascript loading is now deferred until the end of the
   document." This caused issues with content in ifnotslides blocks.
   (Issue #33)
+* Fixed an issue with path mangling for generated images (ie, from
+  blockdiag).
 * Added support for ``slide_footer`` (Issue #44)
 
 0.6
