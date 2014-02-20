@@ -2,14 +2,11 @@ import os.path
 import re
 from unittest import TestCase
 
-import docutils.frontend
-import docutils.parsers.rst
-
 from hieroglyph.tests.util import with_sphinx
 from hieroglyph.tests import util
 
 
-class PathFixingtests(TestCase):
+class PathFixingTests(TestCase):
 
     @with_sphinx(
         buildername='slides',
