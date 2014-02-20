@@ -41,6 +41,13 @@ div.figure p.caption {
     font-size: 66%;
 }
 
+.slide-no {
+    position: absolute;
+    bottom: 1ex;
+    left: 1em;
+    font-size: 66%;
+}
+
 div.admonition.note {
     visibility: hidden;
     display: none;
