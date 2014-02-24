@@ -51,7 +51,7 @@ def setup(app):
     app.add_directive('ifslides', directives.IfBuildingSlides)
     app.add_directive('notslides', directives.IfBuildingSlides)
     app.add_directive('slides', directives.IfBuildingSlides)
-    app.connect('doctree-resolved', directives.process_slidecond_nodes)
+    app.add_transform(directives.TransformSlideConditions)
 
     app.add_node(directives.slideconf,
                  html=(directives.raiseSkip, None),

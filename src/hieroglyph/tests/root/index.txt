@@ -4,6 +4,25 @@
 
 This is the title slide
 
+.. contents::
+   :local:
+
+.. ifslides::
+
+   SLIDES
+
+   Slide 3
+   =======
+
+.. ifnotslides::
+
+   Heading 3
+   =========
+
+   OTHERBUILDERS
+
+   Hello, World
+
 Another Slide
 =============
 

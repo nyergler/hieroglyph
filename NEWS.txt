@@ -12,6 +12,9 @@ News
 * Fixed an issue with path mangling for generated images (ie, from
   blockdiag).
 * Added support for ``slide_footer`` (Issue #44)
+* Converted slide condition directive processing to use Docutils
+  transforms. This allows section headings to appear in tables of
+  contents correctly. (Issue #25)
 
 0.6
 ---

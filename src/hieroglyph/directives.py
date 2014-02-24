@@ -7,6 +7,7 @@ from docutils.parsers.rst.directives import (
     admonitions,
 )
 from docutils.parsers.rst.roles import set_classes
+from docutils.transforms import Transform
 
 
 def raiseSkip(self, node):
@@ -48,21 +49,26 @@ class IfBuildingSlides(Directive):
         return [node]
 
 
-def process_slidecond_nodes(app, doctree, docname):
+class TransformSlideConditions(Transform):
 
-    from hieroglyph import builder
+    default_priority = 550
 
-    is_slides = builder.building_slides(app)
+    def apply(self, *args, **kwargs):
 
-    # this is a slide builder, remove notslides nodes
-    for node in doctree.traverse(if_slides):
+        app = self.document.settings.env.app
+        from hieroglyph import builder
 
-        keep_content = is_slides == node.attributes.get('ifslides', False)
+        is_slides = builder.building_slides(app)
 
-        if keep_content:
-            node.replace_self(node.children)
-        else:
-            node.replace_self([])
+        # this is a slide builder, remove notslides nodes
+        for node in self.document.traverse(if_slides):
+
+            keep_content = is_slides == node.attributes.get('ifslides', False)
+
+            if keep_content:
+                node.replace_self(node.children)
+            else:
+                node.replace_self([])
 
 
 class slideconf(nodes.Element):

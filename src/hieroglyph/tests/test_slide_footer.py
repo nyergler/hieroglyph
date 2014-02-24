@@ -29,7 +29,7 @@ class SlideFooterTests(TestCase):
         # sanity check
         self.assertEqual(
             len(slides),
-            2,
+            3,
         )
 
         for slide in slides:
@@ -61,7 +61,7 @@ class SlideFooterTests(TestCase):
         # sanity check
         self.assertEqual(
             len(slides),
-            2,
+            3,
         )
 
         for slide in slides:

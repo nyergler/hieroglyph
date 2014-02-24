@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+from bs4 import BeautifulSoup
+
 import docutils.frontend
 import docutils.parsers.rst
 import docutils.utils
@@ -164,3 +166,52 @@ Another Paragraph
             document[1].tagname,
             'paragraph',
         )
+
+
+class TestSlideConditions(TestCase):
+
+    @with_sphinx(
+        buildername='html',
+        srcdir=util.test_root,
+    )
+    def test_slide_content_removed_when_building_html(self, sphinx_app):
+
+        sphinx_app.build()
+
+        with open(sphinx_app.builddir/'html'/'index.html') as html_file:
+            html = html_file.read()
+
+            self.assertIn('OTHERBUILDERS', html)
+            self.assertNotIn('SLIDES', html)
+
+    @with_sphinx(
+        buildername='slides',
+        srcdir=util.test_root,
+    )
+    def test_notslide_content_removed_when_building_slides(self, sphinx_app):
+
+        sphinx_app.build()
+
+        with open(sphinx_app.builddir/'slides'/'index.html') as html_file:
+            html = html_file.read()
+
+            self.assertIn('SLIDES', html)
+            self.assertNotIn('OTHERBUILDERS', html)
+
+    @with_sphinx(
+        buildername='html',
+        srcdir=util.test_root,
+    )
+    def test_sections_in_cond_nodes_appear_in_toc(self, sphinx_app):
+        sphinx_app.build()
+
+        with open(sphinx_app.builddir/'html'/'index.html') as html_file:
+            tree = BeautifulSoup(html_file.read())
+            contents = tree.find(
+                'div',
+                attrs=dict(id='contents'),
+            )
+            self.assertEqual(
+                len(contents.find_all('li')),
+                2,
+            )
