@@ -83,11 +83,13 @@ class NextSlideDirective(Directive):
     required_arguments = 0
     optional_arguments = 1
     final_argument_whitespace = True
-    option_spec = {}
+    option_spec = {
+        'increment': directives.flag,
+    }
 
     def run(self):
 
-        node = nextslide()
+        node = nextslide(**self.options)
         node.args = self.arguments
         node.document = self.state.document
         set_source_info(self, node)
@@ -109,24 +111,38 @@ class TransformNextSlides(Transform):
         for node in self.document.traverse(nextslide):
             self.visit_nextslide(node, is_slides)
 
-    def _make_title_node(self, node):
+    def _make_title_node(self, node, increment=True):
         """Generate a new title node for ``node``.
 
-        The title will use the node's parent's title.
+        ``node`` is a ``nextslide`` node. The title will use the node's
+        parent's title, or the title specified as an argument.
 
         """
 
         parent_title_node = node.parent.next_node(nodes.title)
+        nextslide_info = getattr(
+            parent_title_node, 'nextslide_info',
+            (parent_title_node.astext(), 1),
+        )
+        nextslide_info = (
+            nextslide_info[0],
+            nextslide_info[1] + 1,
+        )
 
         if node.args:
             title_text = node.args[0]
+        elif 'increment' in node.attributes:
+            # autogenerating titles;
+            title_text = '%s (%d)' % nextslide_info
         else:
-            title_text = parent_title_node.astext()
+            title_text = nextslide_info[0]
 
-        return nodes.title(
+        new_title = nodes.title(
             '',
             title_text,
         )
+        new_title.nextslide_info = nextslide_info
+        return new_title
 
     def visit_nextslide(self, node, building_slides):
 
