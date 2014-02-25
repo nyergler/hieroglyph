@@ -194,8 +194,8 @@ def process_slideconf_nodes(app, doctree, docname):
     # if autoslides is disabled and we're building slides,
     # replace the document tree with only explicit slide nodes
     if (is_slides and
-            not slideconf.get_conf(app.builder, doctree)['autoslides']):
-
+        not slideconf.get_conf(
+            app.builder, doctree)['autoslides']):
         filter_doctree_for_slides(doctree)
 
 
