@@ -15,6 +15,9 @@ News
 * Converted slide condition directive processing to use Docutils
   transforms. This allows section headings to appear in tables of
   contents correctly. (Issue #25)
+* Added ``nextslide`` directive for splitting sections.
+  (Issue #46)
+
 
 0.6
 ---

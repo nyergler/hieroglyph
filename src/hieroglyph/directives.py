@@ -71,6 +71,92 @@ class TransformSlideConditions(Transform):
                 node.replace_self([])
 
 
+class nextslide(nodes.Element):
+
+    def __repr__(self):
+        return 'nextslide: %s' % self.args
+
+
+class NextSlideDirective(Directive):
+
+    has_content = False
+    required_arguments = 0
+    optional_arguments = 1
+    final_argument_whitespace = True
+    option_spec = {}
+
+    def run(self):
+
+        node = nextslide()
+        node.args = self.arguments
+        node.document = self.state.document
+        set_source_info(self, node)
+
+        return [node]
+
+
+class TransformNextSlides(Transform):
+
+    default_priority = 550
+
+    def apply(self, *args, **kwargs):
+
+        app = self.document.settings.env.app
+        from hieroglyph import builder
+
+        is_slides = builder.building_slides(app)
+
+        for node in self.document.traverse(nextslide):
+            self.visit_nextslide(node, is_slides)
+
+    def _make_title_node(self, node):
+        """Generate a new title node for ``node``.
+
+        The title will use the node's parent's title.
+
+        """
+
+        parent_title_node = node.parent.next_node(nodes.title)
+
+        if node.args:
+            title_text = node.args[0]
+        else:
+            title_text = parent_title_node.astext()
+
+        return nodes.title(
+            '',
+            title_text,
+        )
+
+    def visit_nextslide(self, node, building_slides):
+
+        index = node.parent.index(node)
+
+        if (not building_slides or
+                not node.parent.children[index+1:]):
+            node.replace_self([])
+
+        # figure out where to hoist the subsequent content to
+        parent = node.parent
+        grandparent = node.parent.parent
+        insertion_point = grandparent.index(node.parent) + 1
+
+        # truncate siblings, storing a reference to the rest of the
+        # content
+        new_children = parent.children[index+1:]
+        parent.children = parent.children[:index+1]
+
+        # create the next section
+        new_section = nodes.section()
+        new_section += self._make_title_node(node)
+        new_section.extend(new_children)
+        self.document.set_id(new_section)
+
+        # attach the section and delete the nextslide node
+        grandparent.insert(insertion_point, new_section)
+        del node.parent[index]
+
+
 class slideconf(nodes.Element):
 
     def apply(self, builder):

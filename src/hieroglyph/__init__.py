@@ -67,5 +67,9 @@ def setup(app):
     app.add_directive('slide', directives.SlideDirective)
     app.connect('doctree-resolved', directives.process_slide_nodes)
 
+    app.add_node(directives.nextslide)
+    app.add_directive('nextslide', directives.NextSlideDirective)
+    app.add_transform(directives.TransformNextSlides)
+
     app.connect('builder-inited', html.inspect_config)
     app.connect('html-page-context', html.add_link)
