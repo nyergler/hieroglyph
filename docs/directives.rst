@@ -1,6 +1,6 @@
-============
- Directives
-============
+==============================
+ Restructured Text Directives
+==============================
 
 .. rst:directive:: .. ifslides::
 
