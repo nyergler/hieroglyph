@@ -28,6 +28,7 @@ Hieroglyph is an extension for `Sphinx`_ which builds HTML slides from
       config
       directives
       builders
+      developing
       ref-index
       releases
 
