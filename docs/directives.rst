@@ -91,3 +91,26 @@
         * Microwaving metal
         * Leaving the gas on
         * Using a frayed electrical cord
+
+.. rst:directive:: .. nextslide:: title
+
+   Splits the content at the directive when building slides. An option
+   title may be specified as an argument. If not specified, the title
+   of the current section will be copied.
+
+   Consider the following example::
+
+     Section Title
+     =============
+
+     some content
+
+     .. nextslide::
+
+     additional content
+
+   When building slides, this will generate two slides with the name
+   **Section Title**.
+
+   The ``increment`` argument, if present, will append an index to the
+   slide title.

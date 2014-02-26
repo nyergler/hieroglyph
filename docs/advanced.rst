@@ -26,6 +26,53 @@ For example::
 
      This Slide would appear as a level two slide.
 
+Splitting Sections with the ``nextslide`` directive
+===================================================
+
+In addition to section headings and the :rst:dir:`slide` directive,
+text sections may be split into multiple slides using the
+:rst:dir:`nextslide` directive.
+
+When building slides, :rst:dir:`nextslide` will split the content at
+the point of the directive and copy the section title.
+
+Consider the following example::
+
+    Section Title
+    =============
+
+    some content
+
+    .. nextslide::
+
+    additional content
+
+When building slides, this will generate two slides with the name
+**Section Title**.
+
+A different title may be specified as an argument to
+:rst:dir:`nextslide`.
+
+The ``increment`` argument will add an index to the subsequent slide
+titles. For example::
+
+    Section Title
+    =============
+
+    some content
+
+    .. nextslide::
+       :increment
+
+    additional content
+
+    .. nextslide::
+       :increment
+
+    conclusion
+
+Will generate three slides, with the titles **Section Title**,
+**Section Title (2)**, and **Section Title (3)**, respectively.
 
 .. _interlinking-html:
 
