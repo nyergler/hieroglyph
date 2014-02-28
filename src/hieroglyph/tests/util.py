@@ -31,6 +31,7 @@ except ImportError:
 
 import docutils.frontend
 import docutils.parsers.rst
+import docutils.writers.html4css1
 import docutils.utils
 
 from sphinx import application
@@ -281,7 +282,10 @@ def make_document(source_name, contents):
     document = docutils.utils.new_document(
         source_name,
         docutils.frontend.OptionParser(
-            components=(docutils.parsers.rst.Parser,)
+            components=(
+                docutils.parsers.rst.Parser,
+                docutils.writers.html4css1.Writer,
+            ),
         ).get_default_values(),
     )
 
