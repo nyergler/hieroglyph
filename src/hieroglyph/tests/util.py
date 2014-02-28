@@ -10,7 +10,7 @@
     because the Sphinx test directory isn't included with the
     installable package.
 
-    The ``with_sphinx`` function has been improved to use a kward
+    The ``with_sphinx`` function has been improved to use a kwarg
     instead of the first positional argument for the Sphinx
     Application, which allows it to work with TestCase methods.
 
@@ -28,6 +28,10 @@ try:
 except ImportError:
     # functools is new in 2.4
     wraps = lambda f: (lambda w: w)
+
+import docutils.frontend
+import docutils.parsers.rst
+import docutils.utils
 
 from sphinx import application
 from sphinx.theming import Theme
@@ -268,3 +272,19 @@ def sprint(*args):
 _unicode_literals_re = re.compile(r'u(".*?")|u(\'.*?\')')
 def remove_unicode_literals(s):
     return _unicode_literals_re.sub(lambda x: x.group(1) or x.group(2), s)
+
+
+def make_document(source_name, contents):
+    """Parse ```contents``` into a docutils document."""
+
+    parser = docutils.parsers.rst.Parser()
+    document = docutils.utils.new_document(
+        source_name,
+        docutils.frontend.OptionParser(
+            components=(docutils.parsers.rst.Parser,)
+        ).get_default_values(),
+    )
+
+    parser.parse(contents, document)
+
+    return document

@@ -2,31 +2,16 @@ from unittest import TestCase
 
 from bs4 import BeautifulSoup
 
-import docutils.frontend
-import docutils.parsers.rst
-import docutils.utils
-
-from hieroglyph.tests.util import with_sphinx
+from hieroglyph.tests.util import (
+    make_document,
+    with_sphinx,
+)
 from hieroglyph.tests import util
 
 from hieroglyph import directives
 
 
 class SlideConfTests(TestCase):
-
-    def _make_document(self, source, contents):
-
-        parser = docutils.parsers.rst.Parser()
-        document = docutils.utils.new_document(
-            source,
-            docutils.frontend.OptionParser(
-                components=(docutils.parsers.rst.Parser,)
-            ).get_default_values(),
-        )
-
-        parser.parse(contents, document)
-
-        return document
 
     @with_sphinx()
     def test_filter_doctree(self, sphinx_app):
@@ -52,7 +37,7 @@ Second Level
 
 """
 
-        document = self._make_document(
+        document = make_document(
             'slideconf_test',
             test_content,
         )
@@ -79,20 +64,6 @@ Second Level
 
 class SlideTests(TestCase):
 
-    def _make_document(self, source, contents):
-
-        parser = docutils.parsers.rst.Parser()
-        document = docutils.utils.new_document(
-            source,
-            docutils.frontend.OptionParser(
-                components=(docutils.parsers.rst.Parser,)
-            ).get_default_values(),
-        )
-
-        parser.parse(contents, document)
-
-        return document
-
     def test_slide(self):
 
         test_content = """
@@ -101,7 +72,7 @@ class SlideTests(TestCase):
    Blarf
 """
 
-        document = self._make_document(
+        document = make_document(
             'slide_directive_test',
             test_content,
         )
@@ -124,7 +95,7 @@ class SlideTests(TestCase):
 Another Paragraph
 """
 
-        document = self._make_document(
+        document = make_document(
             'slide_directive_test',
             test_content,
         )
@@ -151,7 +122,7 @@ Another Paragraph
 Another Paragraph
 """
 
-        document = self._make_document(
+        document = make_document(
             'slide_directive_test',
             test_content,
         )
