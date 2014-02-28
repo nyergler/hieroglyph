@@ -109,8 +109,8 @@ class BaseSlideTranslator(HTMLTranslator):
 
             node.closed = False
 
-            classes = []
-            if not node.get('classes'):
+            classes = node.get('classes')
+            if not classes:
                 classes = slide_conf['slide_classes']
 
             self.body.append(

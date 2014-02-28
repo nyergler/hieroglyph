@@ -17,6 +17,7 @@ News
   contents correctly. (Issue #25)
 * Added ``nextslide`` directive for splitting sections.
   (Issue #46)
+* Section classes are now added to the generated slides (Issue #50).
 
 
 0.6
