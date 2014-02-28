@@ -2,7 +2,7 @@
  Hieroglyph
 ============
 
-.. image:: https://travis-ci.org/nyergler/hieroglyph.png
+.. image:: https://api.travis-ci.org/nyergler/hieroglyph.png?branch=master
    :target: https://travis-ci.org/nyergler/hieroglyph
 
 .. image:: https://coveralls.io/repos/nyergler/hieroglyph/badge.png?branch=master
