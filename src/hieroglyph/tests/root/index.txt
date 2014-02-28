@@ -27,3 +27,9 @@ Another Slide
 =============
 
 A Second slide
+
+.. toctree::
+
+   split_slides
+   split_slide_title_override
+   split_slides_increment

@@ -1,8 +1,6 @@
-.. _getting-started:
-
-=================================
- Getting Started with Hieroglyph
-=================================
+================================
+ Another Day, Another Blockdiag
+================================
 
 .. blockdiag::
 

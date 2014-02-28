@@ -10,9 +10,6 @@
 .. slide:: Getting Started with Hieroglyph
    :level: 1
 
-   .. figure:: /_static/hieroglyphs.jpg
-      :class: fill
-
-      CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
+   CC BY-SA http://www.flickr.com/photos/tamburix/2900909093/
 
 TESTING_SENTINEL

@@ -140,7 +140,7 @@ class TestApp(application.Sphinx):
     def __init__(self, srcdir=None, confdir=None, outdir=None, doctreedir=None,
                  buildername='html', confoverrides=None,
                  status=None, warning=None, freshenv=None,
-                 warningiserror=None, tags=None,
+                 warningiserror=True, tags=None,
                  confname='conf.py', cleanenv=False):
 
         application.CONFIG_FILENAME = confname
