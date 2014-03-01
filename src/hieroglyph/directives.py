@@ -58,17 +58,23 @@ class TransformSlideConditions(Transform):
         app = self.document.settings.env.app
         from hieroglyph import builder
 
+        need_reread = False
         is_slides = builder.building_slides(app)
 
         # this is a slide builder, remove notslides nodes
         for node in self.document.traverse(if_slides):
 
+            need_reread = True
             keep_content = is_slides == node.attributes.get('ifslides', False)
 
             if keep_content:
                 node.replace_self(node.children)
             else:
                 node.replace_self([])
+
+        if need_reread:
+            self.document.settings.env.note_reread()
+
 
 
 class nextslide(nodes.Element):
@@ -107,9 +113,14 @@ class TransformNextSlides(Transform):
         from hieroglyph import builder
 
         is_slides = builder.building_slides(app)
+        need_reread = False
 
         for node in self.document.traverse(nextslide):
+            need_reread = True
             self.visit_nextslide(node, is_slides)
+
+        if need_reread:
+            self.document.settings.env.note_reread()
 
     def _make_title_node(self, node, increment=True):
         """Generate a new title node for ``node``.

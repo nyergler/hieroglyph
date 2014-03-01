@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from hieroglyph.tests.util import (
     make_document,
     with_sphinx,
+    TestApp,
 )
 from hieroglyph.tests import util
 
@@ -186,6 +187,42 @@ class TestSlideConditions(TestCase):
                 len(contents.find_all('li')),
                 2,
             )
+
+    def test_builder_collision(self):
+
+        html_sphinx = TestApp(
+            buildername='slides',
+            srcdir=util.test_root,
+        )
+        slides_sphinx = TestApp(
+            buildername='html',
+            srcdir=util.test_root,
+        )
+        self.assertEqual(html_sphinx.doctreedir, slides_sphinx.doctreedir)
+
+        try:
+            html_sphinx.build()
+            slides_sphinx.build()
+
+            with open(html_sphinx.builddir/'html'/'split_slides.html') as html_file:
+                with open(slides_sphinx.builddir/'slides'/'split_slides.html') as slide_file:
+
+                    html = BeautifulSoup(html_file.read())
+                    slides = BeautifulSoup(slide_file.read())
+
+                    self.assertEqual(
+                        len(html.find_all('h2')),
+                        1,
+                    )
+                    self.assertEqual(
+                        len(slides.find_all('h2')),
+                        3,
+                    )
+
+        finally:
+            html_sphinx.cleanup()
+            slides_sphinx.cleanup()
+
 
 
 class NextSlideTests(TestCase):

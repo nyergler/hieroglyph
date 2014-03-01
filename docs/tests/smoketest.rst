@@ -115,6 +115,21 @@ Incremental Slides
 - To incrementally show its contents
 - Remember that *Sphinx* maps the basic ``class`` directive to ``rst-class``
 
+Splitting Sections
+------------------
+
+The ``nextslide`` directive will split a single section into multiple
+slides.
+
+.. nextslide::
+   :increment:
+
+The ``increment`` option tells Hieroglyph to add ``(2)`` (and
+subsequent indices) to the title.
+
+.. only:: slides
+
+   Only on slides, please
 
 .. slide:: The ``slide`` Directive
    :level: 2

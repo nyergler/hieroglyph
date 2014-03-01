@@ -22,6 +22,7 @@ def building_slides(app):
 
 class AbstractSlideBuilder(object):
 
+    format = 'slides'
     add_permalinks = False
 
     def init_translator_class(self):
