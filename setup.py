@@ -44,5 +44,6 @@ setup(name='hieroglyph',
       tests_require=[
           'sphinxcontrib-blockdiag',
           'beautifulsoup4',
+          'mock',
       ],
 )

@@ -110,17 +110,27 @@ class TransformNextSlides(Transform):
     def apply(self, *args, **kwargs):
 
         app = self.document.settings.env.app
+
         from hieroglyph import builder
 
         is_slides = builder.building_slides(app)
+
+        return self.apply_to_document(
+            self.document,
+            env=self.document.settings.env,
+            building_slides=is_slides,
+        )
+
+    def apply_to_document(self, document, env, building_slides):
+
         need_reread = False
 
-        for node in self.document.traverse(nextslide):
+        for node in document.traverse(nextslide):
             need_reread = True
-            self.visit_nextslide(node, is_slides)
+            self.visit_nextslide(node, building_slides)
 
         if need_reread:
-            self.document.settings.env.note_reread()
+            env.note_reread()
 
     def _make_title_node(self, node, increment=True):
         """Generate a new title node for ``node``.
@@ -162,6 +172,9 @@ class TransformNextSlides(Transform):
         if (not building_slides or
                 not node.parent.children[index+1:]):
             node.replace_self([])
+
+            # nothing else to do
+            return
 
         # figure out where to hoist the subsequent content to
         parent = node.parent

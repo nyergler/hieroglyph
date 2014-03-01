@@ -1,6 +1,9 @@
 from unittest import TestCase
 
 from bs4 import BeautifulSoup
+from mock import MagicMock
+
+from docutils import nodes
 
 from hieroglyph.tests.util import (
     make_document,
@@ -9,6 +12,7 @@ from hieroglyph.tests.util import (
 )
 from hieroglyph.tests import util
 
+from hieroglyph.builder import SlideBuilder
 from hieroglyph import directives
 
 
@@ -224,7 +228,6 @@ class TestSlideConditions(TestCase):
             slides_sphinx.cleanup()
 
 
-
 class NextSlideTests(TestCase):
 
     @with_sphinx(
@@ -310,3 +313,46 @@ class NextSlideTests(TestCase):
                     title,
                     '%s (%d)' % (first_title, idx+2),
                 )
+
+
+class TransformNextSlideTests(TestCase):
+
+    def setUp(self):
+
+        self.app = TestApp(buildername='slides')
+        self.builder = SlideBuilder(self.app)
+        self.document = make_document(
+            'testing',
+            """\
+Slide Title
+-----------
+
+* Bullet 1
+* Bullet 2
+
+.. nextslide::
+
+Additional Text
+
+""",
+        )
+        self.builder.init_templates()
+
+    def test_visit_slide_creates_new_slide_data(self):
+
+        self.assertEqual(
+            len(self.document.traverse(nodes.section)),
+            1,
+        )
+
+        transformer = directives.TransformNextSlides(self.document)
+        transformer.apply_to_document(
+            self.document,
+            env=MagicMock(),
+            building_slides=False,
+        )
+
+        self.assertEqual(
+            len(self.document.traverse(nodes.section)),
+            1,
+        )
