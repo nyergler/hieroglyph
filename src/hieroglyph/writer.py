@@ -47,6 +47,36 @@ def depart_title(self, node):
     BaseTranslator.depart_title(self, node)
 
 
+class SlideData(object):
+
+    def __init__(self, translator, **kwargs):
+
+        self._translator = translator
+
+        self.level = 0
+        self.title = ''
+        self.content = ''
+        self.classes = []
+        self.slide_number = 0
+        self.id = ''
+
+        for name, value in kwargs.items():
+            setattr(self, name, value)
+
+    def get_slide_context(self):
+        """Return the context dict for rendering this slide."""
+
+        return {
+            'title': self.title,
+            'level': self.level,
+            'content': self.content,
+            'classes': self.classes,
+            'slide_number': self.slide_number,
+            'config': self._translator.builder.config,
+            'id': self.id,
+        }
+
+
 class BaseSlideTranslator(HTMLTranslator):
 
     def __init__(self, *args, **kwargs):
@@ -54,6 +84,20 @@ class BaseSlideTranslator(HTMLTranslator):
         HTMLTranslator.__init__(self, *args, **kwargs)
 
         self.section_count = 0
+        self.body_stack = []
+        self.current_slide = None
+        self.slide_data = []
+
+    def push_body(self):
+        """Push the current body onto the stack and create an empty one."""
+
+        self.body_stack.append(self.body)
+        self.body = []
+
+    def pop_body(self):
+        """Replace the current body with the last one pushed to the stack."""
+
+        self.body = self.body_stack.pop()
 
     def visit_slideconf(self, node):
         pass
@@ -93,6 +137,7 @@ class BaseSlideTranslator(HTMLTranslator):
             )
             node.tag_name = 'div'
         else:
+
             slide_conf = slideconf.get_conf(self.builder, node.document)
             if (builder.building_slides(self.builder.app) and
                     slide_conf['autoslides'] and
@@ -113,16 +158,32 @@ class BaseSlideTranslator(HTMLTranslator):
             if not classes:
                 classes = slide_conf['slide_classes']
 
-            self.body.append(
-                self.starttag(
-                    node, 'article',
-                    CLASS='%s slide level-%s' % (
-                        ' '.join(classes),
-                        slide_level,
-                    ),
-                )
-            )
+            # self.body.append(
+            #     self.starttag(
+            #         node, 'article',
+            #         CLASS='%s slide level-%s' % (
+            #             ' '.join(classes),
+            #             slide_level,
+            #         ),
+            #     )
+            # )
             node.tag_name = 'article'
+
+            slide_id = node.get('ids')
+            if slide_id:
+                slide_id = slide_id[0]
+            else:
+                slide_id = ''
+
+            assert self.current_slide is None
+            self.current_slide = SlideData(
+                self,
+                id=slide_id,
+                level=slide_level,
+                classes=classes,
+                slide_number=self.section_count,
+            )
+            self.push_body()
 
     def depart_slide(self, node):
 
@@ -131,13 +192,25 @@ class BaseSlideTranslator(HTMLTranslator):
             # mark the slide closed
             node.closed = True
 
-            self._add_slide_footer(self.section_count)
-            self._add_slide_number(self.section_count)
-            self.body.append(
-                '\n</%s>\n' % getattr(node, 'tag_name', 'article')
+            # self._add_slide_footer(self.section_count)
+            # self._add_slide_number(self.section_count)
+            # self.body.append(
+            #     '\n</%s>\n' % getattr(node, 'tag_name', 'article')
+            # )
+
+            self.current_slide.content = ''.join(self.body)
+            self.pop_body()
+            rendered_slide = self.builder.templates.render(
+                'slide.html',
+                self.current_slide.get_slide_context(),
             )
+            self.body.append(rendered_slide)
+            self.slide_data.append(self.current_slide)
+            self.current_slide = None
 
     def visit_title(self, node):
+
+        self.push_body()
 
         if (isinstance(node.parent, slide) or
                 node.parent.attributes.get('include-as-slide', False)):
@@ -148,12 +221,28 @@ class BaseSlideTranslator(HTMLTranslator):
                 slide_level + self.initial_header_level - 1,
                 1,
             )
+            self.current_slide.title_level = level
 
-            tag = 'h%s' % level
-            self.body.append(self.starttag(node, tag, ''))
-            self.context.append('</%s>\n' % tag)
+            # tag = 'h%s' % level
+            # self.body.append(self.starttag(node, tag, ''))
+            # self.context.append('</%s>\n' % tag)
+
+        if self.current_slide:
+            self.current_slide.title = node.astext().strip()
         else:
             HTMLTranslator.visit_title(self, node)
+
+
+    def depart_title(self, node):
+
+        if self.current_slide:
+            self.current_slide.title = ''.join(self.body)
+            self.pop_body()
+        else:
+            HTMLTranslator.depart_title(self, node)
+            title = ''.join(self.body)
+            self.pop_body()
+            self.body.append(title)
 
 
 class SlideTranslator(BaseSlideTranslator):
@@ -197,4 +286,4 @@ class SlideTranslator(BaseSlideTranslator):
                         self.builder.app.config.slide_html_slide_link_symbol,
                     ))
 
-        HTMLTranslator.depart_title(self, node)
+        BaseSlideTranslator.depart_title(self, node)
