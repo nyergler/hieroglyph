@@ -50,6 +50,16 @@ existing configuration::
 `Read the documentation`_ for all the details about using,
 configuring, and extending Hieroglyph.
 
+Connect
+=======
+
+You can connect with other Hieroglyph users and the developers via the
+`hieroglyph-users`_ email list (Google Groups). A `Gmane archive`_ is
+also available.
+
+.. _`hieroglyph-users`: http://groups.google.com/d/forum/hieroglyph-users
+.. _`Gmane archive`: http://dir.gmane.org/gmane.comp.python.hieroglyph.users
+
 License
 =======
 

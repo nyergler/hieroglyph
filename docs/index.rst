@@ -19,6 +19,13 @@ Hieroglyph is an extension for `Sphinx`_ which builds HTML slides from
    files, Hieroglyph can help. Check out :ref:`getting-started` for a
    walk through using Hieroglyph.
 
+   You can connect with other Hieroglyph users and the developers via
+   the `hieroglyph-users`_ email list. A `Gmane archive`_ is also
+   available.
+
+   .. _`hieroglyph-users`: http://groups.google.com/d/forum/hieroglyph-users
+   .. _`Gmane archive`: http://dir.gmane.org/gmane.comp.python.hieroglyph.users
+
    .. toctree::
       :maxdepth: 2
 
