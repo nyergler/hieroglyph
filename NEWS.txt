@@ -4,7 +4,7 @@ News
 0.6.5
 -----
 
-*Release date: UNRELEASED*
+*Release date: 1 March 2014*
 
 * Revert "Javascript loading is now deferred until the end of the
   document." This caused issues with content in ifnotslides blocks.
@@ -18,7 +18,6 @@ News
 * Added ``nextslide`` directive for splitting sections.
   (Issue #46)
 * Section classes are now added to the generated slides (Issue #50).
-
 
 0.6
 ---
