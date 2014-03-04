@@ -232,3 +232,40 @@ Slide ``Title``
             'Slide <tt class="docutils literal">'
             '<span class="pre">Title</span></tt>',
         )
+
+    def test_non_section_titles_rendered_normally(self):
+        document = make_document(
+            'testing',
+            """\
+Section Title
+-------------
+
+Some Text
+
+.. note:: Take note!
+
+Another paragraph
+
+""",
+        )
+        translator = SlideTranslator(
+            self.builder,
+            document,
+        )
+
+        document.walkabout(translator)
+
+        self.assertEqual(
+            translator.body,
+            [
+                u'\n<article class="slide level-1" id="section-title">\n\n'
+                '<h1>Section Title</h1>\n\n'
+                '<p>Some Text</p>\n'
+                '<div class="admonition note">\n'
+                '<p class="first admonition-title">Note</p>\n'
+                '<p class="last">Take note!</p>\n'
+                '</div>\n'
+                '<p>Another paragraph</p>'
+                '\n\n\n\n\n</article>',
+            ],
+        )
