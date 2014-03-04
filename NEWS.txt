@@ -6,6 +6,8 @@ News
 
 * Release date: UNRELEASED*
 
+* Themes now use a template fragment for rendering individual slides.
+  (Issue #49)
 
 0.6.5
 -----
