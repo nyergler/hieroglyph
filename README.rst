@@ -58,7 +58,7 @@ You can connect with other Hieroglyph users and the developers via the
 also available.
 
 .. _`hieroglyph-users`: http://groups.google.com/d/forum/hieroglyph-users
-.. _`Gmane archive`: http://dir.gmane.org/gmane.comp.python.hieroglyph.users
+.. _`Gmane archive`: http://dir.gmane.org/gmane.comp.python.hieroglyph.user
 
 License
 =======
