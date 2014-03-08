@@ -211,6 +211,19 @@ should begin with::
 
 ``slides.css`` will be supplied by the base theme (``slides``).
 
+Hieroglyph also allows specification of extra pages to build in the
+theme configuration. Any key in ``options`` that begins with
+``extra_pages_`` specifies an additional page to be built. The base
+``slides`` theme specifies the console in this manner::
+
+  [options]
+  custom_css =
+  custom_js =
+  extra_pages_console = console.html
+
+The value of the key (``console.html`` in this case) specifies the
+template to use to render the page.
+
 See the Sphinx documentation for `themes`_ for more information.
 
 .. _`themes`: http://sphinx.pocoo.org/theming.html

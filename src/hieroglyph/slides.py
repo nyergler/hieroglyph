@@ -1,7 +1,5 @@
 from hieroglyph.builder import building_slides
 
-EXTRA_PAGES = ('console',)
-
 
 def __fix_context(context):
     """Return a new context dict based on original context.
@@ -20,37 +18,19 @@ def __fix_context(context):
     return context
 
 
-def slide_context(app, pagename, templatename, context, doctree):
-    """Update the context when building Slides."""
+def get_extra_pages(app):
+    """
 
-    if building_slides(app):
+    """
 
-        # make a copy so we don't pollute the shared context
-        context = __fix_context(context)
+    result = []
+    context = app.builder.globalcontext
 
-        if pagename not in EXTRA_PAGES:
+    for context_key in context:
+        if context_key.startswith('theme_extra_pages_'):
+            page_name = context_key.split('theme_extra_pages_')[-1]
+            result.append(
+                (page_name, context, context[context_key],)
+            )
 
-            context['script_files'].append('_static/common.js')
-            context['script_files'].append('_static/slides.js')
-            context['script_files'].append('_static/sync.js')
-            context['script_files'].append('_static/controller.js')
-            context['script_files'].append('_static/init.js')
-
-    return context
-
-def get_pages(app):
-
-    if building_slides(app):
-
-        # include the slide console
-        context = __fix_context(app.builder.globalcontext.copy())
-        context['css_files'].append('_static/console.css')
-        context['script_files'].append('_static/common.js')
-        context['script_files'].append('_static/console.js')
-        context['title'] = 'Presenter Console'
-
-        return [
-            ('console', context, 'console.html',),
-        ]
-
-    return []
+    return result
