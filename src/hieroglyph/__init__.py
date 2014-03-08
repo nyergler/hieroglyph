@@ -22,7 +22,6 @@ def setup(app):
     app.add_builder(builder.InlineSlideBuilder)
     app.add_builder(builder.DirectoryInlineSlideBuilder)
 
-    app.connect('html-page-context', slides.slide_context)
     app.connect('html-collect-pages', slides.get_pages)
 
     # core slide configuration
