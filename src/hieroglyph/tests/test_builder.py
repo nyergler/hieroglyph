@@ -1,6 +1,9 @@
 from unittest import TestCase
 
-from hieroglyph.tests.util import TestApp
+from hieroglyph.tests.util import (
+    with_sphinx,
+    TestApp,
+)
 import hieroglyph.builder
 
 
@@ -50,4 +53,24 @@ class SlideBuilderTests(TestCase):
         self.assertEqual(
             resolved_theme_options['custom_css'],
             'testing.css',
+        )
+
+    @with_sphinx(
+        buildername='slides',
+    )
+    def test_html_static_dir_contents_override_theme(self, sphinx_app):
+
+        self.assertIsInstance(
+            sphinx_app.builder,
+            hieroglyph.builder.AbstractSlideBuilder,
+        )
+
+        sphinx_app.build()
+
+        built_styles = open(sphinx_app.builddir/'slides'/'_static'/'styles.css').read()
+        static_styles = open(sphinx_app.srcdir/'_static'/'styles.css').read()
+
+        self.assertEqual(
+            built_styles,
+            static_styles,
         )

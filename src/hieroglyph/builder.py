@@ -76,7 +76,8 @@ class AbstractSlideBuilder(object):
         self.theme_options = themeoptions.copy()
         self.templates.init(self, self.theme)
 
-        self._additional_themes.append(self.theme)
+        if self.theme not in self._additional_themes:
+            self._additional_themes.append(self.theme)
 
     def pop_theme(self):
         """Disable the most recent theme, and restore its predecessor."""
@@ -144,7 +145,7 @@ class AbstractSlideBuilder(object):
         ctx = self.globalcontext.copy()
         ctx.update(self.indexer.context_for_searchtool())
 
-        for theme in self._additional_themes:
+        for theme in self._additional_themes[1:]:
 
             themeentries = [os.path.join(themepath, 'static')
                             for themepath in theme.get_dirchain()[::-1]]

@@ -8,6 +8,8 @@ News
 
 * Themes now use a template fragment for rendering individual slides.
   (Issue #49)
+* Bug fix: files in ``html_static_dir`` will now override theme files.
+  (Issue #54)
 
 0.6.5
 -----
