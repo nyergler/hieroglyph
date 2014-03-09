@@ -39,6 +39,12 @@ class AbstractSlideBuilder(object):
 
         return self.config.slide_theme, self.config.slide_theme_options
 
+    def get_theme_options(self):
+        """Return a dict of theme options, combining defaults and overrides."""
+
+        overrides = self.get_theme_config()[1]
+        return self.theme.get_options(overrides)
+
     def init_templates(self):
         Theme.init_themes(self.confdir,
                           self.get_builtin_theme_dirs() +
