@@ -10,6 +10,7 @@ News
   (Issue #49)
 * Bug fix: files in ``html_static_dir`` will now override theme files.
   (Issue #54)
+* Added ``slide_title`` configuration setting. (Issue #56)
 
 0.6.5
 -----

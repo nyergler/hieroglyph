@@ -32,6 +32,7 @@ extensions += [
     'hieroglyph',
 ]
 
+slide_title = '%(project_str)s'
 slide_theme = '%(slide_theme)s'
 slide_levels = 3
 

@@ -276,7 +276,7 @@ texinfo_documents = [
 #texinfo_show_urls = 'footnote'
 
 intersphinx_map = {
-    'sphinx': ('http://sphinx-doc.org/', 'objects.inv'),
+    'sphinx': ('http://sphinx-doc.org/', None),
 }
 
 googleanalytics_enabled = True

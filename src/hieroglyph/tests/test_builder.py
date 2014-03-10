@@ -74,3 +74,31 @@ class SlideBuilderTests(TestCase):
             built_styles,
             static_styles,
         )
+
+    def test_docstitle_uses_slidetitle(self):
+
+        app = TestApp(
+            confoverrides={
+                'slide_title': 'SLIDES TITLE',
+            },
+        )
+        builder = hieroglyph.builder.SlideBuilder(app)
+
+        builder.prepare_writing([])
+
+        self.assertEqual(
+            builder.globalcontext['docstitle'],
+            'SLIDES TITLE',
+        )
+
+    def test_docstitle_fallback_to_html_title(self):
+
+        app = TestApp()
+        builder = hieroglyph.builder.SlideBuilder(app)
+
+        builder.prepare_writing([])
+
+        self.assertEqual(
+            builder.globalcontext['docstitle'],
+            builder.config.html_title,
+        )

@@ -25,6 +25,7 @@ def setup(app):
     app.connect('html-collect-pages', slides.get_extra_pages)
 
     # core slide configuration
+    app.add_config_value('slide_title', None, 'html')
     app.add_config_value('slide_theme', 'slides', 'html')
     app.add_config_value('slide_levels', 3, 'html')
     app.add_config_value('slide_theme_options', {}, 'html')

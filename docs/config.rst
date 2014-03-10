@@ -23,6 +23,13 @@
 Basic Configuration
 ===================
 
+.. confval:: slide_title
+
+   Default: inherit from :confval:`html_title <sphinx:html_title>`
+
+   Sets the title of slide project generated. This title will be used
+   in the HTML title of the output.
+
 .. confval:: autoslides
 
    Default: ``True``

@@ -86,6 +86,14 @@ class AbstractSlideBuilder(object):
 
         self.templates.init(self, self.theme)
 
+    def prepare_writing(self, docnames):
+
+        super(AbstractSlideBuilder, self).prepare_writing(docnames)
+
+        # override items in the global context if needed
+        if self.config.slide_title:
+            self.globalcontext['docstitle'] = self.config.slide_title
+
     def get_doc_context(self, docname, body, metatags):
 
         context = super(AbstractSlideBuilder, self).get_doc_context(
