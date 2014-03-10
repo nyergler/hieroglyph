@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-import sys, os
+import os
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
@@ -18,7 +18,7 @@ setup(name='hieroglyph',
       version=version,
       description="",
       long_description=README + '\n\n' + NEWS,
-      classifiers = [
+      classifiers=[
         'License :: OSI Approved :: BSD License',
         'Topic :: Documentation',
         'Topic :: Text Processing',
@@ -31,7 +31,7 @@ setup(name='hieroglyph',
       url='https://github.com/nyergler/hieroglyph',
       license='BSD',
       packages=find_packages('src'),
-      package_dir = {'': 'src'},
+      package_dir={'': 'src'},
       include_package_data=True,
       zip_safe=False,
       install_requires=install_requires,
