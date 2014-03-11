@@ -1,5 +1,6 @@
 """Available slide building classes."""
 
+import json
 import os
 
 from docutils import nodes
@@ -53,7 +54,6 @@ class AbstractSlideBuilder(object):
         themename, themeoptions = self.get_theme_config()
 
         self.create_template_bridge()
-
         self._theme_stack = []
         self._additional_themes = []
 
@@ -75,6 +75,7 @@ class AbstractSlideBuilder(object):
         self.theme = Theme(themename)
         self.theme_options = themeoptions.copy()
         self.templates.init(self, self.theme)
+        self.templates.environment.filters['json'] = json.dumps
 
         if self.theme not in self._additional_themes:
             self._additional_themes.append(self.theme)
@@ -83,8 +84,6 @@ class AbstractSlideBuilder(object):
         """Disable the most recent theme, and restore its predecessor."""
 
         self.theme, self.theme_options = self._theme_stack.pop()
-
-        self.templates.init(self, self.theme)
 
     def prepare_writing(self, docnames):
 
