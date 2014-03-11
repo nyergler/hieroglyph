@@ -11,6 +11,8 @@ News
 * Bug fix: files in ``html_static_dir`` will now override theme files.
   (Issue #54)
 * Added ``slide_title`` configuration setting. (Issue #56)
+* Added ``slides2`` theme, based on updated Google HTML 5 slide
+  templates. (Issue #48)
 
 0.6.5
 -----

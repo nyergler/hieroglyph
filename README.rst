@@ -9,8 +9,8 @@
    :target: https://coveralls.io/r/nyergler/hieroglyph?branch=master
 
 
-**Hieroglyph** is an extension for `Sphinx`_ which builds HTML5 slides
-from ReStructured Text documents.
+**Hieroglyph** is an extension for `Sphinx`_ which builds HTML
+presentations from ReStructured Text documents.
 
 Installing
 ==========
@@ -67,9 +67,11 @@ License
 details.
 
 Included slide CSS and JavaScript originally based on `HTML 5 Slides`_
-licensed under the Apache Public License.
+and `io-2012-slides`_ projects licensed under the Apache Public
+License.
 
 .. _`Sphinx`: http://sphinx.pocoo.org/
 .. _`latest development version`: https://github.com/nyergler/hieroglyph/tarball/master#egg=hieroglyph-dev
 .. _`HTML 5 Slides`: http://code.google.com/p/html5slides/
-.. _`Read the documentation`: http://hieroglyph.io/
+.. _`io-2012-slides`: https://code.google.com/p/io-2012-slides/
+.. _`Read the documentation`: http://docs.hieroglyph.io/

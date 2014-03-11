@@ -19,7 +19,7 @@ Styling
 Included Themes
 ---------------
 
-Hieroglyph includes two :ref:`themes <custom-themes>`.
+Hieroglyph includes three :ref:`themes <custom-themes>`.
 
 ``slides``
 
@@ -28,7 +28,13 @@ Hieroglyph includes two :ref:`themes <custom-themes>`.
 
 ``single-level``
 
-  Only one style of slide, every slide has a title at the top.
+  Based on the default ``slides`` theme. Only one style of slide,
+  every slide has a title at the top.
+
+``slides2``
+
+  Based on the updated (2012+) Google I/O HTML slides template. This
+  theme is new in 0.7.
 
 
 Setting the Theme
