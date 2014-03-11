@@ -34,7 +34,7 @@ SlideDeck.prototype.SLIDE_CLASSES_ = [
  * @const
  * @private
  */
-SlideDeck.prototype.CSS_DIR_ = 'theme/css/';
+SlideDeck.prototype.CSS_DIR_ = '_static/theme/css/';
 
 /**
  * @private
