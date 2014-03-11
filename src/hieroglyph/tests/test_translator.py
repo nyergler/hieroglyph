@@ -116,6 +116,27 @@ Slide ``Title``
             ['fancy'],
         )
 
+    def test_prefixed_classes_added_to_slidedata_context_classes(self):
+
+        self.document[0].set_class('fancy')
+        self.document[0].set_class('-content-inner')
+
+        # visit the slide section
+        self.translator.visit_slide(self.document[0])
+
+        self.assertEqual(
+            self.translator.current_slide.get_slide_context()['classes'],
+            ['fancy', '-content-inner'],
+        )
+        self.assertEqual(
+            self.translator.current_slide.get_slide_context()['slide_classes'],
+            ['fancy', ],
+        )
+        self.assertEqual(
+            self.translator.current_slide.get_slide_context()['content_classes'],
+            ['inner'],
+        )
+
     def test_depart_slide_clears_current_slide(self):
 
         # visit the slide section
@@ -157,6 +178,8 @@ Slide ``Title``
                 'level': 1,
                 'content': '',
                 'classes': [],
+                'slide_classes': [],
+                'content_classes': [],
                 'id': 'my-pretty-slide',
                 'slide_number': 0,
                 'config': self.translator.builder.config,

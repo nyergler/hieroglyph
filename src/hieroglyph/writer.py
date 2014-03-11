@@ -63,6 +63,23 @@ class SlideData(object):
         for name, value in kwargs.items():
             setattr(self, name, value)
 
+    def _filter_classes(self, include=None, exclude=None):
+
+        classes = self.classes[:]
+        if include is not None:
+            classes = [
+                c[len(include):] for c in classes
+                if c.startswith(include)
+            ]
+
+        if exclude is not None:
+            classes = [
+                c for c in classes
+                if not c.startswith(exclude)
+            ]
+
+        return classes
+
     def get_slide_context(self):
         """Return the context dict for rendering this slide."""
 
@@ -71,6 +88,8 @@ class SlideData(object):
             'level': self.level,
             'content': self.content,
             'classes': self.classes,
+            'slide_classes': self._filter_classes(exclude='-content-'),
+            'content_classes': self._filter_classes(include='-content-'),
             'slide_number': self.slide_number,
             'config': self._translator.builder.config,
             'id': self.id,

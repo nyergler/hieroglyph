@@ -1,8 +1,8 @@
-  <slide class="{% if classes %}{{ ' '.join(classes) }} {% endif %}level-{{ level }}">
+  <slide class="{% if slide_classes %}{{ ' '.join(slide_classes) }} {% endif %}level-{{ level }}">
     <hgroup>
       <h{{ level }}>{{ title }}</h{{ level }}>
     </hgroup>
-    <article>
+    <article class="{{ content_classes|join(' ') }}">
       {{ content }}
 
 {% if config.slide_numbers %}
