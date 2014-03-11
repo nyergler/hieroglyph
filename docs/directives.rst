@@ -114,3 +114,6 @@
 
    The ``increment`` argument, if present, will append an index to the
    slide title.
+
+   The ``classes`` arguments, if present, contains a list of classes
+   that will be applied to the newly created section.

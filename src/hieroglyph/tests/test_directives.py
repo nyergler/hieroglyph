@@ -331,6 +331,7 @@ Slide Title
 * Bullet 2
 
 .. nextslide::
+   :classes: extra-class
 
 Additional Text
 
@@ -355,4 +356,27 @@ Additional Text
         self.assertEqual(
             len(self.document.traverse(nodes.section)),
             1,
+        )
+
+    def test_next_slide_creates_new_sections(self):
+
+        self.assertEqual(
+            len(self.document.traverse(nodes.section)),
+            1,
+        )
+
+        transformer = directives.TransformNextSlides(self.document)
+        transformer.apply_to_document(
+            self.document,
+            env=MagicMock(),
+            building_slides=True,
+        )
+
+        self.assertEqual(
+            len(self.document.traverse(nodes.section)),
+            2,
+        )
+        self.assertIn(
+            'extra-class',
+            self.document.traverse(nodes.section)[-1].get('classes'),
         )

@@ -91,6 +91,7 @@ class NextSlideDirective(Directive):
     final_argument_whitespace = True
     option_spec = {
         'increment': directives.flag,
+        'classes': directives.class_option,
     }
 
     def run(self):
@@ -171,7 +172,7 @@ class TransformNextSlides(Transform):
 
         if (not building_slides or
                 not node.parent.children[index+1:]):
-            node.replace_self([])
+            node.parent.replace(node, [])
 
             # nothing else to do
             return
@@ -191,6 +192,10 @@ class TransformNextSlides(Transform):
         new_section += self._make_title_node(node)
         new_section.extend(new_children)
         self.document.set_id(new_section)
+
+        # add classes, if needed
+        if node.get('classes'):
+            new_section['classes'].extend(node.get('classes'))
 
         # attach the section and delete the nextslide node
         grandparent.insert(insertion_point, new_section)
