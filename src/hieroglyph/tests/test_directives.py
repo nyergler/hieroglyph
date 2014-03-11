@@ -338,7 +338,7 @@ Additional Text
         )
         self.builder.init_templates()
 
-    def test_visit_slide_creates_new_slide_data(self):
+    def test_next_slide_transformer_ignores_nonslide_builds(self):
 
         self.assertEqual(
             len(self.document.traverse(nodes.section)),
