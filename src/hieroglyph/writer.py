@@ -221,13 +221,13 @@ class BaseSlideTranslator(HTMLTranslator):
                 slide_level + self.initial_header_level - 1,
                 1,
             )
-            self.current_slide.title_level = level
+            self.current_slide.level = level
 
             # tag = 'h%s' % level
             # self.body.append(self.starttag(node, tag, ''))
             # self.context.append('</%s>\n' % tag)
 
-        if self.current_slide and isinstance(node.parent, nodes.section):
+        if self.current_slide and isinstance(node.parent, (nodes.section, slide)):
             self.current_slide.title = node.astext().strip()
         else:
             HTMLTranslator.visit_title(self, node)
@@ -235,7 +235,7 @@ class BaseSlideTranslator(HTMLTranslator):
 
     def depart_title(self, node):
 
-        if self.current_slide and isinstance(node.parent, nodes.section):
+        if self.current_slide and isinstance(node.parent, (nodes.section, slide)):
             self.current_slide.title = ''.join(self.body)
             self.pop_body()
         else:

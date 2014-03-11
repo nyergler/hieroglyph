@@ -269,3 +269,29 @@ Another paragraph
                 '\n\n\n\n\n</article>',
             ],
         )
+
+    def test_slide_titles(self):
+        document = make_document(
+            'testing',
+            """\
+.. slide:: Slide Title
+
+   Slide Content
+
+""",
+        )
+        translator = SlideTranslator(
+            self.builder,
+            document,
+        )
+
+        document.walkabout(translator)
+
+        self.assertEqual(
+            translator.body,
+            [
+                u'\n<article class="admonition-slide-title slide level-1">\n\n'
+                '<h1>Slide Title</h1>\n\n'
+                '<p>Slide Content</p>\n\n\n\n\n</article>',
+            ],
+        )
