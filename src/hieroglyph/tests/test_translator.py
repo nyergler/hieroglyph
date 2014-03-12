@@ -119,14 +119,14 @@ Slide ``Title``
     def test_prefixed_classes_added_to_slidedata_context_classes(self):
 
         self.document[0].set_class('fancy')
-        self.document[0].set_class('-content-inner')
+        self.document[0].set_class('content-inner')
 
         # visit the slide section
         self.translator.visit_slide(self.document[0])
 
         self.assertEqual(
             self.translator.current_slide.get_slide_context()['classes'],
-            ['fancy', '-content-inner'],
+            ['fancy', 'content-inner'],
         )
         self.assertEqual(
             self.translator.current_slide.get_slide_context()['slide_classes'],
