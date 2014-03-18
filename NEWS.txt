@@ -13,6 +13,7 @@ News
 * Added ``slide_title`` configuration setting. (Issue #56)
 * Added ``slides2`` theme, based on updated Google HTML 5 slide
   templates. (Issue #48)
+* Added more flexible incremental slides using build-item-* classes.
 
 0.6.5
 -----

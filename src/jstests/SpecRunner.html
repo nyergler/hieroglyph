@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Hieroglyph Jasmine Spec Runner</title>
+
+  <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.0/jasmine.css">
+
+  <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine.js"></script>
+  <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="lib/jasmine-2.0.0/boot.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript">
+  var SLIDE_CONFIG = {
+      settings: {}
+  };
+  </script>
+  <script data-main="../hieroglyph/themes/slides2/static/js/slide-testing"
+          src="../hieroglyph/themes/slides2/static/js/require-1.0.8.min.js"></script>
+
+  <!-- include spec files here... -->
+  <script type="text/javascript" src="spec/Slide2BuildSpec.js"></script>
+
+</head>
+
+<body>
+
+  <section id="test_markup" style="display:none;">
+    <div id="test_slides">
+      <slide></slide>
+      <slide></slide>
+    </div>
+
+    <div id="test_slides_with_hidden">
+      <slide></slide>
+      <slide></slide>
+      <slide class="hidden"></slide>
+    </div>
+
+    <div id="test_build_item">
+      <slide>
+        <h1 class="build-item-1">H1</h1>
+        <p class="build-item-2">First paragraph</p>
+        <p class="build-item-2">Second paragraph</p>
+        <p class="build-item-3">Third paragraph</p>
+      </slide>
+    </div>
+
+    <div id="test_mixed_build_item_and_build">
+      <slide>
+        <ul class="build">
+          <li>Uno</li>
+          <li>Dos</li>
+        </ul>
+        <p class="build-item-2">First paragraph</p>
+        <p class="build-item-2">Second paragraph</p>
+        <p class="build-item-3">Second paragraph</p>
+      </slide>
+    </div>
+
+    <slides/>
+  </section>
+
+</body>
+</html>
