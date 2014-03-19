@@ -22,6 +22,9 @@ SlideDeck.prototype.makeBuildLists_ = function () {
     for (var j = 0, item; item = items[j]; ++j) {
       if (item.classList) {
         item.classList.add('to-build');
+        if (!item.parentNode.classList.contains('build')) {
+            item.parentNode.classList.add('build');
+        }
         if (item.parentNode.classList.contains('fade')) {
           item.classList.add('fade');
         }

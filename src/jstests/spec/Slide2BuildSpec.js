@@ -36,6 +36,20 @@ describe("build-item classes", function() {
 
     });
 
+    it("should add the build class to the item's parent node", function() {
+
+        var build_items = deck.container.querySelectorAll("[class*='build-item']");
+
+        // sanity check
+        expect(build_items.length).toBe(4);
+
+        // expect that to-build was added to each
+        for (var j = 0, item; item = build_items[j]; ++j) {
+            expect(item.parentNode.classList.contains('build')).toBe(true);
+        }
+
+    });
+
     it("should show the first build-item on buildNext", function() {
 
         var build_item_1 = deck.container.querySelector('.build-item-1');
