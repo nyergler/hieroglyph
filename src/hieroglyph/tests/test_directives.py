@@ -330,7 +330,7 @@ Slide Title
 * Bullet 1
 * Bullet 2
 
-.. nextslide::
+.. nextslide:: **Title**
    :classes: extra-class
 
 Additional Text
@@ -379,4 +379,18 @@ Additional Text
         self.assertIn(
             'extra-class',
             self.document.traverse(nodes.section)[-1].get('classes'),
+        )
+
+    def test_nested_title_markup(self):
+
+        transformer = directives.TransformNextSlides(self.document)
+        transformer.apply_to_document(
+            self.document,
+            env=MagicMock(),
+            building_slides=True,
+        )
+
+        self.assertEqual(
+            str(self.document.traverse(nodes.section)[1][0]),
+            '<title><strong>Title</strong></title>',
         )

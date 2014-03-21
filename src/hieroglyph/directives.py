@@ -98,6 +98,7 @@ class NextSlideDirective(Directive):
 
         node = nextslide(**self.options)
         node.args = self.arguments
+        node.state = self.state
         node.document = self.state.document
         set_source_info(self, node)
 
@@ -152,17 +153,25 @@ class TransformNextSlides(Transform):
         )
 
         if node.args:
-            title_text = node.args[0]
-        elif 'increment' in node.attributes:
-            # autogenerating titles;
-            title_text = '%s (%d)' % nextslide_info
-        else:
-            title_text = nextslide_info[0]
+            textnodes, messages = node.state.inline_text(
+                node.args[0],
+                1,
+            )
+            new_title = nodes.title(node.args[0], '', *textnodes)
 
-        new_title = nodes.title(
-            '',
-            title_text,
-        )
+            # title_text = node.args[0]
+        else:
+
+            if 'increment' in node.attributes:
+                # autogenerating titles;
+                title_text = '%s (%d)' % nextslide_info
+            else:
+                title_text = nextslide_info[0]
+
+            new_title = nodes.title(
+                '',
+                title_text,
+            )
         new_title.nextslide_info = nextslide_info
         return new_title
 
