@@ -122,7 +122,7 @@ Which theme would you like to use?"""
 
     # XXX make a themes dict that has the keys/descriptions
     sphinx_quickstart.do_prompt(
-        d, 'slide_theme', 'Slide Theme', 'slides',
+        d, 'slide_theme', 'Slide Theme', 'single-level',
         sphinx_quickstart.choice('slides', 'single-level',),
     )
 
