@@ -31,6 +31,7 @@ Hieroglyph is an extension for `Sphinx`_ which builds HTML slides from
 
       getting-started
       styling
+      themes
       advanced
       config
       directives
