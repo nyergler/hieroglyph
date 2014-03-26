@@ -154,3 +154,27 @@ Included Styles
 
 Incremental Slides (Builds)
 ---------------------------
+
+In addition to the :ref:`common incremental slide support
+<incremental_slides>`, the ``slides2`` theme supports more granular
+builds. Items with the class ``build-item-x`` (where ``x`` is a
+number) will be incrementally display, in numerical order.
+
+For example, you can show items from bottom to top on a slide::
+
+  .. rst-class:: build-item-3
+
+  This will be shown third
+
+  .. rst-clsas:: build-item-2
+
+  This will be shown second
+
+  .. rst-class:: build-item-1
+
+  This will be shown first
+
+If multiple items have the same number, they will both be displayed at
+the same time.
+
+.. _`Google I/O 2012+`: https://code.google.com/p/io-2012-slides/

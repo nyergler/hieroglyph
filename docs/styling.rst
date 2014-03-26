@@ -52,6 +52,7 @@ in for themes::
 
   slide_theme_path = '...'
 
+.. _incremental_slides:
 
 Incremental slides (builds)
 ---------------------------
