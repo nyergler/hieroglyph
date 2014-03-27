@@ -166,7 +166,7 @@ For example, you can show items from bottom to top on a slide::
 
   This will be shown third
 
-  .. rst-clsas:: build-item-2
+  .. rst-class:: build-item-2
 
   This will be shown second
 
