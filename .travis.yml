@@ -8,6 +8,9 @@ env:
   - SPHINX_VERSION=1.2.2
   - SPHINX_VERSION=dev
 
+before_install:
+  - bundle install
+
 install:
   - pip install coveralls --use-mirrors
   - pip install -q Sphinx==$SPHINX_VERSION --allow-external Sphinx --allow-unverified Sphinx
@@ -15,6 +18,7 @@ install:
 
 script:
   - coverage run --source=hieroglyph setup.py test
+  - rake jasmine:ci JASMINE_CONFIG_PATH=./src/jstests/jasmine.yml
 
 after_success:
   - coveralls

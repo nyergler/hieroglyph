@@ -1,15 +1,32 @@
 describe("The slide deck class", function() {
 
+    beforeEach(function() {
+        var test_dom = document.createElement('div');
+        test_dom.setAttribute('id', 'test_slides');
+        test_dom.innerHTML = '<slide></slide><slide></slide>';
+        document.body.appendChild(test_dom);
+    });
+
     it("should find all matching slides in the container.", function() {
         deck = new SlideDeck(document.querySelector('#test_slides'));
         expect(deck.slides.length).toBe(2);
     });
 
-    it("should exclude hidden slides", function() {
-        deck = new SlideDeck(document.querySelector('#test_slides_with_hidden'));
-        expect(document.querySelectorAll("#test_slides_with_hidden > slide").length)
-            .toBe(3);
-        expect(deck.slides.length).toBe(2);
+    describe("with hidden slides", function() {
+
+        beforeEach(function() {
+            var test_dom = document.createElement('div');
+            test_dom.setAttribute('id', 'test_slides_with_hidden');
+            test_dom.innerHTML = '<slide></slide><slide></slide><slide class="hidden"></slide>';
+            document.body.appendChild(test_dom);
+        });
+
+        it("should exclude hidden slides", function() {
+            deck = new SlideDeck(document.querySelector('#test_slides_with_hidden'));
+            expect(document.querySelectorAll("#test_slides_with_hidden > slide").length)
+                .toBe(3);
+            expect(deck.slides.length).toBe(2);
+        });
     });
 
 });
@@ -19,6 +36,19 @@ describe("build-item classes", function() {
     var deck;
 
     beforeEach(function() {
+
+        var test_dom = document.createElement('div');
+        test_dom.setAttribute('id', 'test_build_item');
+        test_dom.innerHTML = [
+            '<slide>',
+            '  <h1 class="build-item-1">H1</h1>',
+            '  <p class="build-item-2">First paragraph</p>',
+            '  <p class="build-item-2">Second paragraph</p>',
+            '  <p class="build-item-3">Third paragraph</p>',
+            '</slide>',
+        ].join('\n');
+        document.body.appendChild(test_dom);
+
         deck = new SlideDeck(document.querySelector("#test_build_item"));
     });
 
@@ -79,6 +109,23 @@ describe("mixed build-item classes and 'classic' build", function() {
     var deck;
 
     beforeEach(function() {
+
+       var test_dom = document.createElement('div');
+        test_dom.setAttribute('id', 'test_mixed_build_item_and_build');
+        test_dom.innerHTML = [
+            '<slide>',
+            '<ul class="build">',
+            '  <li>Uno</li>',
+            '  <li>Dos</li>',
+            '</ul>',
+            '  <p class="build-item-2">First paragraph</p>',
+            '  <p class="build-item-2">Second paragraph</p>',
+            '  <p class="build-item-3">Third paragraph</p>',
+            '</slide>',
+        ].join('\n');
+        document.body.appendChild(test_dom);
+
+
         deck = new SlideDeck(
             document.querySelector("#test_mixed_build_item_and_build")
         );
