@@ -27,5 +27,24 @@ Tox_ can be used to run the tests with both Python 2.7 and 3.3. The
 Tox configuration will run the tests with Sphinx 1.1.3, Sphinx 1.2,
 and the development branch.
 
+Jasmine Tests for Javascript
+----------------------------
+
+There are some Jasmine_ tests in ``src/jstests`` that test theme
+Javascript functionality. You can open ``src/jstests/SpecRunner.html``
+in your browser to run those. Alternately, you can install the
+``jasmine`` gem to do so.
+
+If you have Bundler_ installed, get started by installing the
+necessary gems::
+
+  $ bundle install
+
+Then run the tests using ``rake``::
+
+  $ rake jasmine:ci JASMINE_CONFIG_PATH=./src/jstests/jasmine.yml
+
 .. _Buildout: https://pypi.python.org/pypi/zc.buildout/2.2.1
 .. _Tox: http://tox.readthedocs.org/en/latest/
+.. _Jasmine: http://jasmine.github.io/
+.. _Bundler: http://bundler.io/
