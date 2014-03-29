@@ -2,58 +2,66 @@ import os.path
 import re
 from unittest import TestCase
 
-from hieroglyph.tests.util import with_sphinx
-from hieroglyph.tests import util
+from docutils import nodes
+
+from hieroglyph.tests.util import (
+    TestApp,
+    make_document,
+)
+
+from hieroglyph.builder import SlideBuilder
 
 
-class PathFixingTests(TestCase):
+class PostProcessImageTests(TestCase):
 
-    @with_sphinx(
-        buildername='slides',
-        srcdir=util.test_root.parent/'with-blockdiag',
-    )
-    def test_image_paths_exist(self, sphinx_app):
+    def setUp(self):
 
-        sphinx_app.build()
+        self.app = TestApp(buildername='slides')
+        self.builder = SlideBuilder(self.app)
+        self.document = make_document(
+            'testing',
+            """\
+Title
+-----
 
-        IMG_RE = re.compile(r'img.*src="(.*)"')
+.. image:: %s/_static/image.png
 
-        img_paths = IMG_RE.findall(
-            open(sphinx_app.builddir/'slides'/'index.html').read()
+""" % (self.builder.outdir,),
         )
 
-        for img_src in img_paths:
-            self.assertTrue(
-                os.path.exists(
-                    os.path.join(
-                        sphinx_app.builddir/'slides',
-                        img_src,
-                    ),
-                ),
-                msg='Path %s does not exist.' % img_src,
-            )
+        self.image_node = self.document.traverse(nodes.image)[0]
+        self.image_node.attributes['candidates'] = {
+            '*': None,
+        }
 
-    @with_sphinx(
-        buildername='slides',
-        srcdir=util.test_root.parent/'with-blockdiag',
-    )
-    def test_image_paths_exist_subdirs(self, sphinx_app):
+    def test_absolute_paths_made_relative(self):
 
-        sphinx_app.build()
-
-        IMG_RE = re.compile(r'img.*src="(.*)"')
-
-        img_paths = IMG_RE.findall(
-            open(sphinx_app.builddir/'slides'/'subdir'/'index.html').read()
+        self.assertEqual(
+            self.image_node['uri'],
+            '%s/_static/image.png' % (self.builder.outdir,),
         )
 
-        for img_src in img_paths:
-            self.assertTrue(
-                os.path.exists(
-                    os.path.join(
-                        sphinx_app.builddir/'slides'/'subdir',
-                        img_src,
-                    ),
-                ),
-                msg='Path %s does not exist.' % img_src,
-            )
+        self.document.attributes['source'] = '%s/index.rst' % (self.builder.srcdir,)
+        self.builder.post_process_images(self.document)
+
+        self.assertEqual(
+            self.image_node['uri'],
+            '_static/image.png',
+        )
+
+    def test_absolute_paths_subdir_made_relative(self):
+
+        self.assertEqual(
+            self.image_node['uri'],
+            '%s/_static/image.png' % (self.builder.outdir,),
+        )
+
+        self.document.attributes['source'] = '%s/sub/dir/index.rst' % (
+            self.builder.srcdir,
+        )
+        self.builder.post_process_images(self.document)
+
+        self.assertEqual(
+            self.image_node['uri'],
+            '../../_static/image.png',
+        )
