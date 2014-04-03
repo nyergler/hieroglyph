@@ -149,3 +149,45 @@ describe("mixed build-item classes and 'classic' build", function() {
     });
 
 });
+
+describe("build-item-*-only classes", function() {
+
+    var deck;
+
+    beforeEach(function() {
+
+       var test_dom = document.createElement('div');
+        test_dom.setAttribute('id', 'test_build_item_only');
+        test_dom.innerHTML = [
+            '<slide>',
+            '  <p class="build-item-1-only">First paragraph</p>',
+            '  <p class="build-item-2">Second paragraph</p>',
+            '  <p class="build-item-3">Third paragraph</p>',
+            '</slide>',
+        ].join('\n');
+        document.body.appendChild(test_dom);
+
+
+        deck = new SlideDeck(
+            document.querySelector("#test_build_item_only")
+        );
+    });
+
+    it("should hide build-item-onlies after their index passes.", function() {
+
+        var build_item_1 = deck.container.querySelector('.build-item-1-only');
+
+        // build-item-1 starts out as to-build
+        expect(build_item_1.classList.contains('to-build')).toBeTruthy();
+
+        // and then is built
+        deck.buildNextItem_();
+        expect(build_item_1.classList.contains('build-current')).toBeTruthy();
+
+        // and then is hidden again
+        deck.buildNextItem_();
+        expect(build_item_1.classList.contains('build-hide')).toBeTruthy();
+
+    });
+
+});

@@ -96,7 +96,7 @@ specified in ``slide_theme_options``:
 
 ``use_builds``
     Default: ``true``
-    
+
 ``use_prettify``
     Default: ``true``
 
@@ -176,5 +176,9 @@ For example, you can show items from bottom to top on a slide::
 
 If multiple items have the same number, they will both be displayed at
 the same time.
+
+Items may also be displayed *only* at a specific index. That is,
+displayed, then hidden again. Appending the suffix ``-only`` to the
+``build-item-`` class activates this behavior.
 
 .. _`Google I/O 2012+`: https://code.google.com/p/io-2012-slides/
