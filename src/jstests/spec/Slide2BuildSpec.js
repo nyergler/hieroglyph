@@ -191,3 +191,65 @@ describe("build-item-*-only classes", function() {
     });
 
 });
+
+describe("build-item-*-class-* classes", function() {
+
+    var deck;
+
+    beforeEach(function() {
+
+       var test_dom = document.createElement('div');
+        test_dom.setAttribute('id', 'test_build_item_class');
+        test_dom.innerHTML = [
+            '<slide>',
+            '  <p class="build-item-1-class-hll">First paragraph</p>',
+            '  <p class="build-item-2-class-hll-only">Second paragraph</p>',
+            '  <p class="build-item-3">Third paragraph</p>',
+            '</slide>',
+        ].join('\n');
+        document.body.appendChild(test_dom);
+
+
+        deck = new SlideDeck(
+            document.querySelector("#test_build_item_class")
+        );
+    });
+
+    it("should add the specified class when showing an item.", function() {
+
+        var build_item_1 = deck.container.querySelector('.to-build');
+
+        // build-item-1 starts out as to-build, without hll
+        expect(build_item_1.classList.contains('to-build')).toBeTruthy();
+        expect(build_item_1.classList.contains('hll')).toBeFalsy();
+
+        // and then is built
+        deck.buildNextItem_();
+        expect(build_item_1.classList.contains('to-build')).toBeFalsy();
+        expect(build_item_1.classList.contains('hll')).toBeTruthy();
+
+    });
+
+    it("should remove the specified class when only is specified.", function() {
+
+        var build_item_2 = deck.container.querySelectorAll('.to-build')[1];
+        deck.buildNextItem_();
+
+        // build-item-2 starts out as to-build, without hll
+        expect(build_item_2.classList.contains('to-build')).toBeTruthy();
+        expect(build_item_2.classList.contains('hll')).toBeFalsy();
+
+        // and then is built
+        deck.buildNextItem_();
+        expect(build_item_2.classList.contains('to-build')).toBeFalsy();
+        expect(build_item_2.classList.contains('hll')).toBeTruthy();
+
+        // and then the class is removed
+        deck.buildNextItem_();
+        expect(build_item_2.classList.contains('to-build')).toBeFalsy();
+        expect(build_item_2.classList.contains('hll')).toBeFalsy();
+
+    });
+
+
+});
