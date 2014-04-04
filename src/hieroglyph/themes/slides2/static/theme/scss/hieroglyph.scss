@@ -1,0 +1,30 @@
+@import "compass/css3/background-size";
+
+@import "variables";
+
+ol {
+  margin-left: 1.2em;
+  margin-bottom: 1em;
+  position: relative;
+  list-style: decimal;
+
+  li {
+    margin-bottom: 0.5em;
+
+    ol {
+      margin-left: 2em;
+      margin-bottom: 0;
+      list-style: decimal;
+
+      li:before {
+        font-weight: 600;
+      }
+    }
+  }
+
+  ol {
+    margin-top: .5em;
+    list-style: decimal;
+
+  }
+}
