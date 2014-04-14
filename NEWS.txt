@@ -15,6 +15,7 @@ News
   templates. (Issue #48)
 * Added more flexible incremental slides using build-item-* classes.
 * Theme creation documentation (#53)
+* Section slide CSS updated for printing. (Issue #37)
 
 0.6.5
 -----
