@@ -95,6 +95,24 @@ creating a presentation (as opposed to a presentation and other
 documentation simultaneously), so you can usually just accept the
 defaults.
 
+.. note:: Attention Mac users
+
+    Mac users may run into an error where a dependency isn't found, such as this error below.
+
+    ::
+
+        $ hieroglyph-quickstart
+        Traceback (most recent call last):
+          File "/usr/local/bin/hieroglyph-quickstart", line 5, in <module>
+            from pkg_resources import load_entry_point
+                :
+        pkg_resources.DistributionNotFound: six
+
+    This is a result of having your installed version of Python conflict with the one that Apple provides as part of Mac OS X. This may be rectified simply by editing the first line of the newly-installed ``/usr/local/bin/hieroglyph-quickstart``. Change it from ``#!/usr/bin/python`` to ``#!/usr/bin/env python``.
+
+    Another issue you may run into is that the Sphinx wrapper may require a specific version, i.e., anything that looks like "==1.1.2" in ``/usr/local/bin/sphinx-build``. If you've got another version of Sphinx already installed, then it's likely newer and will be able to handle it. IOW, just remove references to "==1.1.2" in that file, and it should work.
+
+
 Adding Hieroglyph to an Existing Project
 ========================================
 
@@ -115,7 +133,7 @@ the ``conf.py`` configuration file.
 
 Open ``conf.py`` and find the ``extensions`` definition::
 
-  extensions = []
+  extensions = [ ]
 
 Your definition may have items in the list if you answered "yes" to
 any of the Sphinx Quickstart questions. We need to add ``hieroglyph``
@@ -181,21 +199,27 @@ Generating Your Slides
 
    You can build your slides using :program:`sphinx-build`::
 
-     $ sphinx-build -b slides . ./_build/slides
+     $ sphinx-build -b slides . ./_build/slides # or 'make slides'
 
-   * This will place the slides in the ``./_build/slides`` directory.
+   * Executing either command will place the slides in the ``./_build/slides`` directory.
    * ``-b slides`` specifies the *builder* to use. Hieroglyph provides
      two for generating slides: :py:class:`SlideBuilder` and
      :py:class:`DirectorySlideBuilder`.
 
 
 Now that we've written some simple slides in ReStructured Text, we can
-generate the HTML slides from that. To do that we use of the included
+generate the HTML slides from that. To do that we use one of the included
 :ref:`builders`.
 
 ::
 
   $ sphinx-build -b slides . ./_build/slides
+
+As an alternative, if you have ``make`` on your system, the quickstart installs a ``slides`` directive in the ``Makefile`` which executes ``sphinx-build``, so all you'd need to do is the following:
+
+::
+
+     $ make slides
 
 :program:`sphinx-build` will read the ``conf.py`` file, load the
 ``index.rst`` we've been editing, and generate the slides in the
