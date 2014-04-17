@@ -2,5 +2,5 @@
 
 .slides > article.level-2 > h2 {
     position: static;
-    bottom: auto;
+    margin-top: 0;
 }
