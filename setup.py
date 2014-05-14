@@ -37,7 +37,8 @@ setup(name='hieroglyph',
       install_requires=install_requires,
       entry_points={
           'console_scripts': [
-              'hieroglyph-quickstart=hieroglyph.quickstart:main',
+              'hieroglyph=hieroglyph.quickstart:main',
+			  'hieroglyph-quickstart=hieroglyph.quickstart:compatibility',
           ],
       },
       test_suite='hieroglyph.tests',
