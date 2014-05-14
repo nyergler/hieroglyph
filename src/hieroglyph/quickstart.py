@@ -1,5 +1,6 @@
 import datetime
 
+from argparse import ArgumentParser
 from sphinx.util.console import bold
 from sphinx import quickstart as sphinx_quickstart
 
@@ -133,5 +134,16 @@ Which theme would you like to use?"""
 
 sphinx_quickstart.ask_user = ask_user
 
-def main():
+def compatibility():
     sphinx_quickstart.main()
+
+def main():
+    parser = ArgumentParser()
+    parser.add_argument('hieroglyph', nargs='?', help="Run hieroglyph -q to start a presentation")
+    parser.add_argument('-v', '--version', action='store_true', help="Print current version of hieroglyph")
+    parser.add_argument('-q', '--quickstart', action='store_true', help="Start a hieroglyph project")
+    args = vars(parser.parse_args())
+    if (args['version']):
+        print(version())
+    elif (args['quickstart']):
+        sphinx_quickstart.main()
