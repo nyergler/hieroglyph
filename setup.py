@@ -38,7 +38,7 @@ setup(name='hieroglyph',
       entry_points={
           'console_scripts': [
               'hieroglyph=hieroglyph.quickstart:main',
-			  'hieroglyph-quickstart=hieroglyph.quickstart:compatibility',
+              'hieroglyph-quickstart=hieroglyph.quickstart:compatibility',
           ],
       },
       test_suite='hieroglyph.tests',
