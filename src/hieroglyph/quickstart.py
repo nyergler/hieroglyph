@@ -52,8 +52,8 @@ slide_levels = 3
 sphinx_quickstart.MAKEFILE += u"""
 
 slides:
-    $(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
-    @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
+       $(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
+       @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
 """
 
@@ -76,8 +76,8 @@ def ask_user(d):
 
     # Print welcome message
     msg = bold('Welcome to the Hieroglyph %s quickstart utility.') % (
-            version(),
-            )
+        version(),
+    )
     print(msg)
     msg = """
 This will ask questions for creating a Hieroglyph project, and then ask
@@ -98,7 +98,7 @@ some basic Sphinx questions.
         'ext_mathjax': False,
         'ext_ifconfig': True,
         'ext_viewcode': False,
-        })
+    })
 
     if 'project' not in d:
         print('''
@@ -123,9 +123,9 @@ Which theme would you like to use?"""
 
     # XXX make a themes dict that has the keys/descriptions
     sphinx_quickstart.do_prompt(
-            d, 'slide_theme', 'Slide Theme', 'single-level',
-            sphinx_quickstart.choice('slides', 'single-level',),
-            )
+        d, 'slide_theme', 'Slide Theme', 'single-level',
+        sphinx_quickstart.choice('slides', 'single-level',),
+        )
 
     # Ask original questions
     print("")
