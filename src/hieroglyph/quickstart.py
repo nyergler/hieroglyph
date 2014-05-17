@@ -125,7 +125,7 @@ Which theme would you like to use?"""
     sphinx_quickstart.do_prompt(
         d, 'slide_theme', 'Slide Theme', 'single-level',
         sphinx_quickstart.choice('slides', 'single-level',),
-        )
+    )
 
     # Ask original questions
     print("")
