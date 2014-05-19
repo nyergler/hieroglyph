@@ -52,8 +52,8 @@ slide_levels = 3
 sphinx_quickstart.MAKEFILE += u"""
 
 slides:
-	$(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
-	@echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
+       $(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
+       @echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
 
 """
 
