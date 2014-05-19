@@ -12,7 +12,7 @@ before_install:
   - bundle install
 
 install:
-  - pip install coveralls --use-mirrors
+  - pip install coveralls
   - pip install $SPHINX_SPEC --allow-external Sphinx --allow-unverified Sphinx
   - python setup.py install
 
