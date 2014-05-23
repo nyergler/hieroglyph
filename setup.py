@@ -9,7 +9,7 @@ NEWS = open(os.path.join(here, 'NEWS.txt')).read()
 version = '0.7'
 
 install_requires = [
-    "Sphinx",
+    "Sphinx >= 1.1",
     "six",
 ]
 
