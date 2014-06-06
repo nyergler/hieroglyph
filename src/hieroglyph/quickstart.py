@@ -57,8 +57,9 @@ slides:
 
 """
 
+batchfile = sphinx_quickstart.BATCHFILE
+sphinx_quickstart.BATCHFILE = batchfile[:batchfile.rfind("\n:end\n")]
 sphinx_quickstart.BATCHFILE += u"""
-
 if "%%1" == "slides" (
 \t%%SPHINXBUILD%% -b slides %%ALLSPHINXOPTS%% %%BUILDDIR%%/slides
 \tif errorlevel 1 exit /b 1
@@ -66,6 +67,8 @@ if "%%1" == "slides" (
 \techo.Build finished. The HTML slides pages are in %%BUILDDIR%%/slides.
 \tgoto end
 )
+
+:end
 
 """
 
