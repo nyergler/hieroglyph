@@ -301,6 +301,26 @@ Hieroglyph introductory slide deck uses the following markup::
 The caption (license information above) is styled as an overlay on the
 image.
 
+Quotes
+------
+
+.. slide:: Quotes
+   :level: 2
+
+     reStructuredText quotes are automatically converted
+
+     -- whoever this is
+
+.. slide:: Quotes
+   :level: 2
+
+     Attribution is optional
+
+A standard reStructuredText quote will be interpreted as a quote slide,
+multiple quotes or additional content (on the same slide) are not supported.
+
+The attribution is standard rST, and optional.
+
 The ``slide`` directive
 -----------------------
 
