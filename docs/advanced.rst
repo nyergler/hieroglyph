@@ -62,12 +62,12 @@ titles. For example::
     some content
 
     .. nextslide::
-       :increment
+       :increment:
 
     additional content
 
     .. nextslide::
-       :increment
+       :increment:
 
     conclusion
 
