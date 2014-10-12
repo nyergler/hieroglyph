@@ -23,9 +23,13 @@ The unit tests can be run via ``setup.py``::
 
   $ ./bin/python setup.py test
 
-Tox_ can be used to run the tests with both Python 2.7 and 3.3. The
-Tox configuration will run the tests with Sphinx 1.1.3, Sphinx 1.2,
-and the development branch.
+Tox_ can be used to run the tests with both Python 2 and 3. The Tox
+configuration will run the tests with Sphinx 1.1.x, Sphinx 1.2.x, and
+the development branch. Note that Hieroglyph requires Tox 1.8.
+
+::
+
+  $ tox
 
 Jasmine Tests for Javascript
 ----------------------------
