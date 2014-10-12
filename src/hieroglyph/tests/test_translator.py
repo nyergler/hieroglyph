@@ -250,10 +250,18 @@ Slide ``Title``
         self.translator.depart_section = self.translator.depart_slide
         self.document.walkabout(self.translator)
 
-        self.assertEqual(
+        self.assertIn(
             self.translator.slide_data[-1].title,
-            'Slide <tt class="docutils literal">'
-            '<span class="pre">Title</span></tt>',
+            [
+                # Sphinx 1.1, 1.2
+                'Slide <tt class="docutils literal">'
+                '<span class="pre">Title</span></tt>',
+
+                # Sphinx 1.3
+                'Slide <code class="docutils literal">'
+                '<span class="pre">Title</span></code>'
+
+            ],
         )
 
     def test_non_section_titles_rendered_normally(self):
