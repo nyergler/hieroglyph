@@ -326,3 +326,46 @@ Another paragraph
                 '<p>Slide Content</p>\n\n\n\n\n</article>',
             ],
         )
+
+
+class QuoteSlideTests(TestCase):
+
+    def setUp(self):
+
+        self.app = TestApp(buildername='slides')
+        self.builder = SlideBuilder(self.app)
+
+    def test_rst_quote_makes_quote_slide(self):
+        document = make_document(
+            'quoted',
+            """\
+.. slide:: Quotes
+ :level: 2
+
+   reStructuredText quotes are automatically converted
+
+   -- The Sign Painter
+
+""",
+        )
+        translator = SlideTranslator(
+            self.builder,
+            document,
+        )
+
+        document.walkabout(translator)
+
+        self.assertEqual(
+            translator.body,
+            [
+                u'\n<article class="admonition-quotes slide level-2">\n\n'
+                '<h2>Quotes</h2>\n\n'
+                '<q>\n'
+                'reStructuredText quotes are automatically converted</q>\n'
+                '<div class="author">\n'
+                'The Sign Painter</div>'
+                '\n\n\n\n\n</article>',
+            ],
+        )
+
+
