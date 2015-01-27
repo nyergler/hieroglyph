@@ -64,3 +64,19 @@ Related Projects
 .. _ifconfig: http://sphinx.pocoo.org/ext/ifconfig.html
 .. _`HTML 5 Slides`: http://code.google.com/p/html5slides/
 .. _`ReStructured Text`: http://docutils.sourceforge.net/
+
+.. toctree::
+   :hidden:
+
+   tests/smoketest.rst
+   getting-started
+   styling
+   themes
+   advanced
+   config
+   theme-creation
+   directives
+   builders
+   developing
+   ref-index
+   releases
