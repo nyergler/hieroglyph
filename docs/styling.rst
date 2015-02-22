@@ -93,6 +93,8 @@ displays a bulleted list.
 Here the :rst:dir:`rst-class` directive causes the next element
 to be built incrementally.
 
+.. _setting-slide-class:
+
 Setting a Class on Slides
 -------------------------
 
@@ -125,6 +127,44 @@ the ``slide_theme_options`` dict in ``conf.py``::
 The custom CSS file should be located in the ``html_static_path``
 (``_static`` by default).
 
+Slide Transitions
+-----------------
+
+Most themes use a default transition between slides. For the `slides`
+and `slides2` theme, the next slide moves in from the right, sliding
+on top of the previous one. This isn't always desirable: sometimes you
+want to skip the transition so that you can do more interesting
+"builds" using multiple slides.
+
+The slide transitions are implemented using CSS transitions. The
+slides2 CSS includes the following declaration:
+
+.. code-block:: css
+
+   slides > slide {
+     -webkit-transition: all 0.6s ease-in-out;
+     -moz-transition: all 0.6s ease-in-out;
+     -o-transition: all 0.6s ease-in-out;
+     transition: all 0.6s ease-in-out;
+   }
+
+This tells the browser to take 0.6s to transition between slides.
+
+If you want to omit the transition altogether, you can add
+:ref:`custom-css` to override this.
+
+.. code-block:: css
+
+   slides > slide {
+     -webkit-transition: none;
+     -moz-transition: none;
+     -o-transition: none;
+     transition: none;
+   }
+
+If you only want to selectively change the transition timing, you can
+define a class and :ref:`set a class on the
+slide<setting-slide-class>`.
 
 .. _custom-js:
 
@@ -137,4 +177,3 @@ static directory (``_static`` by default), and then reference it in
 the ``slide_theme_options`` dict in ``conf.py``::
 
   slide_theme_options = {'custom_js': 'myslides.js'}
-
