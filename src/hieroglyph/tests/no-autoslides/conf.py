@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys, os
+from sphinx import version_info as SPHINX_VERSION
 
 sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('..'))
@@ -28,7 +29,10 @@ show_authors = True
 
 rst_epilog = '.. |subst| replace:: global substitution'
 
-html_theme = 'default'
+if SPHINX_VERSION < (1, 3):
+    html_theme = 'default'
+else:
+    html_theme = 'classic'
 html_theme_path = ['.']
 html_theme_options = {}
 html_sidebars = {}
