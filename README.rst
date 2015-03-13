@@ -20,7 +20,8 @@ You can install **Hieroglyph** using ``easy_install`` or ``pip``::
    $ easy_install hieroglyph
 
 You can also download the `latest development version`_, which may
-contain new features. Hieroglyph supports Python 2.7 and Python 3.3.
+contain new features. Hieroglyph supports Sphinx 1.2 and later, and
+Python 2.7 and Python 3.3.
 
 Using Hieroglyph
 ================
