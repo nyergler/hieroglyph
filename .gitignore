@@ -12,9 +12,11 @@ build
 dist
 parts
 eggs
+.eggs
 _build
 /lib/
 /include/
 /.Python
 /.tox/
 .sass-cache
+/pip-selfcheck.json

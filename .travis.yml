@@ -4,9 +4,9 @@ python:
   - "3.4"
 
 env:
-  - SPHINX_SPEC=Sphinx==1.2.3
-  - SPHINX_SPEC=Sphinx==1.3
-  - SPHINX_SPEC=http://bitbucket.org/birkenfeld/sphinx/get/tip.gz\#egg\Sphinx-dev
+  - SPHINX_SPEC=Sphinx ~= 1.2
+  - SPHINX_SPEC=Sphinx ~= 1.3
+  - SPHINX_SPEC=git+https://github.com/sphinx-doc/sphinx.git\#egg\=Sphinx-dev
 
 before_install:
   - bundle install
