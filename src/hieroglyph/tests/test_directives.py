@@ -5,9 +5,7 @@ from mock import MagicMock
 
 from docutils import nodes
 
-from hieroglyph.tests.util import (
-    make_document,
-    with_sphinx,
+from sphinx_testing import (
     TestApp,
 )
 from hieroglyph.tests import util
@@ -18,8 +16,8 @@ from hieroglyph import directives
 
 class SlideConfTests(TestCase):
 
-    @with_sphinx()
-    def test_filter_doctree(self, sphinx_app):
+    @util.with_app()
+    def test_filter_doctree(self, sphinx_app, status, warning):
         """Only slide related elements will be retained when filtering."""
 
         test_content = """
@@ -42,7 +40,7 @@ Second Level
 
 """
 
-        document = make_document(
+        document = util.make_document(
             'slideconf_test',
             test_content,
         )
@@ -52,11 +50,11 @@ Second Level
         # only two elements remain -- the slideconf and slide element
         self.assertEqual(len(document.children), 2)
 
-    @with_sphinx(
+    @util.with_app(
         buildername='slides',
         srcdir=util.test_root.parent/'no-autoslides',
     )
-    def test_trailing_content_removed(self, sphinx_app):
+    def test_trailing_content_removed(self, sphinx_app, status, warning):
 
         sphinx_app.build()
 
@@ -77,7 +75,7 @@ class SlideTests(TestCase):
    Blarf
 """
 
-        document = make_document(
+        document = util.make_document(
             'slide_directive_test',
             test_content,
         )
@@ -100,7 +98,7 @@ class SlideTests(TestCase):
 Another Paragraph
 """
 
-        document = make_document(
+        document = util.make_document(
             'slide_directive_test',
             test_content,
         )
@@ -127,7 +125,7 @@ Another Paragraph
 Another Paragraph
 """
 
-        document = make_document(
+        document = util.make_document(
             'slide_directive_test',
             test_content,
         )
@@ -146,11 +144,11 @@ Another Paragraph
 
 class TestSlideConditions(TestCase):
 
-    @with_sphinx(
+    @util.with_app(
         buildername='html',
         srcdir=util.test_root,
     )
-    def test_slide_content_removed_when_building_html(self, sphinx_app):
+    def test_slide_content_removed_when_building_html(self, sphinx_app, status, warning):
 
         sphinx_app.build()
 
@@ -160,11 +158,11 @@ class TestSlideConditions(TestCase):
             self.assertIn('OTHERBUILDERS', html)
             self.assertNotIn('SLIDES', html)
 
-    @with_sphinx(
+    @util.with_app(
         buildername='slides',
         srcdir=util.test_root,
     )
-    def test_notslide_content_removed_when_building_slides(self, sphinx_app):
+    def test_notslide_content_removed_when_building_slides(self, sphinx_app, status, warning):
 
         sphinx_app.build()
 
@@ -174,11 +172,11 @@ class TestSlideConditions(TestCase):
             self.assertIn('SLIDES', html)
             self.assertNotIn('OTHERBUILDERS', html)
 
-    @with_sphinx(
+    @util.with_app(
         buildername='html',
         srcdir=util.test_root,
     )
-    def test_sections_in_cond_nodes_appear_in_toc(self, sphinx_app):
+    def test_sections_in_cond_nodes_appear_in_toc(self, sphinx_app, status, warning):
         sphinx_app.build()
 
         with open(sphinx_app.builddir/'html'/'index.html') as html_file:
@@ -192,16 +190,18 @@ class TestSlideConditions(TestCase):
                 2,
             )
 
-    def test_builder_collision(self):
+    def test_builder_shared_doctreedirs(self):
 
         html_sphinx = TestApp(
-            buildername='slides',
-            srcdir=util.test_root,
-        )
-        slides_sphinx = TestApp(
             buildername='html',
             srcdir=util.test_root,
         )
+        slides_sphinx = TestApp(
+            buildername='slides',
+            srcdir=util.test_root,
+            doctreedir=html_sphinx.doctreedir,
+        )
+
         self.assertEqual(html_sphinx.doctreedir, slides_sphinx.doctreedir)
 
         try:
@@ -230,11 +230,11 @@ class TestSlideConditions(TestCase):
 
 class NextSlideTests(TestCase):
 
-    @with_sphinx(
+    @util.with_app(
         buildername='slides',
         srcdir=util.test_root,
     )
-    def test_nextslide_splits_content(self, sphinx_app):
+    def test_nextslide_splits_content(self, sphinx_app, status, warning):
 
         sphinx_app.build()
 
@@ -264,11 +264,11 @@ class NextSlideTests(TestCase):
                 'C Section',
             )
 
-    @with_sphinx(
+    @util.with_app(
         buildername='slides',
         srcdir=util.test_root,
     )
-    def test_copied_title(self, sphinx_app):
+    def test_copied_title(self, sphinx_app, status, warning):
 
         sphinx_app.build()
 
@@ -289,11 +289,11 @@ class NextSlideTests(TestCase):
                     first_title,
                 )
 
-    @with_sphinx(
+    @util.with_app(
         buildername='slides',
         srcdir=util.test_root,
     )
-    def test_increment_supports_nested_markup(self, sphinx_app):
+    def test_increment_supports_nested_markup(self, sphinx_app, status, warning):
         sphinx_app.build()
 
         def inner_html(n):
@@ -318,11 +318,11 @@ class NextSlideTests(TestCase):
                     '%s (%d)' % (first_title, idx+2),
                 )
 
-    @with_sphinx(
+    @util.with_app(
         buildername='slides',
         srcdir=util.test_root,
     )
-    def test_increment_slide_title(self, sphinx_app):
+    def test_increment_slide_title(self, sphinx_app, status, warning):
 
         sphinx_app.build()
 
@@ -348,9 +348,13 @@ class TransformNextSlideTests(TestCase):
 
     def setUp(self):
 
-        self.app = TestApp(buildername='slides')
+        self.app = TestApp(
+            buildername='slides',
+            copy_srcdir_to_tmpdir=True,
+            srcdir=util.test_root,
+        )
         self.builder = SlideBuilder(self.app)
-        self.document = make_document(
+        self.document = util.make_document(
             'testing',
             """\
 Slide Title

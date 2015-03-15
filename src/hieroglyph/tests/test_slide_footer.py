@@ -3,21 +3,21 @@ from __future__ import absolute_import
 from unittest import TestCase
 
 from bs4 import BeautifulSoup
+from sphinx_testing import with_app
 
-from hieroglyph.tests.util import with_sphinx
 from hieroglyph.tests import util
 
 
 class SlideFooterTests(TestCase):
 
-    @with_sphinx(
+    @with_app(
         buildername='slides',
         srcdir=util.test_root,
         confoverrides={
             'slide_footer': 'TEST FOOTER',
         },
     )
-    def test_footer_added_to_all_slides(self, sphinx_app):
+    def test_footer_added_to_all_slides(self, sphinx_app, status, warning):
 
         sphinx_app.build()
 
@@ -42,14 +42,14 @@ class SlideFooterTests(TestCase):
                 sphinx_app.config.slide_footer,
             )
 
-    @with_sphinx(
+    @with_app(
         buildername='slides',
         srcdir=util.test_root,
         confoverrides={
             'slide_footer': None,
         },
     )
-    def test_footer_not_added_when_not_configured(self, sphinx_app):
+    def test_footer_not_added_when_not_configured(self, sphinx_app, status, warning):
 
         sphinx_app.build()
 

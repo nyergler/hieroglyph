@@ -1,17 +1,19 @@
 from unittest import TestCase
 
-from hieroglyph.tests.util import (
-    with_sphinx,
+from sphinx_testing import (
     TestApp,
 )
+from hieroglyph.tests import util
+from hieroglyph.tests.util import with_app
+
 import hieroglyph.builder
 
 
 class SlideBuilderTests(TestCase):
 
-    def test_get_theme_options(self):
+    @with_app()
+    def test_get_theme_options(self, app, *args):
 
-        app = TestApp()
         builder = hieroglyph.builder.SlideBuilder(app)
 
         resolved_theme_options = builder.get_theme_options()
@@ -29,9 +31,9 @@ class SlideBuilderTests(TestCase):
             resolved_theme_options,
         )
 
-    def test_get_theme_options_with_overrides(self):
+    @with_app()
+    def test_get_theme_options_with_overrides(self, app, *args):
 
-        app = TestApp()
         builder = hieroglyph.builder.SlideBuilder(app)
         resolved_theme_options = builder.get_theme_options()
 
@@ -41,6 +43,8 @@ class SlideBuilderTests(TestCase):
         )
 
         app = TestApp(
+            srcdir=util.test_root,
+            copy_srcdir_to_tmpdir=True,
             confoverrides={
                 'slide_theme_options': {
                     'custom_css': 'testing.css',
@@ -55,10 +59,10 @@ class SlideBuilderTests(TestCase):
             'testing.css',
         )
 
-    @with_sphinx(
+    @with_app(
         buildername='slides',
     )
-    def test_html_static_dir_contents_override_theme(self, sphinx_app):
+    def test_html_static_dir_contents_override_theme(self, sphinx_app, status, warning):
 
         self.assertIsInstance(
             sphinx_app.builder,
@@ -75,13 +79,13 @@ class SlideBuilderTests(TestCase):
             static_styles,
         )
 
-    def test_docstitle_uses_slidetitle(self):
+    @with_app(
+        confoverrides={
+            'slide_title': 'SLIDES TITLE',
+        },
+    )
+    def test_docstitle_uses_slidetitle(self, app, *args):
 
-        app = TestApp(
-            confoverrides={
-                'slide_title': 'SLIDES TITLE',
-            },
-        )
         builder = hieroglyph.builder.SlideBuilder(app)
 
         builder.prepare_writing([])
@@ -91,9 +95,9 @@ class SlideBuilderTests(TestCase):
             'SLIDES TITLE',
         )
 
-    def test_docstitle_fallback_to_html_title(self):
+    @with_app()
+    def test_docstitle_fallback_to_html_title(self, app, status, warning):
 
-        app = TestApp()
         builder = hieroglyph.builder.SlideBuilder(app)
 
         builder.prepare_writing([])

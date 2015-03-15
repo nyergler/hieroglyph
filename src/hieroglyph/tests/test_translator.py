@@ -3,11 +3,10 @@ from unittest import TestCase
 from docutils import nodes
 from mock import patch
 from sphinx import jinja2glue
+from sphinx_testing import TestApp
 
-from hieroglyph.tests.util import (
-    TestApp,
-    make_document,
-)
+from hieroglyph.tests import util
+
 from hieroglyph.builder import SlideBuilder
 from hieroglyph.writer import (
     SlideData,
@@ -20,9 +19,13 @@ class SlideTranslationTests(TestCase):
 
     def setUp(self):
 
-        self.app = TestApp(buildername='slides')
+        self.app = TestApp(
+            buildername='slides',
+            copy_srcdir_to_tmpdir=True,
+            srcdir=util.test_root,
+        )
         self.builder = SlideBuilder(self.app)
-        self.document = make_document(
+        self.document = util.make_document(
             'testing',
             """\
 Slide ``Title``
@@ -265,7 +268,7 @@ Slide ``Title``
         )
 
     def test_non_section_titles_rendered_normally(self):
-        document = make_document(
+        document = util.make_document(
             'testing',
             """\
 Section Title
@@ -302,7 +305,7 @@ Another paragraph
         )
 
     def test_slide_titles(self):
-        document = make_document(
+        document = util.make_document(
             'testing',
             """\
 .. slide:: Slide Title
@@ -332,11 +335,15 @@ class QuoteSlideTests(TestCase):
 
     def setUp(self):
 
-        self.app = TestApp(buildername='slides')
+        self.app = TestApp(
+            buildername='slides',
+            copy_srcdir_to_tmpdir=True,
+            srcdir=util.test_root,
+        )
         self.builder = SlideBuilder(self.app)
 
     def test_rst_quote_makes_quote_slide(self):
-        document = make_document(
+        document = util.make_document(
             'quoted',
             """\
 .. slide:: Quotes
@@ -367,5 +374,3 @@ class QuoteSlideTests(TestCase):
                 '\n\n\n\n\n</article>',
             ],
         )
-
-

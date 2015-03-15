@@ -3,11 +3,9 @@ import re
 from unittest import TestCase
 
 from docutils import nodes
+from sphinx_testing import TestApp
 
-from hieroglyph.tests.util import (
-    TestApp,
-    make_document,
-)
+from hieroglyph.tests import util
 
 from hieroglyph.builder import SlideBuilder
 
@@ -16,9 +14,13 @@ class PostProcessImageTests(TestCase):
 
     def setUp(self):
 
-        self.app = TestApp(buildername='slides')
+        self.app = TestApp(
+            buildername='slides',
+            copy_srcdir_to_tmpdir=True,
+            srcdir=util.test_root,
+        )
         self.builder = SlideBuilder(self.app)
-        self.document = make_document(
+        self.document = util.make_document(
             'testing',
             """\
 Title
