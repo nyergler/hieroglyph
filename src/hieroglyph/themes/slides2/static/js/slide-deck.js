@@ -36,11 +36,51 @@ SlideDeck.prototype.SLIDE_CLASSES_ = [
  */
 SlideDeck.prototype.CSS_DIR_ = '_static/theme/css/';
 
+
+/**
+ * @private
+ */
+SlideDeck.prototype.findSlideById = function(title_id) {
+  // Return the 1-base index of the Slide with id ``title_id``
+  //
+  // The index must be 1-based, as it's passed to code which assumes
+  // it was specified as the location fragment.
+
+  console.log('findSlideById ', title_id);
+
+  slideEls = document.querySelectorAll('slides > slide');
+  console.log(slideEls);
+
+  for (var i = 0; i < slideEls.length; i++) {
+    if (slideEls.item(i).id == title_id) {
+      return i + 1;
+    }
+  }
+
+  // no match on a slide, perhaps it's an explicit reference?
+  var
+  target_link = document.querySelector("span[id='" + title_id + "']"),
+  // XXX this is pretty strict, may need to be more flexible in the future
+  slide = (target_link && target_link.parentNode);
+
+  if (slide && slide.tagName == 'SLIDE') {
+    return this.findSlideById(slide.id);
+  }
+
+  return false;
+
+};
+
 /**
  * @private
  */
 SlideDeck.prototype.getCurrentSlideFromHash_ = function() {
   var slideNo = parseInt(document.location.hash.substr(1));
+
+  if (isNaN(slideNo)) {
+      // must be a section title reference
+      slideNo = this.findSlideById(location.hash.substr(1));
+  }
 
   if (slideNo) {
     this.curSlide_ = slideNo - 1;
