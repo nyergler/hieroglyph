@@ -14,6 +14,8 @@
 import os
 import sys
 
+from sphinx import version_info as SPHINX_VERSION
+
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -123,9 +125,12 @@ slide_html_relative_path = "../"
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 if on_rtd:
-    html_theme = 'default'
+    html_theme = 'sphinx_rtd_theme'
 else:
-    html_theme = 'nature'
+    if SPHINX_VERSION < (1, 3):
+        html_theme = 'nature'
+    else:
+        html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
