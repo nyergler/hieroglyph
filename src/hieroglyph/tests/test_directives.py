@@ -293,6 +293,35 @@ class NextSlideTests(TestCase):
         buildername='slides',
         srcdir=util.test_root,
     )
+    def test_increment_supports_nested_markup(self, sphinx_app):
+        sphinx_app.build()
+
+        def inner_html(n):
+            return ''.join(
+                str(t) for t in n.contents
+            )
+
+        with open(
+            sphinx_app.builddir/'slides'/'nextslide_nested_markup.html'
+        ) as html_file:
+
+            slide_html = BeautifulSoup(
+                html_file.read()
+            )
+            slides = slide_html.find_all('article', class_='slide')[1:]
+            first_title = inner_html(slides[0].find('h2'))
+
+            for idx, slide in enumerate(slides[1:]):
+                title = inner_html(slide.find('h2'))
+                self.assertEqual(
+                    title,
+                    '%s (%d)' % (first_title, idx+2),
+                )
+
+    @with_sphinx(
+        buildername='slides',
+        srcdir=util.test_root,
+    )
     def test_increment_slide_title(self, sphinx_app):
 
         sphinx_app.build()

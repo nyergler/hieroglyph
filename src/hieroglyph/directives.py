@@ -145,7 +145,7 @@ class TransformNextSlides(Transform):
         parent_title_node = node.parent.next_node(nodes.title)
         nextslide_info = getattr(
             parent_title_node, 'nextslide_info',
-            (parent_title_node.astext(), 1),
+            (parent_title_node.deepcopy().children, 1),
         )
         nextslide_info = (
             nextslide_info[0],
@@ -159,19 +159,20 @@ class TransformNextSlides(Transform):
             )
             new_title = nodes.title(node.args[0], '', *textnodes)
 
-            # title_text = node.args[0]
         else:
 
+            title_nodes = nextslide_info[0][:]
+
             if 'increment' in node.attributes:
-                # autogenerating titles;
-                title_text = '%s (%d)' % nextslide_info
-            else:
-                title_text = nextslide_info[0]
+                title_nodes.append(
+                    nodes.Text(' (%s)' % nextslide_info[1])
+                )
 
             new_title = nodes.title(
-                '',
-                title_text,
+                '', '',
+                *title_nodes
             )
+
         new_title.nextslide_info = nextslide_info
         return new_title
 
