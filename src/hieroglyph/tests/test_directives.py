@@ -293,7 +293,7 @@ class NextSlideTests(TestCase):
         buildername='slides',
         srcdir=util.test_root,
     )
-    def test_increment_supports_nested_markup(self, sphinx_app, status, warning):
+    def test_nextslide_supports_nested_markup(self, sphinx_app, status, warning):
         sphinx_app.build()
 
         def inner_html(n):
@@ -317,6 +317,33 @@ class NextSlideTests(TestCase):
                     title,
                     '%s (%d)' % (first_title, idx+2),
                 )
+
+    @util.with_app(
+        buildername='slides',
+        srcdir=util.test_root,
+    )
+    def test_nextslide_allows_explicit_title(self, sphinx_app, status, warning):
+        sphinx_app.build()
+
+        def inner_html(n):
+            return ''.join(
+                str(t) for t in n.contents
+            )
+
+        with open(
+            sphinx_app.builddir/'slides'/'nextslide_explicit_title.html'
+        ) as html_file:
+
+            slide_html = BeautifulSoup(
+                html_file.read()
+            )
+            slides = slide_html.find_all('article', class_='slide')[1:]
+            first_title = inner_html(slides[0].find('h2'))
+            second_title = inner_html(slides[1].find('h2'))
+
+            self.assertNotEqual(first_title, second_title)
+            self.assertEqual(first_title, '<em>Slide</em> Title')
+            self.assertEqual(second_title, '<strong>Slide</strong> Title')
 
     @util.with_app(
         buildername='slides',
