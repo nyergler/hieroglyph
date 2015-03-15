@@ -1,4 +1,5 @@
 import datetime
+import pkg_resources
 
 from argparse import ArgumentParser
 from sphinx.util.console import bold
@@ -111,23 +112,33 @@ The presentation title will be included on the title slide.''')
         sphinx_quickstart.do_prompt(d, 'author', 'Author name(s)')
 
     # slide_theme
+    theme_entrypoints = pkg_resources.iter_entry_points('hieroglyph.theme')
+
+    themes = [
+        t.resolve()
+        for t in theme_entrypoints
+    ]
+
     msg = """
-Hieroglyph includes two themes:
+Available themes:
 
-* """ + bold("slides") + """
-  The default theme, with different styling for first, second, and third
-  level headings.
+"""
 
-* """ + bold("single-level") + """
-  All slides are styled the same, with the heading at the top.
+    for theme in themes:
+        msg += '\n'.join([
+            bold(theme['name']),
+            theme['desc'],
+            '', '',
+        ])
 
-Which theme would you like to use?"""
+    msg += """Which theme would you like to use?"""
     print(msg)
 
-    # XXX make a themes dict that has the keys/descriptions
     sphinx_quickstart.do_prompt(
-        d, 'slide_theme', 'Slide Theme', 'single-level',
-        sphinx_quickstart.choice('slides', 'single-level',),
+        d, 'slide_theme', 'Slide Theme', themes[0]['name'],
+        sphinx_quickstart.choice(
+            *[t['name'] for t in themes]
+        ),
     )
 
     # Ask original questions

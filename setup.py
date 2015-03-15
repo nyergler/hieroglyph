@@ -40,6 +40,11 @@ setup(name='hieroglyph',
               'hieroglyph=hieroglyph.quickstart:main',
               'hieroglyph-quickstart=hieroglyph.quickstart:compatibility',
           ],
+          'hieroglyph.theme': [
+              'slides=hieroglyph.themes:SLIDES',
+              'single-level=hieroglyph.themes:SINGLE_LEVEL',
+              'slides2=hieroglyph.themes:SLIDES2',
+          ],
       },
       test_suite='hieroglyph.tests',
       tests_require=[
