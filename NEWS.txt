@@ -1,10 +1,10 @@
 News
 ====
 
-0.7 (development)
------------------
+0.7
+---
 
-* Release date: UNRELEASED*
+*Release date: 16 March 2015*
 
 * Themes now use a template fragment for rendering individual slides.
   (Issue #49)
@@ -16,6 +16,8 @@ News
 * Added more flexible incremental slides using build-item-* classes.
 * Theme creation documentation (#53)
 * Section slide CSS updated for printing. (Issue #37)
+* Handle titles with embedded markup w/ nextslide directive. (#85)
+* Improved quickstart script
 
 0.6.5
 -----
