@@ -3,13 +3,13 @@ import pkg_resources
 
 from argparse import ArgumentParser
 from sphinx.util.console import bold
-from sphinx import quickstart as sphinx_quickstart
+import sphinx.quickstart
 
 from hieroglyph import version
 
 
 # redefine or extend some Sphixn declarations
-sphinx_quickstart.MASTER_FILE = u"""
+sphinx.quickstart.MASTER_FILE = u"""
 .. %(project)s slides file, created by
    hieroglyph-quickstart on %(now)s.
 
@@ -26,7 +26,7 @@ Contents:
 
 """
 
-sphinx_quickstart.QUICKSTART_CONF += u"""
+sphinx.quickstart.QUICKSTART_CONF += u"""
 
 # -- Hieroglyph Slide Configuration ------------
 
@@ -50,7 +50,7 @@ slide_levels = 3
 
 """
 
-sphinx_quickstart.MAKEFILE += u"""
+sphinx.quickstart.MAKEFILE += u"""
 
 slides:
 	$(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
@@ -58,9 +58,9 @@ slides:
 
 """
 
-batchfile = sphinx_quickstart.BATCHFILE
-sphinx_quickstart.BATCHFILE = batchfile[:batchfile.rfind("\n:end\n")]
-sphinx_quickstart.BATCHFILE += u"""
+batchfile = sphinx.quickstart.BATCHFILE
+sphinx.quickstart.BATCHFILE = batchfile[:batchfile.rfind("\n:end\n")]
+sphinx.quickstart.BATCHFILE += u"""
 if "%%1" == "slides" (
 \t%%SPHINXBUILD%% -b slides %%ALLSPHINXOPTS%% %%BUILDDIR%%/slides
 \tif errorlevel 1 exit /b 1
@@ -73,10 +73,10 @@ if "%%1" == "slides" (
 
 """
 
-sphinx_ask_user = sphinx_quickstart.ask_user
+sphinx_ask_user = sphinx.quickstart.ask_user
 
 def ask_user(d):
-    """Wrap sphinx_quickstart.ask_user, and add additional questions."""
+    """Wrap sphinx.quickstart.ask_user, and add additional questions."""
 
     # Print welcome message
     msg = bold('Welcome to the Hieroglyph %s quickstart utility.') % (
@@ -107,9 +107,9 @@ some basic Sphinx questions.
     if 'project' not in d:
         print('''
 The presentation title will be included on the title slide.''')
-        sphinx_quickstart.do_prompt(d, 'project', 'Presentation title')
+        sphinx.quickstart.do_prompt(d, 'project', 'Presentation title')
     if 'author' not in d:
-        sphinx_quickstart.do_prompt(d, 'author', 'Author name(s)')
+        sphinx.quickstart.do_prompt(d, 'author', 'Author name(s)')
 
     # slide_theme
     theme_entrypoints = pkg_resources.iter_entry_points('hieroglyph.theme')
@@ -134,9 +134,9 @@ Available themes:
     msg += """Which theme would you like to use?"""
     print(msg)
 
-    sphinx_quickstart.do_prompt(
+    sphinx.quickstart.do_prompt(
         d, 'slide_theme', 'Slide Theme', themes[0]['name'],
-        sphinx_quickstart.choice(
+        sphinx.quickstart.choice(
             *[t['name'] for t in themes]
         ),
     )
@@ -146,18 +146,32 @@ Available themes:
     sphinx_ask_user(d)
 
 
-sphinx_quickstart.ask_user = ask_user
+def quickstart(path=None):
 
-def compatibility():
-    sphinx_quickstart.main()
+    d = {}
+    if path:
+        d['path'] = path
+
+    ask_user(d)
+    sphinx.quickstart.generate(d)
+
 
 def main():
-    parser = ArgumentParser()
-    parser.add_argument('hieroglyph', nargs='?', help="Run hieroglyph -q to start a presentation")
-    parser.add_argument('-v', '--version', action='store_true', help="Print current version of hieroglyph")
-    parser.add_argument('-q', '--quickstart', action='store_true', help="Start a hieroglyph project")
+    parser = ArgumentParser(
+        description='Run hieroglyph -q to start a presentation',
+    )
+
+    parser.add_argument('-v', '--version', action='store_true',
+                        help="Print current version of hieroglyph")
+    parser.add_argument('-q', '--quickstart', action='store_true',
+                        help="Start a hieroglyph project")
+
+    parser.add_argument('path', nargs='?', default=None,
+                        help='Output directory for new presentation.')
+
     args = vars(parser.parse_args())
+
     if (args['version']):
         print(version())
     elif (args['quickstart']):
-        sphinx_quickstart.main()
+        quickstart(args['path'])
