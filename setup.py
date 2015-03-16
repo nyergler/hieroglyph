@@ -16,7 +16,8 @@ install_requires = [
 
 setup(name='hieroglyph',
       version=version,
-      description="",
+      description=("Generate HTML presentations from plain text "
+                   "sources with all the power of Sphinx."),
       long_description=README + '\n\n' + NEWS,
       classifiers=[
         'License :: OSI Approved :: BSD License',
@@ -52,4 +53,4 @@ setup(name='hieroglyph',
           'mock',
           'sphinx-testing',
       ],
-)
+      )
