@@ -23,6 +23,11 @@ You can also download the `latest development version`_, which may
 contain new features. Hieroglyph supports Sphinx 1.2 and later, and
 Python 2.7, 3.3, and 3.4.
 
+**WARNING** Hieroglyph 0.6.5 (the current release) is incompatible
+with the recently released Sphinx 1.3. Until a new release is
+available, you should either install the development version
+(`hieroglyph==dev`) or Sphinx 1.2 (`sphinx~=1.2.0`).
+
 Using Hieroglyph
 ================
 
