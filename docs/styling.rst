@@ -114,6 +114,16 @@ You can also set a default class on slides using the
 ``slide_classes`` option of the :rst:dir:`slideconf` directive. Note
 that specifying an explicit class will override the ``slide_classes``.
 
+Slide Classes
+-------------
+
+Hieroglyph includes some pre-defined style classes.
+
+``title-image``
+
+  Designed to be used as a title slide with a full screen image. Use
+  the `figure` directive to specifiy the image and caption.
+
 .. _custom-css:
 
 Custom CSS
