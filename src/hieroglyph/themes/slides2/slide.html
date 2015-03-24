@@ -1,4 +1,4 @@
-  <slide class="{% if slide_classes %}{{ ' '.join(slide_classes) }} {% endif %}level-{{ level }}"{% if id %} id="{{ id }}"{% endif %}>
+  <slide class="{% if slide_number==1 %}title-slide segue nobackground {% endif %}{% if slide_classes %}{{ ' '.join(slide_classes) }} {% endif %}level-{{ level }}"{% if id %} id="{{ id }}"{% endif %}>
     <hgroup>
       <h{{ level }}>{{ title }}</h{{ level }}>
     </hgroup>
