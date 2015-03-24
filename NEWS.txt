@@ -1,6 +1,15 @@
 News
 ====
 
+0.7.1
+-----
+
+*Release date: UNRELEADED*
+
+* Add `title-iamge` slide class
+* Bug fix: `slides2` theme includes extra slides (#92)
+* Bug fix: setuptools version is not specified (#94)
+
 0.7
 ---
 
