@@ -1,1 +1,26 @@
-ol{margin-left:1.2em;margin-bottom:1em;position:relative;list-style:decimal}ol li{margin-bottom:0.5em}ol li ol{margin-left:2em;margin-bottom:0;list-style:decimal}ol li ol li:before{font-weight:600}ol ol{margin-top:.5em;list-style:decimal}
+/* line 5, ../scss/hieroglyph.scss */
+ol {
+  margin-left: 1.2em;
+  margin-bottom: 1em;
+  position: relative;
+  list-style: decimal;
+}
+/* line 11, ../scss/hieroglyph.scss */
+ol li {
+  margin-bottom: 0.5em;
+}
+/* line 14, ../scss/hieroglyph.scss */
+ol li ol {
+  margin-left: 2em;
+  margin-bottom: 0;
+  list-style: decimal;
+}
+/* line 19, ../scss/hieroglyph.scss */
+ol li ol li:before {
+  font-weight: 600;
+}
+/* line 25, ../scss/hieroglyph.scss */
+ol ol {
+  margin-top: .5em;
+  list-style: decimal;
+}
