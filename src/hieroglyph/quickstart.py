@@ -115,7 +115,7 @@ The presentation title will be included on the title slide.''')
     theme_entrypoints = pkg_resources.iter_entry_points('hieroglyph.theme')
 
     themes = [
-        t.resolve()
+        t.load()
         for t in theme_entrypoints
     ]
 
