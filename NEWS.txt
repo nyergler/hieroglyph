@@ -4,11 +4,12 @@ News
 0.7.1
 -----
 
-*Release date: UNRELEADED*
+*Release date: 28 March 2015*
 
 * Add `title-iamge` slide class
 * Bug fix: `slides2` theme includes extra slides (#92)
-* Bug fix: setuptools version is not specified (#94)
+* Bug fix: entry point invocation relies on new setuptools (#94)
+* Bug fix: RST quotes raise exceptions (#93)
 
 0.7
 ---
