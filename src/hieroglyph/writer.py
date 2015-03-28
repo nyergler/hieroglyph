@@ -264,33 +264,37 @@ class BaseSlideTranslator(HTMLTranslator):
             self.body.append(title)
 
     def visit_block_quote(self, node):
-        # first child must be a paragraph, process it as a <q> element
-        p = node.children[0]
-        if p.tagname != 'paragraph':
-            raise ValueError("The first child of a quote must be a paragraph")
-        self.body.append(self.starttag(node, 'q'))
-        for text_item in p:
-            text_item.walkabout(self)
-        self.body.append('</q>\n')
+        quote_slide_tags = ['paragraph', 'attribution']
 
-        if len(node.children) > 2:
-            raise ValueError("A quote can only have 2 children, the quote text"
-                             " and an attribution")
-        # optional second child must be an attribution, processing as a <div>
-        # following the <q>
-        if len(node.children) > 1:
-            attr = node.children[1]
-            if attr.tagname != 'attribution':
-                raise ValueError("The second child of a quote must be"
-                                 " an attribution")
+        # see if this looks like a quote slide
+        if (len(node.children) <= 2 and
+            [c.tagname for c in node.children] == quote_slide_tags[:len(node.children)]):
 
-            self.body.append(self.starttag(attr, 'div', CLASS="author"))
-            for text_item in attr:
+            # process this as a quote slide
+
+            # first child must be a paragraph, process it as a <q> element
+            p = node.children[0]
+            self.body.append(self.starttag(node, 'q'))
+            for text_item in p:
                 text_item.walkabout(self)
-            self.body.append('</div>\n')
+                self.body.append('</q>\n')
 
-        # skip all normal processing
-        raise nodes.SkipNode
+            # optional second child must be an attribution, processing as a <div>
+            # following the <q>
+            if len(node.children) > 1:
+                attr = node.children[1]
+
+                self.body.append(self.starttag(attr, 'div', CLASS="author"))
+                for text_item in attr:
+                    text_item.walkabout(self)
+                    self.body.append('</div>\n')
+
+            # skip all normal processing
+            raise nodes.SkipNode
+
+        else:
+            return HTMLTranslator.visit_block_quote(self, node)
+
 
 class SlideTranslator(BaseSlideTranslator):
 

@@ -374,3 +374,68 @@ class QuoteSlideTests(TestCase):
                 '\n\n\n\n\n</article>',
             ],
         )
+
+    def test_unattributed_rst_quote_makes_quote_slide(self):
+        document = util.make_document(
+            'quoted',
+            """\
+.. slide:: Quotes
+ :level: 2
+
+   reStructuredText quotes are automatically converted
+
+""",
+        )
+        translator = SlideTranslator(
+            self.builder,
+            document,
+        )
+
+        document.walkabout(translator)
+
+        self.assertEqual(
+            translator.body,
+            [
+                u'\n<article class="admonition-quotes slide level-2">\n\n'
+                '<h2>Quotes</h2>\n\n'
+                '<q>\n'
+                'reStructuredText quotes are automatically converted</q>\n'
+                '\n\n\n\n</article>',
+            ],
+        )
+
+    def test_rst_quote_processes_normally_with_extra_content(self):
+        document = util.make_document(
+            'quoted',
+            """\
+.. slide:: Indented RST
+ :level: 2
+
+   This text is over indented.
+
+   As is this text.
+
+   They look like quotes but they're not.
+
+""",
+        )
+        translator = SlideTranslator(
+            self.builder,
+            document,
+        )
+
+        document.walkabout(translator)
+
+        self.assertEqual(
+            translator.body,
+            [
+                u'\n<article class="admonition-indented-rst slide level-2">\n\n'
+                '<h2>Indented RST</h2>\n\n'
+                '<blockquote>\n'
+                '<div><p>This text is over indented.</p>\n'
+                '<p>As is this text.</p>\n'
+                '<p>They look like quotes but they\'re not.</p>\n'
+                '</div></blockquote>\n'
+                '\n\n\n\n</article>',
+            ],
+        )
