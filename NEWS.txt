@@ -6,7 +6,7 @@ News
 
 *Release date: 28 March 2015*
 
-* Add `title-iamge` slide class
+* Add `title-image` slide class
 * Bug fix: `slides2` theme includes extra slides (#92)
 * Bug fix: entry point invocation relies on new setuptools (#94)
 * Bug fix: RST quotes raise exceptions (#93)
