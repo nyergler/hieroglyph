@@ -338,3 +338,14 @@ class SlideTranslator(BaseSlideTranslator):
                     ))
 
         BaseSlideTranslator.depart_title(self, node)
+
+    def visit_start_of_file(self, node):
+        previous = node.parent
+        if isinstance(previous, nodes.compound):
+            # step up one more level
+            previous = previous.parent
+
+        self.depart_slide(previous)
+        self.section_level -= 1
+
+        BaseSlideTranslator.visit_start_of_file(self, node)

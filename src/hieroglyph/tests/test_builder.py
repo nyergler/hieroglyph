@@ -1,6 +1,7 @@
 import glob
 from unittest import TestCase
 
+from bs4 import BeautifulSoup
 from sphinx_testing import (
     TestApp,
 )
@@ -113,6 +114,7 @@ class SingleFileBuilderTests(TestCase):
 
     @with_app(
         buildername='singlefile-slides',
+        srcdir=util.test_root.parent/'singlefile',
     )
     def test_builds_single_file(self, app, *args):
 
@@ -122,3 +124,18 @@ class SingleFileBuilderTests(TestCase):
             len(glob.glob(app.builddir/'singlefile-slides'/'*.html')),
             1,
         )
+
+    @with_app(
+        buildername='singlefile-slides',
+        srcdir=util.test_root.parent/'singlefile',
+    )
+    def test_adjusts_section_levels_to_account_for_toctree(self, app, *args):
+        """The TOCTREE pushes sections/slides down a level if not handled."""
+
+        app.build()
+
+        with open(app.builddir/'singlefile-slides'/'index.html') as html_file:
+            tree = BeautifulSoup(html_file.read())
+            contents = tree.find_all('article')
+
+            self.assertEqual(len(contents), 4)

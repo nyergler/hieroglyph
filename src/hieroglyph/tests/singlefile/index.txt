@@ -1,0 +1,17 @@
+.. _getting-started:
+
+=================================
+ Getting Started with Hieroglyph
+=================================
+
+some text
+
+
+Slide 2
+=======
+
+TESTING_SENTINEL
+
+.. toctree::
+
+   another_doc
