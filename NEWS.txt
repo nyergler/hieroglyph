@@ -1,6 +1,13 @@
 News
 ====
 
+0.8
+---
+
+*Release date: UNRELEASED*
+
+* Add `singlefile-slides` builder
+
 0.7.1
 -----
 

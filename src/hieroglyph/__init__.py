@@ -19,6 +19,7 @@ def setup(app):
     # Register Builders
     app.add_builder(builder.SlideBuilder)
     app.add_builder(builder.DirectorySlideBuilder)
+    app.add_builder(builder.SingleFileSlideBuilder)
     app.add_builder(builder.InlineSlideBuilder)
     app.add_builder(builder.DirectoryInlineSlideBuilder)
 

@@ -1,3 +1,4 @@
+import glob
 from unittest import TestCase
 
 from sphinx_testing import (
@@ -105,4 +106,19 @@ class SlideBuilderTests(TestCase):
         self.assertEqual(
             builder.globalcontext['docstitle'],
             builder.config.html_title,
+        )
+
+
+class SingleFileBuilderTests(TestCase):
+
+    @with_app(
+        buildername='singlefile-slides',
+    )
+    def test_builds_single_file(self, app, *args):
+
+        app.build()
+
+        self.assertEqual(
+            len(glob.glob(app.builddir/'singlefile-slides'/'*.html')),
+            1,
         )

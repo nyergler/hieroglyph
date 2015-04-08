@@ -6,6 +6,7 @@ import os
 from docutils import nodes
 from sphinx.theming import Theme
 from sphinx.builders.html import (
+    SingleFileHTMLBuilder,
     StandaloneHTMLBuilder,
     DirectoryHTMLBuilder,
 )
@@ -195,6 +196,19 @@ class SlideBuilder(AbstractSlideBuilder, StandaloneHTMLBuilder):
     """
 
     name = 'slides'
+
+
+class SingleFileSlideBuilder(AbstractSlideBuilder, SingleFileHTMLBuilder):
+    """This is the single file Slide HTML builder.
+
+    Its output is a directory with a single HTML file, along with the
+    needed style sheets and JavaScript.
+
+    Its name is ``singlefile-slides``.
+
+    """
+
+    name = 'singlefile-slides'
 
 
 class AbstractInlineSlideBuilder(object):

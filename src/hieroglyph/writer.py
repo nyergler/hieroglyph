@@ -206,7 +206,7 @@ class BaseSlideTranslator(HTMLTranslator):
 
     def depart_slide(self, node):
 
-        if not getattr(node, 'closed', False):
+        if self.current_slide and not getattr(node, 'closed', False):
 
             # mark the slide closed
             node.closed = True
