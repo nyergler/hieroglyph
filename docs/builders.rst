@@ -32,6 +32,8 @@ following target::
 
 .. autoclass:: DirectorySlideBuilder
 
+.. autoclass:: SingleFileSlideBuilder
+
 .. autoclass:: InlineSlideBuilder
 
 .. autoclass:: DirectoryInlineSlideBuilder
