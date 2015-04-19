@@ -139,3 +139,21 @@ class SingleFileBuilderTests(TestCase):
             contents = tree.find_all('article')
 
             self.assertEqual(len(contents), 4)
+
+    @with_app(
+        buildername='singlefile-slides',
+        srcdir=util.test_root.parent/'singlefile',
+    )
+    def test_slide_directive_closes_correctly_at_end_of_source_file(self, app, *args):
+        app.build()
+
+        with open(app.builddir/'singlefile-slides'/'index.html') as html_file:
+            tree = BeautifulSoup(html_file.read())
+
+            # test to see that all the slides are siblings
+            slides = [
+                s for s in tree.section.children
+                if s.name == 'article'
+            ]
+
+            self.assertEqual(len(slides), 4)

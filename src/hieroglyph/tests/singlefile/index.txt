@@ -7,10 +7,9 @@
 some text
 
 
-Slide 2
-=======
+.. slide:: Slide 2
 
-TESTING_SENTINEL
+  TESTING_SENTINEL
 
 .. toctree::
 

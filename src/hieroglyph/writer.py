@@ -349,3 +349,14 @@ class SlideTranslator(BaseSlideTranslator):
         self.section_level -= 1
 
         BaseSlideTranslator.visit_start_of_file(self, node)
+
+
+class SingleFileSlideTranslator(SlideTranslator):
+
+    def visit_compound(self, node):
+        if not 'toctree-wrapper' in node['classes']:
+            SlideTranslator.visit_compound(self, node)
+
+    def depart_compound(self, node):
+        if not 'toctree-wrapper' in node['classes']:
+            SlideTranslator.depart_compound(self, node)

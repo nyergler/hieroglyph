@@ -210,6 +210,9 @@ class SingleFileSlideBuilder(AbstractSlideBuilder, SingleFileHTMLBuilder):
 
     name = 'singlefile-slides'
 
+    def init_translator_class(self):
+        self.translator_class = writer.SingleFileSlideTranslator
+
 
 class AbstractInlineSlideBuilder(object):
 
