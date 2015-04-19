@@ -46,10 +46,7 @@ SlideDeck.prototype.findSlideById = function(title_id) {
   // The index must be 1-based, as it's passed to code which assumes
   // it was specified as the location fragment.
 
-  console.log('findSlideById ', title_id);
-
   slideEls = document.querySelectorAll('slides > slide');
-  console.log(slideEls);
 
   for (var i = 0; i < slideEls.length; i++) {
     if (slideEls.item(i).id == title_id) {
