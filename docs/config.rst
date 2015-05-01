@@ -129,8 +129,9 @@ The value of this variable is a ``dict`` and can have the following keys:
     analytics JS block is included in the resulting slides.
 
 
+**Example**
+
 .. code-block:: python
-    :caption: Example
 
     slide_theme_options = {
         'custom_css': 'mystyle.css',
