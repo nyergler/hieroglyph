@@ -424,13 +424,13 @@ SlideDeck.prototype.loadConfig_ = function(config) {
     var el = document.createElement('div');
     el.classList.add('slide-area');
     el.id = 'prev-slide-area';
-    el.addEventListener('click', this.prevSlide.bind(this), false);
+    el.addEventListener('click', this.prevSlide.bind(this,undefined), false);
     this.container.appendChild(el);
 
     var el = document.createElement('div');
     el.classList.add('slide-area');
     el.id = 'next-slide-area';
-    el.addEventListener('click', this.nextSlide.bind(this), false);
+    el.addEventListener('click', this.nextSlide.bind(this,undefined), false);
     this.container.appendChild(el);
   }
 
