@@ -57,11 +57,13 @@ Hieroglyph includes some classes that for styling slides:
    from the right to left.
 
 
+.. _org_doc_gio_slides:
+
 Slides2
 =======
 
 The ``slides2`` theme was added in Hieroglyph 0.7, and as based on the
-`Google I/O 2012+`_ HTML slide templates.
+`Google I/O 2012+`_ HTML slide templates. Also see: :doc:`gio_slides`
 
 Theme Options
 -------------
