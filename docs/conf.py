@@ -41,8 +41,8 @@ extensions = [
     'hieroglyph',
 ]
 
-if not on_rtd:
-    extensions.append('sphinxcontrib.googleanalytics')
+#GAM#if not on_rtd:
+#GAM#    extensions.append('sphinxcontrib.googleanalytics')
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
