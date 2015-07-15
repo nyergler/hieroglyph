@@ -3,15 +3,11 @@
 from __future__ import print_function
 
 from docutils import nodes
-from sphinx.locale import _
 from docutils.writers.html4css1 import HTMLTranslator as BaseTranslator
 from sphinx.writers.html import HTMLTranslator
-
 from hieroglyph import html
-from hieroglyph.directives import (
-    slide,
-    slideconf,
-)
+from hieroglyph.directives import slideconf
+
 
 import hack
 
@@ -32,7 +28,7 @@ class SlideData(object):
         self.classes = []
 
         # set after init (direct write)
-        self.title = ''
+        self.title = None
         self.content = ''
 
         # no other attr are used then above!
@@ -60,7 +56,7 @@ class SlideData(object):
         """Return the context dict for rendering this slide."""
 
         return {
-            'title': self.title,
+            'title': "" if self.title is None else self.title,
             'level': self.level,
             'content': self.content,
             'classes': self.classes,
@@ -133,7 +129,7 @@ class BaseSlideTranslator(HTMLTranslator):
         self.pop_body()
 
         slide = self.current_slide
-        slide.content = ''.join(slide_body)	# OR copy the []??
+        slide.content = u''.join(slide_body)
 
         rendered_slide = self.builder.templates.render('slide.html', slide._get_slide_context())
         self.body.append(rendered_slide)
@@ -142,35 +138,26 @@ class BaseSlideTranslator(HTMLTranslator):
 
     @hack.TRACE
     def visit_title(self, node):
-        HTMLTranslator.visit_title(self, node)
+        if (self.current_slide is not None) and (self.current_slide.title is None):
+            self.current_slide.title = node.astext().strip()
+            hack.show_body_stack(self, label="visit_title -> set current_slide.title")
+            raise nodes.SkipNode   # will skip depart_title!
+        else:
+            HTMLTranslator.visit_title(self, node)
 
-        ## self.push_body()
-
-        ## if (isinstance(node.parent, slide) or node.parent.attributes.get('include-as-slide', False)):
-        ##     slide_level = node.parent.attributes.get('level', self.section_level)
-        ##     self.current_slide.level =  max(slide_level + self.initial_header_level - 1, 1)
-
-        ## if self.current_slide and isinstance(node.parent, (nodes.section, slide)):
-        ##     self.current_slide.title = node.astext().strip()
-        ## else:
-        ##     HTMLTranslator.visit_title(self, node)
 
     @hack.TRACE
-    def depart_title(self, node):
-        print("XXX", self.body)
+    def depart_title(self, node): # Not called when title of current_slide is set!
         HTMLTranslator.depart_title(self, node)
-        print("XXX", self.body)
-        if self.current_slide and self.current_slide.title == None:
-            self.current_slide.title == "".join(self.body)
+        
+        ## title = self.body
+        ## self.pop_body()
 
-        ## if self.current_slide and isinstance(node.parent, (nodes.section, slide)):
-        ##     self.current_slide.title = ''.join(self.body)
-        ##     self.pop_body()
+
+        ##     self.current_slide.title = "".join(title)
         ## else:
-        ##     HTMLTranslator.depart_title(self, node)
-        ##     title = ''.join(self.body)
-        ##     self.pop_body()
-        ##     self.body.append(title)
+        ##     self.body.extend(title)  # Nicer as `self.body.append("".join(title))`, but functionally the same
+
 
     def visit_block_quote(self, node):
         quote_slide_tags = ['paragraph', 'attribution']
