@@ -53,7 +53,8 @@ body {
   display: block;
 
   position: absolute;
-  overflow: hidden;
+  /* overflow: hidden; GAM: */
+  overflow: scroll;
 
   width: 900px;
   height: 700px;
@@ -415,7 +416,7 @@ h2 {
 
   padding: 0;
   margin: 0;
-  margin-top: 465px;
+  /* GAM margin-top: 465px; */
   padding-right: 40px;
   /* position: absolute; */
   /* bottom: 150px; */
