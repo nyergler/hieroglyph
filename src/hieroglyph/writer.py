@@ -1,11 +1,14 @@
 """Writer Support for Hieroglyph Slides."""
 
+from __future__ import print_function
+
 from docutils import nodes
 from docutils.writers.html4css1 import HTMLTranslator as BaseTranslator
 from sphinx.writers.html import HTMLTranslator
 from hieroglyph import html
 from hieroglyph.directives import slideconf
 
+import hack
 
 class SlideData(object):
 
@@ -38,7 +41,7 @@ class SlideData(object):
     def _get_slide_context(self):
         """Return the context dict for rendering this slide."""
 
-        return { 'title': "" if self.title is None else self.title,
+        return { 'title': "__NO_TITLE__" if self.title is None else self.title,
                  'level': self.level,
                  'content': self.content,
                  'classes': self.classes,
@@ -56,20 +59,21 @@ class BaseSlideTranslator(HTMLTranslator):
         HTMLTranslator.__init__(self, *args, **kwargs)
 
         self.slide_number = 0
-        self.body_stack = []
+        self._body_stack = []
         self.current_slide = None
         #self.slide_data = []
 
 
+    @hack.SHOW_stack
     def push_body(self):
         """Push the current body onto the stack and create an empty one."""
-
-        self.body_stack.append(self.body)
+        self._body_stack.append(self.body)
         self.body = []
 
+    @hack.SHOW_stack
     def pop_body(self):
         """Replace the current body with the last one pushed to the stack."""
-        self.body = self.body_stack.pop()
+        self.body = self._body_stack.pop()
 
 
     def visit_slideconf(self, node):
@@ -78,7 +82,7 @@ class BaseSlideTranslator(HTMLTranslator):
     def depart_slideconf(self, node):
         pass
 
-
+    @hack.TRACE
     def slide_start(self, node): #GAM: renamed
         """A pseudo visitor for slides; as `slides` isn't a docutils node, it can't be visited. It
            is called in the writer to start a (new) slide. Typically on a new section."""
@@ -93,11 +97,19 @@ class BaseSlideTranslator(HTMLTranslator):
             slide_conf = slideconf.get_conf(self.builder, node.document)
             classes = slide_conf['slide_classes']
 
-        self.current_slide = SlideData(translator=self, id=node.get('ids', ("",))[0],  # first ID of empty string
+        try:
+            ids = node.get('ids')[0]
+        except IndexError:
+            ids =str(abs(hash(node))) # Just some string-value
+
+        self.push_body() # Save old data and collect all upto slide_end
+        self.current_slide = SlideData(translator=self, id=ids,
                                        level=self.section_level, slide_number=self.slide_number,
                                        classes=classes)
-        self.push_body() # collect `body` data inside the slide, to render and append it during slide_end
 
+
+
+    @hack.TRACE
     def slide_end(self, node): #GAM: renamed
         ## """Also see `slide_start; this is the matching` pseudo depart for slides. Always called by a writer"""
 
@@ -106,6 +118,12 @@ class BaseSlideTranslator(HTMLTranslator):
         self.pop_body()
 
         slide = self.current_slide
+        print ('XXX slide:', slide)
+        if slide is None:
+            hack.show_stack(self)
+            return
+
+
         slide.content = u''.join(slide_body)
 
         rendered_slide = self.builder.templates.render('slide.html', slide._get_slide_context())
@@ -160,6 +178,7 @@ class BaseSlideTranslator(HTMLTranslator):
 
 class SlideTranslator(BaseSlideTranslator):
 
+    @hack.TRACE
     def visit_section(self, node):
         #  Increase the section_level, and  'maybe' start a new slide
         self.section_level += 1
@@ -168,7 +187,7 @@ class SlideTranslator(BaseSlideTranslator):
     def depart_section(self, node):
         self.section_level -= 1
 
-
+    @hack.TRACE
     def _maybe_new_slide(self, node):
         """Determine whether a slide-transition is needed, and insert it when needed.
            Also return True/False depending on that need."""
@@ -191,10 +210,12 @@ class SlideTranslator(BaseSlideTranslator):
             return False
 
 
+    @hack.TRACE
     def visit_document(self, node): # Only to TRACE it
         BaseSlideTranslator.visit_document(self, node)
 
 
+    @hack.TRACE
     def depart_document(self, node):
         if getattr(self, 'slide_open', False):         #Close the last slide
             self.slide_end(node)
@@ -229,6 +250,19 @@ class SlideTranslator(BaseSlideTranslator):
 
         BaseSlideTranslator.visit_start_of_file(self, node)
 
+    @hack.TRACE
+    def visit_slide(self, node):
+        pass
+#        self.push_body()
+#        self.slide_start(node);
+#        self.slide_open=True
+
+    @hack.TRACE
+    def depart_slide(self, node):
+        pass
+#        self.slide_end(node);
+#        self.pop_body()
+#        self.slide_open=False
 
 
 class SingleFileSlideTranslator(SlideTranslator):

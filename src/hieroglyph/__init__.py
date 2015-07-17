@@ -75,3 +75,4 @@ def setup(app):
     app.connect('builder-inited', html.inspect_config)
     app.connect('html-page-context', html.add_link)
 
+    import hack;     app.connect('doctree-resolved', hack.dump_xml)
