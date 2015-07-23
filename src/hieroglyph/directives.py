@@ -1,11 +1,11 @@
+from __future__ import print_function
+
 from docutils import nodes
 
 from sphinx.util.nodes import set_source_info
 from docutils.nodes import SkipNode
 from docutils.parsers.rst import Directive, directives
-from docutils.parsers.rst.directives import (
-    admonitions,
-)
+from docutils.parsers.rst.directives import admonitions
 from docutils.parsers.rst.roles import set_classes
 from docutils.transforms import Transform
 
@@ -13,6 +13,7 @@ from docutils.transforms import Transform
 def raiseSkip(self, node):
     raise SkipNode()
 
+import hack
 
 class if_slides(nodes.Element):
     pass
@@ -27,16 +28,9 @@ class IfBuildingSlides(Directive):
     option_spec = {}
 
     def run(self):
-        if self.name in ('slides', 'notslides',):
+        if self.name in ('slides', 'notslides',):             # these are deprecated, print a warning
             import warnings
-
-            # these are deprecated, print a warning
-            warnings.warn(
-                "The %s directive has been deprecated; replace with if%s" % (
-                    self.name, self.name,
-                ),
-                stacklevel=2,
-            )
+            warnings.warn("The %s directive has been deprecated; replace with if%s" % (self.name, self.name))
 
         node = if_slides()
         node.document = self.state.document
@@ -109,6 +103,7 @@ class TransformNextSlides(Transform):
 
     default_priority = 550
 
+    @hack.TRACE
     def apply(self, *args, **kwargs):
 
         app = self.document.settings.env.app
@@ -117,14 +112,10 @@ class TransformNextSlides(Transform):
 
         is_slides = builder.building_slides(app)
 
-        return self.apply_to_document(
-            self.document,
-            env=self.document.settings.env,
-            building_slides=is_slides,
-        )
+        return self.apply_to_document(self.document, env=self.document.settings.env, building_slides=is_slides)
 
+    @hack.TRACE
     def apply_to_document(self, document, env, building_slides):
-
         need_reread = False
 
         for node in document.traverse(nextslide):
@@ -134,6 +125,7 @@ class TransformNextSlides(Transform):
         if need_reread:
             env.note_reread()
 
+    @hack.TRACE
     def _make_title_node(self, node, increment=True):
         """Generate a new title node for ``node``.
 
@@ -176,16 +168,26 @@ class TransformNextSlides(Transform):
         new_title.nextslide_info = nextslide_info
         return new_title
 
+    @hack.TRACE
     def visit_nextslide(self, node, building_slides):
 
         index = node.parent.index(node)
 
-        if (not building_slides or
-                not node.parent.children[index+1:]):
+        if not building_slides or not node.parent.children[index+1:]:
             node.parent.replace(node, [])
-
             # nothing else to do
             return
+
+        if True:
+            print('XXX fore-fathers of node:', node)
+            n = node
+            while n is not None:
+                print('XXX \t', n, "--", str(n)[:40]+'...', "class:", type(n))
+                n = n.parent
+            doctree = n
+
+            auto_level=slideconf.get_conf(self.document.settings.env.app.builder, doctree)['slide_levels']
+            print('XXX auto_level:', auto_level)
 
         # figure out where to hoist the subsequent content to
         parent = node.parent
@@ -199,7 +201,7 @@ class TransformNextSlides(Transform):
 
         # create the next section
         new_section = nodes.section()
-        new_section += self._make_title_node(node)
+        new_section += self._make_title_node(node) # XXX
         new_section.extend(new_children)
         self.document.set_id(new_section)
 
@@ -246,6 +248,7 @@ class slideconf(nodes.Element):
             'theme': builder.config.slide_theme,
             'autoslides': builder.config.autoslides,
             'slide_classes': [],
+            'slide_levels': builder.config.slide_levels
         }
 
         # now look for a slideconf node in the doctree and update the conf
@@ -334,9 +337,7 @@ def process_slideconf_nodes(app, doctree, docname):
 
     # if autoslides is disabled and we're building slides,
     # replace the document tree with only explicit slide nodes
-    if (is_slides and
-        not slideconf.get_conf(
-            app.builder, doctree)['autoslides']):
+    if is_slides and not slideconf.get_conf(app.builder, doctree)['autoslides']:
         filter_doctree_for_slides(doctree)
 
 
