@@ -1,6 +1,7 @@
 """Writer Support for Hieroglyph Slides."""
 
 from docutils import nodes
+from sphinx.locale import _
 from docutils.writers.html4css1 import HTMLTranslator as BaseTranslator
 from sphinx.writers.html import HTMLTranslator
 from hieroglyph import html
