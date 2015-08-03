@@ -27,8 +27,7 @@ body {
   height: 100%;
   min-height: 740px;
 
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 
   background: rgb(215, 215, 215);
   background: -o-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
@@ -53,7 +52,7 @@ body {
   display: block;
 
   position: absolute;
-  overflow: scroll;
+  overflow: hidden;
 
   width: 900px;
   height: 700px;
@@ -86,6 +85,10 @@ body {
   -moz-transition: -moz-transform .3s ease-out;
   -webkit-transition: -webkit-transform .3s ease-out;
 }
+
+/* Even when there is to much text, it should be visible on the current slide*/
+.slides > article.current { overflow-y: auto; overflow-x: hidden}
+
 .slides.layout-widescreen > article {
   margin-left: -550px;
   width: 1100px;
