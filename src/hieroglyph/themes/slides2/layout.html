@@ -60,15 +60,15 @@ URL: https://code.google.com/p/io-2012-slides
   <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
         href="{{ pathto('_static/theme/css/phone.css', 1) }}">
 
-    {% if theme_custom_css %}
-    <link rel="stylesheet" href="{{ pathto('_static/' + theme_custom_css, 1) }}"
-          type="text/css" />
-    {% endif %}
-
-    <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
-    {%- for cssfile in css_files %}
-    <link rel="stylesheet" href="{{ pathto(cssfile, 1) }}" type="text/css" />
-    {%- endfor %}
+  <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
+  {% if theme_custom_css %}
+  <link rel="stylesheet" href="{{ pathto('_static/' + theme_custom_css, 1) }}"
+        type="text/css" />
+  {% endif %}
+  
+  {%- for cssfile in css_files %}
+  <link rel="stylesheet" href="{{ pathto(cssfile, 1) }}" type="text/css" />
+  {%- endfor %}
 {%- endmacro %}
 
 <html>
