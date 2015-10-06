@@ -59,10 +59,10 @@
     <link rel="stylesheet" href="{{ pathto('_static/basic.css', 1) }}" type="text/css" />
     <link rel="stylesheet" href="{{ pathto('_static/styles.css', 1) }}" type="text/css" />
     <link rel="stylesheet" href="{{ pathto('_static/' + style, 1) }}" type="text/css" />
+    <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
     {% if theme_custom_css %}
     <link rel="stylesheet" href="{{ pathto('_static/' + theme_custom_css, 1) }}" type="text/css" />
     {% endif %}
-    <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
     {% block template_css %}
     {% endblock %}
     {%- for cssfile in css_files %}
