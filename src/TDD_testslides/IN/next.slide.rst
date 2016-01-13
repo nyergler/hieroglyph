@@ -97,6 +97,24 @@ Nested
 
    echo  nextslide:: (increment)
 
+Nextslide with auto
+===================
+
+still with BUG!
+
+Before nextslide
+----------------
+
+.. nextslide::
+   :increment
+
+After nextslide
+---------------
+
+This should be a new slide!
+
+With title `Nextslide with auto (2)` and a header `After nextslide`
+
 
 END
 ===
