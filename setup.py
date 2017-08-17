@@ -12,7 +12,7 @@ version = '0.8'
 
 install_requires = [
     "setuptools",
-    "Sphinx >= 1.2",
+    "Sphinx >= 1.2, < 1.5",
     "six",
 ]
 
