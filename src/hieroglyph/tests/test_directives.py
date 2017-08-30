@@ -55,7 +55,6 @@ Second Level
         srcdir=util.test_root.parent/'no-autoslides',
     )
     def test_trailing_content_removed(self, sphinx_app, status, warning):
-
         sphinx_app.build()
 
         self.assertFalse(
@@ -380,7 +379,7 @@ class TransformNextSlideTests(TestCase):
             copy_srcdir_to_tmpdir=True,
             srcdir=util.test_root,
         )
-        self.builder = SlideBuilder(self.app)
+        self.builder = self.app.builder
         self.document = util.make_document(
             'testing',
             """\

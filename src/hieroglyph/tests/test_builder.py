@@ -7,7 +7,6 @@ from sphinx_testing import (
 )
 from hieroglyph.tests import util
 from hieroglyph.tests.util import with_app
-
 import hieroglyph.builder
 
 
@@ -17,6 +16,7 @@ class SlideBuilderTests(TestCase):
     def test_get_theme_options(self, app, *args):
 
         builder = hieroglyph.builder.SlideBuilder(app)
+        builder.init()
 
         resolved_theme_options = builder.get_theme_options()
         self.assertIsInstance(
@@ -37,6 +37,7 @@ class SlideBuilderTests(TestCase):
     def test_get_theme_options_with_overrides(self, app, *args):
 
         builder = hieroglyph.builder.SlideBuilder(app)
+        builder.init()
         resolved_theme_options = builder.get_theme_options()
 
         self.assertEqual(
@@ -54,6 +55,7 @@ class SlideBuilderTests(TestCase):
             },
         )
         builder = hieroglyph.builder.SlideBuilder(app)
+        builder.init()
         resolved_theme_options = builder.get_theme_options()
 
         self.assertEqual(
@@ -82,14 +84,14 @@ class SlideBuilderTests(TestCase):
         )
 
     @with_app(
+        buildername='slides',
         confoverrides={
             'slide_title': 'SLIDES TITLE',
         },
     )
     def test_docstitle_uses_slidetitle(self, app, *args):
 
-        builder = hieroglyph.builder.SlideBuilder(app)
-
+        builder = app.builder
         builder.prepare_writing([])
 
         self.assertEqual(
@@ -97,11 +99,10 @@ class SlideBuilderTests(TestCase):
             'SLIDES TITLE',
         )
 
-    @with_app()
+    @with_app(buildername='slides')
     def test_docstitle_fallback_to_html_title(self, app, status, warning):
 
-        builder = hieroglyph.builder.SlideBuilder(app)
-
+        builder = app.builder
         builder.prepare_writing([])
 
         self.assertEqual(

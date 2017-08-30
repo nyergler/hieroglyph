@@ -19,7 +19,7 @@ class PostProcessImageTests(TestCase):
             copy_srcdir_to_tmpdir=True,
             srcdir=util.test_root,
         )
-        self.builder = SlideBuilder(self.app)
+        self.builder = self.app.builder
         self.document = util.make_document(
             'testing',
             """\

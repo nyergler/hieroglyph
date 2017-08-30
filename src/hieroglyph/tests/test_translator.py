@@ -24,7 +24,7 @@ class SlideTranslationTests(TestCase):
             copy_srcdir_to_tmpdir=True,
             srcdir=util.test_root,
         )
-        self.builder = SlideBuilder(self.app)
+        self.builder = self.app.builder
         self.document = util.make_document(
             'testing',
             """\
@@ -40,7 +40,6 @@ Slide ``Title``
             self.builder,
             self.document,
         )
-        self.builder.init_templates()
 
     def test_push_body(self):
 
@@ -340,7 +339,7 @@ class QuoteSlideTests(TestCase):
             copy_srcdir_to_tmpdir=True,
             srcdir=util.test_root,
         )
-        self.builder = SlideBuilder(self.app)
+        self.builder = self.app.builder
 
     def test_rst_quote_makes_quote_slide(self):
         document = util.make_document(
