@@ -4,7 +4,7 @@ import json
 import os
 
 from docutils import nodes
-from sphinx.theming import HTMLThemeFactory
+import sphinx
 from sphinx.builders.html import (
     SingleFileHTMLBuilder,
     StandaloneHTMLBuilder,
@@ -14,6 +14,25 @@ from sphinx.util import copy_static_entry
 
 from hieroglyph import writer
 from hieroglyph import directives
+
+if sphinx.__version__ < '1.6.0':
+    from sphinx.theming import Theme
+
+    class HTMLThemeFactory:
+        """Compatibility shim to make old versions of Sphinx act more like 1.6+."""
+        def __init__(self, app):
+            self.app = app
+
+        def load_additional_themes(self, paths):
+            Theme.init_themes(self.app.confdir, paths)
+
+        def create(self, themename):
+            return Theme(themename)
+
+    Theme.get_config = Theme.get_confstr
+    Theme.get_theme_dirs = Theme.get_dirchain
+else:
+    from sphinx.theming import HTMLThemeFactory
 
 
 def building_slides(app):
@@ -27,6 +46,10 @@ class AbstractSlideBuilder(object):
     format = 'slides'
     add_permalinks = False
     default_translator_class = writer.SlideTranslator
+
+    def init_translator_class(self):
+        """Compatibility shim to support versions of Sphinx prior to 1.6."""
+        self.translator_class = self.default_translator_class
 
     def get_builtin_theme_dirs(self):
 

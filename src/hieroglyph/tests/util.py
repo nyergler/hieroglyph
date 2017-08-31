@@ -4,7 +4,6 @@ import docutils.writers.html4css1
 import docutils.utils
 from sphinx_testing.path import path
 from sphinx_testing import with_app as with_sphinx_testing
-import hieroglyph
 
 
 test_root = path(__file__).parent.joinpath('root').abspath()
