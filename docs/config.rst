@@ -91,7 +91,7 @@ Themes
 
    Theme specific options as a ``dict``.
 
-   See :ref:`custom-css` for more information.
+   See :ref:`slide-theme-options` for more information.
 
 .. confval:: slide_theme_path
 
@@ -101,6 +101,43 @@ Themes
 
 For more information on styling and themes, see
 :ref:`hieroglyph-themes`.
+
+
+.. _slide-theme-options:
+
+Slide Theme Options
+===================
+
+The variable ``slide_theme_options`` can be used to configure a couple of
+aspects of the resulting HTML. The ``slides`` theme supports the following
+options.
+
+The value of this variable is a ``dict`` and can have the following keys:
+
+**custom_css**
+    A CSS file to load into the template. The file should be located in the
+    ``html_static_path`` folder (``_static`` by default). See also
+    :ref:`custom-css`.
+
+**custom_js**
+    A JS file to load into the template. The file should be located in the
+    ``html_static_path`` folder (``_static`` by default). See also
+    :ref:`custom-js`.
+
+**google_analytics**
+    A google analytics code (f.ex.: ``XX-12345-6``). If this value is set, the
+    analytics JS block is included in the resulting slides.
+
+
+**Example**
+
+.. code-block:: python
+
+    slide_theme_options = {
+        'custom_css': 'mystyle.css',
+        'custom_js': 'myjavascript.js',
+        'google_analytics': 'XX-12345-6'
+    }
 
 
 .. _configuring-interlinking:

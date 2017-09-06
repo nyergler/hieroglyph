@@ -32,6 +32,10 @@ class SlideBuilderTests(TestCase):
             'custom_js',
             resolved_theme_options,
         )
+        self.assertIn(
+            'google_analytics',
+            resolved_theme_options,
+        )
 
     @with_app()
     def test_get_theme_options_with_overrides(self, app, *args):
@@ -51,6 +55,7 @@ class SlideBuilderTests(TestCase):
             confoverrides={
                 'slide_theme_options': {
                     'custom_css': 'testing.css',
+                    'google_analytics': 'hello',
                 },
             },
         )
@@ -61,6 +66,11 @@ class SlideBuilderTests(TestCase):
         self.assertEqual(
             resolved_theme_options['custom_css'],
             'testing.css',
+        )
+
+        self.assertEqual(
+            resolved_theme_options['google_analytics'],
+            'hello',
         )
 
     @with_app(
