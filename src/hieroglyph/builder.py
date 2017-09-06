@@ -4,7 +4,7 @@ import json
 import os
 
 from docutils import nodes
-from sphinx.theming import Theme
+import sphinx
 from sphinx.builders.html import (
     SingleFileHTMLBuilder,
     StandaloneHTMLBuilder,
@@ -14,6 +14,25 @@ from sphinx.util import copy_static_entry
 
 from hieroglyph import writer
 from hieroglyph import directives
+
+if sphinx.__version__ < '1.6.0':
+    from sphinx.theming import Theme
+
+    class HTMLThemeFactory:
+        """Compatibility shim to make old versions of Sphinx act more like 1.6+."""
+        def __init__(self, app):
+            self.app = app
+
+        def load_additional_themes(self, paths):
+            Theme.init_themes(self.app.confdir, paths)
+
+        def create(self, themename):
+            return Theme(themename)
+
+    Theme.get_config = Theme.get_confstr
+    Theme.get_theme_dirs = Theme.get_dirchain
+else:
+    from sphinx.theming import HTMLThemeFactory
 
 
 def building_slides(app):
@@ -26,9 +45,11 @@ class AbstractSlideBuilder(object):
 
     format = 'slides'
     add_permalinks = False
+    default_translator_class = writer.SlideTranslator
 
     def init_translator_class(self):
-        self.translator_class = writer.SlideTranslator
+        """Compatibility shim to support versions of Sphinx prior to 1.6."""
+        self.translator_class = self.default_translator_class
 
     def get_builtin_theme_dirs(self):
 
@@ -48,10 +69,6 @@ class AbstractSlideBuilder(object):
         return self.theme.get_options(overrides)
 
     def init_templates(self):
-        Theme.init_themes(self.confdir,
-                          self.get_builtin_theme_dirs() +
-                          self.config.slide_theme_path,
-                          warn=self.warn)
         themename, themeoptions = self.get_theme_config()
 
         self.create_template_bridge()
@@ -73,7 +90,10 @@ class AbstractSlideBuilder(object):
             (self.theme, self.theme_options)
         )
 
-        self.theme = Theme(themename)
+        theme_factory = HTMLThemeFactory(self.app)
+        theme_factory.load_additional_themes(self.get_builtin_theme_dirs() + self.config.slide_theme_path)
+
+        self.theme = theme_factory.create(themename)
         self.theme_options = themeoptions.copy()
         self.templates.init(self, self.theme)
         self.templates.environment.filters['json'] = json.dumps
@@ -102,7 +122,7 @@ class AbstractSlideBuilder(object):
 
         if self.theme:
             context.update(dict(
-                style=self.theme.get_confstr('theme', 'stylesheet'),
+                style=self.theme.get_config('theme', 'stylesheet'),
             ))
 
         return context
@@ -156,7 +176,7 @@ class AbstractSlideBuilder(object):
         for theme in self._additional_themes[1:]:
 
             themeentries = [os.path.join(themepath, 'static')
-                            for themepath in theme.get_dirchain()[::-1]]
+                            for themepath in theme.get_theme_dirs()[::-1]]
             for entry in themeentries:
                 copy_static_entry(entry, os.path.join(self.outdir, '_static'),
                                   self, ctx)
@@ -209,14 +229,13 @@ class SingleFileSlideBuilder(AbstractSlideBuilder, SingleFileHTMLBuilder):
     """
 
     name = 'singlefile-slides'
-
-    def init_translator_class(self):
-        self.translator_class = writer.SingleFileSlideTranslator
+    default_translator_class = writer.SingleFileSlideTranslator
 
 
 class AbstractInlineSlideBuilder(object):
 
     name = 'inlineslides'
+    default_translator_class = writer.BaseSlideTranslator
 
     def __init__(self, *args, **kwargs):
         super(AbstractInlineSlideBuilder, self).__init__(*args, **kwargs)
@@ -234,9 +253,6 @@ class AbstractInlineSlideBuilder(object):
         )
 
         self.css_files.append('_static/slides.css')
-
-    def init_translator_class(self):
-        self.translator_class = writer.BaseSlideTranslator
 
 
 class DirectoryInlineSlideBuilder(
