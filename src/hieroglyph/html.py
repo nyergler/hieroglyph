@@ -2,6 +2,7 @@
 
 import os
 
+import sphinx
 from sphinx.jinja2glue import SphinxFileSystemLoader
 
 HTML_BUILDERS = ('html', 'dirhtml', 'singlehtml',)
@@ -69,14 +70,23 @@ def inspect_config(app):
 
     if app.config.slide_link_html_sections_to_slides:
         # fix up the HTML Translator
-        app.builder.translator_class = type(
-            'SlideLinkTranslator',
-            (app.builder.translator_class,
-             object,
-             ),
-            {'depart_title': writer.depart_title,
-             },
-        )
+        if sphinx.version_info >= (1, 6, 0):
+            override_translator = type(
+                'SlideLinkTranslator',
+                (app.builder.get_translator_class(), object),
+                {
+                    'depart_title': writer.depart_title,
+                },
+            )
+            app.set_translator(app.builder, override_translator)
+        else:
+            app.builder.translator_class = type(
+                'SlideLinkTranslator',
+                (app.builder.translator_class, object),
+                {
+                    'depart_title': writer.depart_title,
+                },
+            )
 
 
 def slide_path(builder, pagename=None):
