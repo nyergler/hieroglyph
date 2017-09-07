@@ -24,8 +24,7 @@ contain new features::
 
   $ pip install git+https://github.com/nyergler/hieroglyph#egg=hieroglyph
 
-Hieroglyph supports Sphinx 1.2 and later, and Python 2.7, 3.3, and
-3.4.
+Hieroglyph supports Sphinx 1.4 and later, and Python 2.7 and 3.6.
 
 Using Hieroglyph
 ================

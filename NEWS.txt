@@ -1,12 +1,15 @@
 News
 ====
 
-0.8
+1.0
 ---
 
-*Release date: UNRELEASED*
+*Release date: 7 September 2017*
 
 * Add `singlefile-slides` builder
+* Fix compatibility with Sphinx >= 1.5
+* Moving to semantic versioning; major version bump indicates backward
+  incompatible changes (dropping Sphinx 1.2, 1.3 support)
 
 0.7.1
 -----
