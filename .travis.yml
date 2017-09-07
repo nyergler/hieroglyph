@@ -9,8 +9,8 @@ env:
   - SPHINX_SPEC=Sphinx~=1.6.0
   - SPHINX_SPEC=git+https://github.com/sphinx-doc/sphinx.git\#egg\=Sphinx-dev
 
-before_install:
-  - bundle install
+# before_install:
+#   - bundle install
 
 install:
   - pip install coveralls
