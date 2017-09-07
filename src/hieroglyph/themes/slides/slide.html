@@ -1,7 +1,5 @@
-
 <article class="{% if classes %}{{ ' '.join(classes) }} {% endif %}slide level-{{ level }}"{% if id %} id="{{ id }}"{% endif %}>
-
-<h{{ level }}>{{ title }}</h{{ level }}>
+{% if title %}<h{{ level }}>{{ title }}</h{{ level }}> {% endif %}
 
 {{ content }}
 

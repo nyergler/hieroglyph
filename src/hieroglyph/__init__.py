@@ -74,3 +74,4 @@ def setup(app):
 
     app.connect('builder-inited', html.inspect_config)
     app.connect('html-page-context', html.add_link)
+

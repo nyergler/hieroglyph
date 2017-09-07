@@ -4,96 +4,50 @@ from docutils import nodes
 from sphinx.locale import _
 from docutils.writers.html4css1 import HTMLTranslator as BaseTranslator
 from sphinx.writers.html import HTMLTranslator
-
 from hieroglyph import html
-from hieroglyph.directives import (
-    slide,
-    slideconf,
-)
-
-
-def depart_title(self, node):
-
-    # XXX Because we want to inject our link into the title, this is
-    # largely copy-pasta'd from sphinx.html.writers.HtmlTranslator.
-
-    close_tag = self.context[-1]
-
-    if (self.permalink_text and self.builder.add_permalinks and
-            node.parent.hasattr('ids') and node.parent['ids']):
-        aname = node.parent['ids'][0]
-
-        if close_tag.startswith('</a></h'):
-            self.body.append('</a>')
-
-        self.body.append(u'<a class="headerlink" href="#%s" ' % aname +
-                         u'title="%s">%s</a>' % (
-                         _('Permalink to this headline'),
-                         self.permalink_text))
-
-        self.body.append(
-            u'<a class="headerlink" href="%s#%s" ' % (
-                html.slide_path(self.builder),
-                aname,
-            ) +
-            u'title="%s">%s' % (
-                _('Slides'),
-                self.builder.app.config.slide_html_slide_link_symbol,
-            ))
-
-        if not close_tag.startswith('</a></h'):
-            self.body.append('</a>')
-
-    BaseTranslator.depart_title(self, node)
+from hieroglyph.directives import slideconf
 
 
 class SlideData(object):
 
     def __init__(self, translator, **kwargs):
 
+        # set during init, see below (there only 1 call!)
         self._translator = translator
-
-        self.level = 0
-        self.title = ''
-        self.content = ''
-        self.classes = []
-        self.slide_number = 0
         self.id = ''
+        self.level = 0
+        self.slide_number = 0
+        self.classes = []
 
-        for name, value in kwargs.items():
-            setattr(self, name, value)
+        # set after init (direct write)
+        self.title = None
+        self.content = ''
+
+        # no other attrs are used then above!
+        for name, value in kwargs.items():  setattr(self, name, value)
+
 
     def _filter_classes(self, include=None, exclude=None):
-
         classes = self.classes[:]
         if include is not None:
-            classes = [
-                c[len(include):] for c in classes
-                if c.startswith(include)
-            ]
-
+            classes = [ c[len(include):] for c in classes if c.startswith(include) ]
         if exclude is not None:
-            classes = [
-                c for c in classes
-                if not c.startswith(exclude)
-            ]
-
+            classes = [ c for c in classes if not c.startswith(exclude) ]
         return classes
 
-    def get_slide_context(self):
+
+    def _get_slide_context(self):
         """Return the context dict for rendering this slide."""
 
-        return {
-            'title': self.title,
-            'level': self.level,
-            'content': self.content,
-            'classes': self.classes,
-            'slide_classes': self._filter_classes(exclude='content-'),
-            'content_classes': self._filter_classes(include='content-'),
-            'slide_number': self.slide_number,
-            'config': self._translator.builder.config,
-            'id': self.id,
-        }
+        return { 'title': self.title,
+                 'level': self.level,
+                 'content': self.content,
+                 'classes': self.classes,
+                 'slide_classes': self._filter_classes(exclude='content-'),
+                 'content_classes': self._filter_classes(include='content-'),
+                 'slide_number': self.slide_number,
+                 'config': self._translator.builder.config,
+                 'id': self.id }
 
 
 class BaseSlideTranslator(HTMLTranslator):
@@ -102,21 +56,21 @@ class BaseSlideTranslator(HTMLTranslator):
 
         HTMLTranslator.__init__(self, *args, **kwargs)
 
-        self.section_count = 0
-        self.body_stack = []
+        self.slide_number = 0
+        self._body_stack = []
         self.current_slide = None
-        self.slide_data = []
+
 
     def push_body(self):
         """Push the current body onto the stack and create an empty one."""
-
-        self.body_stack.append(self.body)
+        self._body_stack.append(self.body)
         self.body = []
 
     def pop_body(self):
-        """Replace the current body with the last one pushed to the stack."""
-
-        self.body = self.body_stack.pop()
+        """Replace the current body with the last pushed one. And return the popped one."""
+        body= self.body
+        self.body = self._body_stack.pop()
+        return body
 
     def visit_slideconf(self, node):
         pass
@@ -124,144 +78,54 @@ class BaseSlideTranslator(HTMLTranslator):
     def depart_slideconf(self, node):
         pass
 
-    def _add_slide_number(self, slide_no):
-        """Add the slide number to the output if enabled."""
 
-        if self.builder.config.slide_numbers:
-            self.body.append(
-                '\n<div class="slide-no">%s</div>\n' % (slide_no,),
-            )
+    def slide_start(self, node):
+        """A pseudo visitor to start (and end) a slide"""
 
-    def _add_slide_footer(self, slide_no):
-        """Add the slide footer to the output if enabled."""
+        self.slide_number +=1
 
-        if self.builder.config.slide_footer:
-            self.body.append(
-                '\n<div class="slide-footer">%s</div>\n' % (
-                    self.builder.config.slide_footer,
-                ),
-            )
-
-    def visit_slide(self, node):
-
-        from hieroglyph import builder
-
-        slide_level = node.attributes.get('level', self.section_level)
-
-        if slide_level > self.builder.config.slide_levels:
-            # dummy for matching div's
-            self.body.append(
-                self.starttag(
-                    node, 'div', CLASS='section level-%s' % slide_level)
-            )
-            node.tag_name = 'div'
-        else:
-
+        classes = node.get('classes')
+        if not classes:
             slide_conf = slideconf.get_conf(self.builder, node.document)
-            if (builder.building_slides(self.builder.app) and
-                    slide_conf['autoslides'] and
-                    isinstance(node.parent, nodes.section) and
-                    not getattr(node.parent, 'closed', False)):
+            classes = slide_conf['slide_classes']
 
-                # we're building slides and creating slides from
-                # sections; close the previous section, if needed
-                self.depart_slide(node.parent)
+        try:
+            ids = node.get('ids')[0]
+        except IndexError:
+            ids =str(abs(hash(node))) # Just some string-value
 
-            # don't increment section_count until we've (potentially)
-            # closed the previous slide
-            self.section_count += 1
+        self.push_body() # Save old data and collect all upto slide_end
+        self.current_slide = SlideData(translator=self, id=ids, level=self.section_level, slide_number=self.slide_number, classes=classes)
 
-            node.closed = False
 
-            classes = node.get('classes')
-            if not classes:
-                classes = slide_conf['slide_classes']
+    def slide_end(self, node):
+        """A pseudo visitor to (start and) end a slide"""
 
-            # self.body.append(
-            #     self.starttag(
-            #         node, 'article',
-            #         CLASS='%s slide level-%s' % (
-            #             ' '.join(classes),
-            #             slide_level,
-            #         ),
-            #     )
-            # )
-            node.tag_name = 'article'
+        # All`body` of the slide is collected; get it and pop the body
+        slide_body = self.pop_body()
 
-            slide_id = node.get('ids')
-            if slide_id:
-                slide_id = slide_id[0]
-            else:
-                slide_id = ''
+        slide = self.current_slide
+        if slide is None:
+            import warnings
+            warnings.warn("Trying to end a slide that does not exist. \n\tnode:", node, "\n\tbody:", slide_body)
+            return
 
-            assert self.current_slide is None
-            self.current_slide = SlideData(
-                self,
-                id=slide_id,
-                level=slide_level,
-                classes=classes,
-                slide_number=self.section_count,
-            )
-            self.push_body()
+        slide.content = u''.join(slide_body)
+        rendered_slide = self.builder.templates.render('slide.html', slide._get_slide_context())
+        self.body.append(rendered_slide)
+        self.current_slide = None
 
-    def depart_slide(self, node):
-
-        if self.current_slide and not getattr(node, 'closed', False):
-
-            # mark the slide closed
-            node.closed = True
-
-            # self._add_slide_footer(self.section_count)
-            # self._add_slide_number(self.section_count)
-            # self.body.append(
-            #     '\n</%s>\n' % getattr(node, 'tag_name', 'article')
-            # )
-
-            self.current_slide.content = ''.join(self.body)
-            self.pop_body()
-            rendered_slide = self.builder.templates.render(
-                'slide.html',
-                self.current_slide.get_slide_context(),
-            )
-            self.body.append(rendered_slide)
-            self.slide_data.append(self.current_slide)
-            self.current_slide = None
 
     def visit_title(self, node):
-
-        self.push_body()
-
-        if (isinstance(node.parent, slide) or
-                node.parent.attributes.get('include-as-slide', False)):
-            slide_level = node.parent.attributes.get(
-                'level',
-                self.section_level)
-            level = max(
-                slide_level + self.initial_header_level - 1,
-                1,
-            )
-            self.current_slide.level = level
-
-            # tag = 'h%s' % level
-            # self.body.append(self.starttag(node, tag, ''))
-            # self.context.append('</%s>\n' % tag)
-
-        if self.current_slide and isinstance(node.parent, (nodes.section, slide)):
+        if (self.current_slide is not None) and (self.current_slide.title is None):
+            # This is the first title in on a new slide -> Put in current_slide title. Not in the body/content
             self.current_slide.title = node.astext().strip()
+            raise nodes.SkipNode   # will skip depart_title!
         else:
             HTMLTranslator.visit_title(self, node)
 
+    # Note: depart_title() is inherited.
 
-    def depart_title(self, node):
-
-        if self.current_slide and isinstance(node.parent, (nodes.section, slide)):
-            self.current_slide.title = ''.join(self.body)
-            self.pop_body()
-        else:
-            HTMLTranslator.depart_title(self, node)
-            title = ''.join(self.body)
-            self.pop_body()
-            self.body.append(title)
 
     def visit_block_quote(self, node):
         quote_slide_tags = ['paragraph', 'attribution']
@@ -299,30 +163,46 @@ class BaseSlideTranslator(HTMLTranslator):
 class SlideTranslator(BaseSlideTranslator):
 
     def visit_section(self, node):
-
-        # XXX: We're actually removing content that's not in slide
-        # nodes with autoslides is false, so it's not clear that we
-        # even need this guard.
-        if (slideconf.get_conf(self.builder, node.document)['autoslides'] or
-                node.attributes.get('include-as-slide', False)):
-
-            self.section_level += 1
-            return self.visit_slide(node)
+        #  Increase the section_level, and  'maybe' start a new slide
+        self.section_level += 1
+        self._maybe_new_slide(node)         # we might need a new slide (stop one and start one)
 
     def depart_section(self, node):
+        self.section_level -= 1
 
-        if (slideconf.get_conf(self.builder, node.document)['autoslides'] or
-                node.attributes.get('include-as-slide', False)):
 
-            if self.section_level > self.builder.config.slide_levels:
-                self.body.append('</div>')
-            else:
-                self.depart_slide(node)
+    def _maybe_new_slide(self, node):
+        """Determine whether a slide-transition is needed, and insert it when needed.
+           Also return True/False depending on that need."""
 
-            self.section_level -= 1
+        if not slideconf.get_conf(self.builder, node.document)['autoslides']:
+            return False
+        # else
+
+        slide_levels = self.builder.config.slide_levels
+
+        if self.section_level <= slide_levels:
+            if getattr(self, 'slide_open', False): #  Basically: Skip slide_end, for when starting the first slide!
+                self.slide_end(node)
+
+            self.slide_start(node)
+            self.slide_open=True
+
+            return True
+        else:
+            return False
+
+
+    def visit_document(self, node): # Only to TRACE it
+        BaseSlideTranslator.visit_document(self, node)
+
+    def depart_document(self, node):
+        if getattr(self, 'slide_open', False):         #Close the last slide
+            self.slide_end(node)
+        BaseSlideTranslator.depart_document(self, node)
+
 
     def depart_title(self, node):
-
         if node.parent.hasattr('ids') and node.parent['ids']:
             aname = node.parent['ids'][0]
 
@@ -349,6 +229,17 @@ class SlideTranslator(BaseSlideTranslator):
         self.section_level -= 1
 
         BaseSlideTranslator.visit_start_of_file(self, node)
+
+
+    def visit_slide(self, node):
+        if getattr(self, 'slide_open', False): # end an "auto slide"
+            self.slide_end(node)
+        self.slide_start(node);
+        self.slide_open=True
+
+    def depart_slide(self, node):
+        self.slide_end(node);
+        self.slide_open=False
 
 
 class SingleFileSlideTranslator(SlideTranslator):

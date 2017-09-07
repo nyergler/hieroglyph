@@ -1,6 +1,6 @@
 @import url(fonts/stylesheet.css);
 
-/*
+/* Based on:
   Google HTML5 slides template
 
   Authors: Luke Mahé (code)
@@ -27,8 +27,7 @@ body {
   height: 100%;
   min-height: 740px;
 
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 
   background: rgb(215, 215, 215);
   background: -o-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
@@ -86,6 +85,10 @@ body {
   -moz-transition: -moz-transform .3s ease-out;
   -webkit-transition: -webkit-transform .3s ease-out;
 }
+
+/* Even when there is to much text, it should be visible on the current slide*/
+.slides > article.current { overflow-y: auto; overflow-x: hidden}
+
 .slides.layout-widescreen > article {
   margin-left: -550px;
   width: 1100px;
@@ -415,10 +418,7 @@ h2 {
 
   padding: 0;
   margin: 0;
-  margin-top: 465px;
   padding-right: 40px;
-  /* position: absolute; */
-  /* bottom: 150px; */
 
   font-weight: 600;
 
@@ -433,6 +433,7 @@ h3 {
 
   padding: 0;
   margin: 0;
+  margin-top: 1em;
   padding-right: 40px;
 
   font-weight: 600;
@@ -457,8 +458,6 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
-
-  margin-top: 40px;
 
   margin-left: .75em;
 }

@@ -1,4 +1,6 @@
 *.pyc
+.DS_Store
+
 
 .installed.cfg
 bin
@@ -20,3 +22,9 @@ _build
 /.tox/
 .sass-cache
 /pip-selfcheck.json
+
+# used by GAM, for debugging/tracing
+/src/hieroglyph/hack.py
+
+BuroLa
+src/TDD_testslides/__Result/

@@ -136,7 +136,7 @@ slides {
 slides > slide {
   display: block;
   position: absolute;
-  overflow: hidden;
+  overflow: auto;
   left: 50%;
   top: 50%;
   -moz-box-sizing: border-box;

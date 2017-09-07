@@ -1,16 +1,15 @@
+
 from docutils import nodes
 
 from sphinx.util.nodes import set_source_info
 from docutils.nodes import SkipNode
 from docutils.parsers.rst import Directive, directives
-from docutils.parsers.rst.directives import (
-    admonitions,
-)
+from docutils.parsers.rst.directives import admonitions
 from docutils.parsers.rst.roles import set_classes
 from docutils.transforms import Transform
 
 
-def raiseSkip(self, node):
+def raiseSkip(self, node): # Used in __init__: app.add_node
     raise SkipNode()
 
 
@@ -27,25 +26,17 @@ class IfBuildingSlides(Directive):
     option_spec = {}
 
     def run(self):
-        if self.name in ('slides', 'notslides',):
+        if self.name in ('slides', 'notslides',):             # these are deprecated, print a warning
             import warnings
-
-            # these are deprecated, print a warning
-            warnings.warn(
-                "The %s directive has been deprecated; replace with if%s" % (
-                    self.name, self.name,
-                ),
-                stacklevel=2,
-            )
+            warnings.warn("The %s directive has been deprecated; replace with if%s" % (self.name, self.name))
 
         node = if_slides()
         node.document = self.state.document
         set_source_info(self, node)
 
-        node.attributes['ifslides'] = self.name in ('slides', 'ifslides',)
+        node.attributes['ifslides'] = self.name in ('slides', 'ifslides')
 
-        self.state.nested_parse(self.content, self.content_offset,
-                                node, match_titles=1)
+        self.state.nested_parse(self.content, self.content_offset, node, match_titles=1)
         return [node]
 
 
@@ -111,20 +102,15 @@ class TransformNextSlides(Transform):
 
     def apply(self, *args, **kwargs):
 
-        app = self.document.settings.env.app
-
         from hieroglyph import builder
 
+        app = self.document.settings.env.app
         is_slides = builder.building_slides(app)
 
-        return self.apply_to_document(
-            self.document,
-            env=self.document.settings.env,
-            building_slides=is_slides,
-        )
+        self.apply_to_document(self.document, env=self.document.settings.env, building_slides=is_slides)
+
 
     def apply_to_document(self, document, env, building_slides):
-
         need_reread = False
 
         for node in document.traverse(nextslide):
@@ -134,66 +120,70 @@ class TransformNextSlides(Transform):
         if need_reread:
             env.note_reread()
 
+    def _find_last_slide(self, node):
+        # Find all ancestors, including the doctree (dads[-1])
+        ancestors, n = [], node
+        while n is not None:
+            ancestors.append(n)
+            n = n.parent
+        ancestors.reverse()
+        doctree = ancestors[0]
+
+        if not slideconf.get_conf(self.document.settings.env.app.builder, doctree)['autoslides']:
+            return node.parent
+        #else it's one for the ancestors
+
+        auto_level = slideconf.get_conf(self.document.settings.env.app.builder, doctree)['slide_levels']
+        my_level = len(ancestors) -1 # Don't count the doctree
+        level = auto_level if my_level > auto_level else my_level-1
+
+        return ancestors[level]
+
+
     def _make_title_node(self, node, increment=True):
         """Generate a new title node for ``node``.
 
         ``node`` is a ``nextslide`` node. The title will use the node's
         parent's title, or the title specified as an argument.
-
         """
 
-        parent_title_node = node.parent.next_node(nodes.title)
-        nextslide_info = getattr(
-            parent_title_node, 'nextslide_info',
-            (parent_title_node.deepcopy().children, 1),
-        )
-        nextslide_info = (
-            nextslide_info[0],
-            nextslide_info[1] + 1,
-        )
+        ancestor = self._find_last_slide(node)
+        parent_title_node = ancestor.next_node(nodes.title)
+
+        nextslide_info = getattr(parent_title_node, 'nextslide_info', (parent_title_node.deepcopy().children, 1))
+        nextslide_info = (nextslide_info[0], nextslide_info[1] + 1)
 
         if node.args:
-            textnodes, messages = node.state.inline_text(
-                node.args[0],
-                1,
-            )
+            textnodes, messages = node.state.inline_text(node.args[0], 1)
             new_title = nodes.title(node.args[0], '', *textnodes)
-
         else:
-
             title_nodes = nextslide_info[0][:]
-
             if 'increment' in node.attributes:
-                title_nodes.append(
-                    nodes.Text(' (%s)' % nextslide_info[1])
-                )
-
-            new_title = nodes.title(
-                '', '',
-                *title_nodes
-            )
+                title_nodes.append(nodes.Text(' (%s)' % nextslide_info[1]))
+            new_title = nodes.title('', '', *title_nodes)
 
         new_title.nextslide_info = nextslide_info
         return new_title
+
 
     def visit_nextslide(self, node, building_slides):
 
         index = node.parent.index(node)
 
-        if (not building_slides or
-                not node.parent.children[index+1:]):
+        if not building_slides or not node.parent.children[index+1:]: # Just delete the directive-node, when not building slides or no content
             node.parent.replace(node, [])
-
-            # nothing else to do
             return
+        #else
 
         # figure out where to hoist the subsequent content to
-        parent = node.parent
-        grandparent = node.parent.parent
-        insertion_point = grandparent.index(node.parent) + 1
+        ancestor = self._find_last_slide(node)
+        forefather = ancestor.parent
+        insertion_point = forefather.index(ancestor) + 1
 
-        # truncate siblings, storing a reference to the rest of the
-        # content
+        # truncate siblings, storing a reference to the rest of the content
+        parent = node.parent
+
+        # truncate siblings, storing a reference to the rest of the content
         new_children = parent.children[index+1:]
         parent.children = parent.children[:index+1]
 
@@ -208,7 +198,7 @@ class TransformNextSlides(Transform):
             new_section['classes'].extend(node.get('classes'))
 
         # attach the section and delete the nextslide node
-        grandparent.insert(insertion_point, new_section)
+        forefather.insert(insertion_point, new_section)
         del node.parent[index]
 
 
@@ -246,6 +236,7 @@ class slideconf(nodes.Element):
             'theme': builder.config.slide_theme,
             'autoslides': builder.config.autoslides,
             'slide_classes': [],
+            'slide_levels': builder.config.slide_levels
         }
 
         # now look for a slideconf node in the doctree and update the conf
@@ -314,9 +305,7 @@ def filter_doctree_for_slides(doctree):
     while current < num_children:
 
         child = doctree.children[current]
-        child.replace_self(
-            child.traverse(no_autoslides_filter)
-        )
+        child.replace_self(child.traverse(no_autoslides_filter))
 
         if len(doctree.children) == num_children:
             # nothing removed, increment current
@@ -334,9 +323,7 @@ def process_slideconf_nodes(app, doctree, docname):
 
     # if autoslides is disabled and we're building slides,
     # replace the document tree with only explicit slide nodes
-    if (is_slides and
-        not slideconf.get_conf(
-            app.builder, doctree)['autoslides']):
+    if is_slides and not slideconf.get_conf(app.builder, doctree)['autoslides']:
         filter_doctree_for_slides(doctree)
 
 
