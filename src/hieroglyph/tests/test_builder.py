@@ -136,7 +136,7 @@ class SingleFileBuilderTests(TestCase):
         app.build()
 
         with open(app.builddir/'singlefile-slides'/'index.html') as html_file:
-            tree = BeautifulSoup(html_file.read())
+            tree = BeautifulSoup(html_file.read(), "html.parser")
             contents = tree.find_all('article')
 
             self.assertEqual(len(contents), 4)
@@ -149,7 +149,7 @@ class SingleFileBuilderTests(TestCase):
         app.build()
 
         with open(app.builddir/'singlefile-slides'/'index.html') as html_file:
-            tree = BeautifulSoup(html_file.read())
+            tree = BeautifulSoup(html_file.read(), "html.parser")
 
             # test to see that all the slides are siblings
             slides = [

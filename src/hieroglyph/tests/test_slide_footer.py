@@ -22,7 +22,8 @@ class SlideFooterTests(TestCase):
         sphinx_app.build()
 
         slide_html = BeautifulSoup(
-            open(sphinx_app.builddir/'slides'/'index.html').read()
+            open(sphinx_app.builddir/'slides'/'index.html').read(),
+            "html.parser",
         )
         slides = slide_html.find_all('article', class_='slide')
 
@@ -54,7 +55,8 @@ class SlideFooterTests(TestCase):
         sphinx_app.build()
 
         slide_html = BeautifulSoup(
-            open(sphinx_app.builddir/'slides'/'index.html').read()
+            open(sphinx_app.builddir/'slides'/'index.html').read(),
+            "html.parser",
         )
         slides = slide_html.find_all('article', class_='slide')
 
