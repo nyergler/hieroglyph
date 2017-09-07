@@ -21,3 +21,5 @@ _build
 .sass-cache
 /pip-selfcheck.json
 pyvenv.cfg
+.vscode
+

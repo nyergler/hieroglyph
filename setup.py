@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
-from setuptools import setup, find_packages
 import os
+from setuptools import setup, find_packages
+import versioneer
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 NEWS = open(os.path.join(here, 'NEWS.txt')).read()
 
-
-version = '0.8'
 
 install_requires = [
     "setuptools",
@@ -18,7 +17,8 @@ install_requires = [
 
 
 setup(name='hieroglyph',
-      version=version,
+      version=versioneer.get_version(),
+      cmdclass=versioneer.get_cmdclass(),
       description=("Generate HTML presentations from plain text "
                    "sources with all the power of Sphinx."),
       long_description=README + '\n\n' + NEWS,

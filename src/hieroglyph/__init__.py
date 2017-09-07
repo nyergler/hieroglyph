@@ -74,3 +74,7 @@ def setup(app):
 
     app.connect('builder-inited', html.inspect_config)
     app.connect('html-page-context', html.add_link)
+
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
