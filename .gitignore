@@ -20,3 +20,4 @@ _build
 /.tox/
 .sass-cache
 /pip-selfcheck.json
+pyvenv.cfg
