@@ -1,17 +1,80 @@
-from __future__ import print_function
-from __future__ import absolute_import
+import datetime
+import pkg_resources
 
 from argparse import ArgumentParser
-import datetime
-import os
-
-import pkg_resources
-from sphinx import version_info as sphinx_version_info
-import sphinx.quickstart
 from sphinx.util.console import bold
+import sphinx.quickstart
 
 from hieroglyph import version
 
+
+# redefine or extend some Sphixn declarations
+sphinx.quickstart.MASTER_FILE = u"""
+.. %(project)s slides file, created by
+   hieroglyph-quickstart on %(now)s.
+
+
+%(project)s
+%(project_underline)s
+
+Contents:
+
+.. toctree::
+   :maxdepth: %(mastertocmaxdepth)s
+
+%(mastertoctree)s
+
+"""
+
+sphinx.quickstart.QUICKSTART_CONF += u"""
+
+# -- Hieroglyph Slide Configuration ------------
+
+extensions += [
+    'hieroglyph',
+]
+
+slide_title = '%(project_str)s'
+slide_theme = '%(slide_theme)s'
+slide_levels = 3
+
+# Place custom static assets in the %(dot)sstatic directory and uncomment
+# the following lines to include them
+
+# slide_theme_options = {
+#     'custom_css': 'custom.css',
+#     'custom_js': 'custom.js',
+# }
+
+# ----------------------------------------------
+
+"""
+
+sphinx.quickstart.MAKEFILE += u"""
+
+.PHONY: slides
+slides:
+	$(SPHINXBUILD) -b slides $(ALLSPHINXOPTS) $(BUILDDIR)/slides
+	@echo "Build finished. The HTML slides are in $(BUILDDIR)/slides."
+
+"""
+
+batchfile = sphinx.quickstart.BATCHFILE
+sphinx.quickstart.BATCHFILE = batchfile[:batchfile.rfind("\n:end\n")]
+sphinx.quickstart.BATCHFILE += u"""
+if "%%1" == "slides" (
+\t%%SPHINXBUILD%% -b slides %%ALLSPHINXOPTS%% %%BUILDDIR%%/slides
+\tif errorlevel 1 exit /b 1
+\techo.
+\techo.Build finished. The HTML slides pages are in %%BUILDDIR%%/slides.
+\tgoto end
+)
+
+:end
+
+"""
+
+sphinx_ask_user = sphinx.quickstart.ask_user
 
 def ask_user(d):
     """Wrap sphinx.quickstart.ask_user, and add additional questions."""
@@ -31,7 +94,15 @@ some basic Sphinx questions.
     d.update({
         'version': datetime.date.today().strftime('%Y.%m.%d'),
         'release': datetime.date.today().strftime('%Y.%m.%d'),
-        'make_mode': True,
+        'ext_autodoc': False,
+        'ext_doctest': True,
+        'ext_intersphinx': True,
+        'ext_todo': True,
+        'ext_coverage': True,
+        'ext_pngmath': True,
+        'ext_mathjax': False,
+        'ext_ifconfig': True,
+        'ext_viewcode': False,
     })
 
     if 'project' not in d:
@@ -73,25 +144,17 @@ Available themes:
 
     # Ask original questions
     print("")
-    sphinx.quickstart.ask_user(d)
+    sphinx_ask_user(d)
 
 
 def quickstart(path=None):
 
-    if sphinx_version_info < (1, 5, 0):
-        from . import quickstart_legacy
-        return quickstart_legacy.quickstart(path=path)
-
-    templatedir = os.path.join(os.path.dirname(__file__), 'templates')
-
-    d = sphinx.quickstart.DEFAULT_VALUE.copy()
-    d['extensions'] = ['hieroglyph']
-    d.update(dict(("ext_" + ext, False) for ext in sphinx.quickstart.EXTENSIONS))
+    d = {}
     if path:
         d['path'] = path
 
     ask_user(d)
-    sphinx.quickstart.generate(d, templatedir=templatedir)
+    sphinx.quickstart.generate(d)
 
 
 def main():
