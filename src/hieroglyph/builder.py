@@ -15,7 +15,8 @@ from sphinx.util import copy_static_entry
 from hieroglyph import writer
 from hieroglyph import directives
 
-if sphinx.__version__ < '1.6.0':
+
+if sphinx.version_info < (1, 6, 0):
     from sphinx.theming import Theme
 
     class HTMLThemeFactory:
