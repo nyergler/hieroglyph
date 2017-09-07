@@ -21,7 +21,7 @@ install:
 script:
   - coverage run --source=hieroglyph setup.py test
   # - rake jasmine:ci JASMINE_CONFIG_PATH=./src/jstests/jasmine.yml
-  - cd docs; READTHEDOCS=True SPHINXOPTS="-NqW" SPHINXBUILD="sphinx-build" make -e html slides
+  - cd docs; READTHEDOCS=True SPHINXOPTS="-NqW" SPHINXBUILD="sphinx-build" make -e clean html slides
 
 after_success:
   - coveralls
