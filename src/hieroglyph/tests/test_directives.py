@@ -179,7 +179,7 @@ class TestSlideConditions(TestCase):
         sphinx_app.build()
 
         with open(sphinx_app.builddir/'html'/'index.html') as html_file:
-            tree = BeautifulSoup(html_file.read())
+            tree = BeautifulSoup(html_file.read(), "html.parser")
             contents = tree.find(
                 'div',
                 attrs=dict(id='contents'),
@@ -210,8 +210,8 @@ class TestSlideConditions(TestCase):
             with open(html_sphinx.builddir/'html'/'split_slides.html') as html_file:
                 with open(slides_sphinx.builddir/'slides'/'split_slides.html') as slide_file:
 
-                    html = BeautifulSoup(html_file.read())
-                    slides = BeautifulSoup(slide_file.read())
+                    html = BeautifulSoup(html_file.read(), "html.parser")
+                    slides = BeautifulSoup(slide_file.read(), "html.parser")
 
                     self.assertEqual(
                         len(html.find_all('h2')),
@@ -242,7 +242,7 @@ class NextSlideTests(TestCase):
         ) as html_file:
 
             slide_html = BeautifulSoup(
-                html_file.read()
+                html_file.read(), "html.parser"
             )
             slides = slide_html.find_all('article', class_='slide')
 
@@ -276,7 +276,7 @@ class NextSlideTests(TestCase):
         ) as html_file:
 
             slide_html = BeautifulSoup(
-                html_file.read()
+                html_file.read(), "html.parser"
             )
             slides = slide_html.find_all('article', class_='slide')[1:]
             first_title = slides[0].find('h2').text
@@ -305,7 +305,7 @@ class NextSlideTests(TestCase):
         ) as html_file:
 
             slide_html = BeautifulSoup(
-                html_file.read()
+                html_file.read(), "html.parser"
             )
             slides = slide_html.find_all('article', class_='slide')[1:]
             first_title = inner_html(slides[0].find('h2'))
@@ -334,7 +334,7 @@ class NextSlideTests(TestCase):
         ) as html_file:
 
             slide_html = BeautifulSoup(
-                html_file.read()
+                html_file.read(), "html.parser"
             )
             slides = slide_html.find_all('article', class_='slide')[1:]
             first_title = inner_html(slides[0].find('h2'))
@@ -357,7 +357,7 @@ class NextSlideTests(TestCase):
         ) as html_file:
 
             slide_html = BeautifulSoup(
-                html_file.read()
+                html_file.read(), "html.parser"
             )
             slides = slide_html.find_all('article', class_='slide')[1:]
             first_title = slides[0].find('h2').text
