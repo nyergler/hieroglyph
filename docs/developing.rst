@@ -2,20 +2,6 @@
  Developing Hieroglyph
 =======================
 
-Hieroglyph uses Buildout_ to manage dependencies and development.
-
-#. Check out the repository::
-
-   $ git clone git@github.com:nyergler/hieroglyph.git
-
-#. Bootstrap and run buildout::
-
-   $ python bootstrap.py
-   $ ./bin/buildout
-
-After running Buildout, you can run ``./bin/python`` to execute an
-interpreter with Hieroglyph and its dependencies installed.
-
 Running Tests
 =============
 
