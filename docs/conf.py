@@ -41,9 +41,6 @@ extensions = [
     'hieroglyph',
 ]
 
-if not on_rtd:
-    extensions.append('sphinxcontrib.googleanalytics')
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -58,7 +55,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Hieroglyph'
-copyright = u'2012, Nathan R. Yergler'
+copyright = u'2012-2017, Nathan R. Yergler'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
