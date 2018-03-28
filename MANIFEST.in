@@ -1,5 +1,6 @@
 include README.rst
 include NEWS.txt
+include LICENSE
 recursive-include src/hieroglyph/themes *
 include versioneer.py
 include src/hieroglyph/_version.py
