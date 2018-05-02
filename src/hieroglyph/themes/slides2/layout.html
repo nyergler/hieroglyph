@@ -59,7 +59,7 @@ URL: https://code.google.com/p/io-2012-slides
         href="{{ pathto('_static/theme/css/hieroglyph.css', 1) }}">
   <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
         href="{{ pathto('_static/theme/css/phone.css', 1) }}">
-
+  <link rel="stylesheet" href="{{ pathto('_static/' + style, 1) }}" type="text/css" />
   <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
   {% if theme_custom_css %}
   <link rel="stylesheet" href="{{ pathto('_static/' + theme_custom_css, 1) }}"
