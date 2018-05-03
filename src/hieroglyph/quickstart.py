@@ -37,11 +37,9 @@ some basic Sphinx questions.
     if 'project' not in d:
         print('''
 The presentation title will be included on the title slide.''')
-        d['project'] = sphinx_quickstart.do_prompt('project',
-                                                   'Presentation title')
+        d['project'] = sphinx_quickstart.do_prompt('Presentation title')
     if 'author' not in d:
-        d['author'] = sphinx_quickstart.do_prompt('author',
-                                                  'Author name(s)')
+        d['author'] = sphinx_quickstart.do_prompt('Author name(s)')
 
     # slide_theme
     theme_entrypoints = pkg_resources.iter_entry_points('hieroglyph.theme')
