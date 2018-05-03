@@ -15,9 +15,10 @@ To create a new theme, follow these steps:
 #. Create a directory for your theme.
 
    This directory will need to be somewhere Sphinx and Hieroglyph can
-   find it. You can set the `html_theme_path`_ in your project to the
-   path, if needed. If you plan to distribute your theme, simply add
-   the `sphinx_themes entry point`_.
+   find it. You can set the ``slide_theme_path`` (in analogy to
+   `html_theme_path`_) in your project to the path, if needed. If you
+   plan to distribute your theme, simply add the `sphinx_themes entry
+   point`_.
 
 
 #. Create a ``theme.conf``
@@ -36,7 +37,7 @@ To create a new theme, follow these steps:
 
 #. Create a ``slide.html`` file.
 
-   The ``slide.html`` template is rendered for each individual slide. 
+   The ``slide.html`` template is rendered for each individual slide.
 
 #. Specify additional pages to generate in the ``theme.conf``
 
@@ -117,7 +118,7 @@ following variables are available for your templates:
     The slide number for the current slide.
 
 ``config``
-    A reference to the `Sphinx Configuration`_. 
+    A reference to the `Sphinx Configuration`_.
 
 Additional Pages
 ================
@@ -136,11 +137,11 @@ The value of the key (``console.html`` in this case) specifies the
 template to use to render the page.
 
 
-.. _`themes`: http://sphinx.pocoo.org/theming.html
-.. _`describes what goes into theme.conf`: http://sphinx-doc.org/theming.html#creating-themes
-.. _`sphinx_themes entry point`: http://sphinx-doc.org/theming.html#using-a-theme
-.. _`html_theme_path`: http://sphinx-doc.org/config.html#confval-html_theme_path
-.. _pathto: http://sphinx-doc.org/templating.html#pathto
+.. _`themes`: http://www.sphinx-doc.org/en/master/theming.html
+.. _`describes what goes into theme.conf`: http://www.sphinx-doc.org/en/master/theming.html#creating-themes
+.. _`sphinx_themes entry point`: http://www.sphinx-doc.org/en/master/theming.html#using-a-theme
+.. _`html_theme_path`: http://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_theme_path
+.. _pathto: http://www.sphinx-doc.org/en/master/templating.html#pathto
 .. _Jinja: http://jinja.pocoo.org/
-.. _`Sphinx templating`: http://sphinx-doc.org/templating.html
-.. _`Sphinx Configuration`: http://sphinx-doc.org/config.html#general-configuration
+.. _`Sphinx templating`: http://www.sphinx-doc.org/en/master/templating.html
+.. _`Sphinx Configuration`: http://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
