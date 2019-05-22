@@ -9,6 +9,11 @@ env:
   - SPHINX_SPEC=Sphinx~=1.6.0
   - SPHINX_SPEC=git+https://github.com/sphinx-doc/sphinx.git\#egg\=Sphinx-dev
 
+matrix:
+  exclude:  # Sphinx >= 2.0 does not work with python2.7
+  - python: 2.7
+    env: SPHINX_SPEC=git+https://github.com/sphinx-doc/sphinx.git\#egg\=Sphinx-dev
+
 # before_install:
 #   - bundle install
 
