@@ -49,7 +49,7 @@ def building_slides(app):
 
 class AbstractSlideBuilder(object):
 
-    format = 'html'
+    format = 'slides'
     add_permalinks = False
     default_translator_class = writer.SlideTranslator
 

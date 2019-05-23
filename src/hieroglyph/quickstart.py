@@ -7,7 +7,7 @@ import os
 
 import pkg_resources
 from sphinx import version_info as sphinx_version_info
-import sphinx.quickstart
+import sphinx.cmd.quickstart
 from sphinx.util.console import bold
 
 from hieroglyph import version
@@ -35,11 +35,10 @@ some basic Sphinx questions.
     })
 
     if 'project' not in d:
-        print('''
-The presentation title will be included on the title slide.''')
-        sphinx.quickstart.do_prompt(d, 'project', 'Presentation title')
+        print("The presentation title will be included on the title slide.")
+        d["project"] = sphinx.cmd.quickstart.do_prompt('Presentation title')
     if 'author' not in d:
-        sphinx.quickstart.do_prompt(d, 'author', 'Author name(s)')
+        d["author"] = sphinx.cmd.quickstart.do_prompt('Author name(s)')
 
     # slide_theme
     theme_entrypoints = pkg_resources.iter_entry_points('hieroglyph.theme')
@@ -64,34 +63,42 @@ Available themes:
     msg += """Which theme would you like to use?"""
     print(msg)
 
-    sphinx.quickstart.do_prompt(
-        d, 'slide_theme', 'Slide Theme', themes[0]['name'],
-        sphinx.quickstart.choice(
-            *[t['name'] for t in themes]
-        ),
-    )
+    if "slide_theme" not in d:
+        d['slide_theme'] = sphinx.cmd.quickstart.do_prompt(
+            'Slide Theme', themes[0]['name'],
+            sphinx.cmd.quickstart.choice(
+                *[t['name'] for t in themes]
+            ),
+        )
 
     # Ask original questions
     print("")
-    sphinx.quickstart.ask_user(d)
+    sphinx.cmd.quickstart.ask_user(d)
 
 
-def quickstart(path=None):
+def quickstart(path=None, title=None, author=None, slide_theme=None, **_):
 
     if sphinx_version_info < (1, 5, 0):
         from . import quickstart_legacy
         return quickstart_legacy.quickstart(path=path)
 
     templatedir = os.path.join(os.path.dirname(__file__), 'templates')
+    d = sphinx.cmd.quickstart.DEFAULTS.copy()
 
-    d = sphinx.quickstart.DEFAULT_VALUE.copy()
     d['extensions'] = ['hieroglyph']
-    d.update(dict(("ext_" + ext, False) for ext in sphinx.quickstart.EXTENSIONS))
+    for ext in sphinx.cmd.quickstart.EXTENSIONS:
+      d["ext_" + ext] = False
     if path:
         d['path'] = path
+    if title:
+        d["project"] = title
+    if author:
+        d["author"] = author
+    if slide_theme:
+        d["slide_theme"] = slide_theme
 
     ask_user(d)
-    sphinx.quickstart.generate(d, templatedir=templatedir)
+    sphinx.cmd.quickstart.generate(d, templatedir=templatedir)
 
 
 def main():
@@ -103,13 +110,14 @@ def main():
                         help="Print current version of hieroglyph")
     parser.add_argument('-q', '--quickstart', action='store_true',
                         help="Start a hieroglyph project")
-
+    parser.add_argument("-t", "--title", help="Presentation title")
+    parser.add_argument("-a", "--author", help="Presentation author")
+    parser.add_argument("-s", "--slide-theme", help="Slide theme to use")
     parser.add_argument('path', nargs='?', default=None,
                         help='Output directory for new presentation.')
-
     args = vars(parser.parse_args())
 
     if (args['version']):
         print(version())
     elif (args['quickstart']):
-        quickstart(args['path'])
+        quickstart(**args)
