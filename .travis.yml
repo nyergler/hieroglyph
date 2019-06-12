@@ -17,8 +17,10 @@ env:
 matrix:
   # exclude non Python2 compatible Sphinx versions
   exclude:
-  - python: 2.7
-    env: SPHINX_SPEC='==2.0.0'
+  - python:
+      "2.7"
+    env:
+      SPHINX_SPEC='==2.0.0'
 
 install:
   - pip install coveralls sphinx_rtd_theme "sphinx${SPHINX_SPEC:-}"
