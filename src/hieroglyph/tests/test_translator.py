@@ -261,6 +261,10 @@ Slide ``Title``
 
                 # Sphinx 1.3
                 'Slide <code class="docutils literal">'
+                '<span class="pre">Title</span></code>',
+
+                # Sphinx 1.7 @Python3.7
+                'Slide <code class="docutils literal notranslate">'
                 '<span class="pre">Title</span></code>'
 
             ],
