@@ -12,6 +12,7 @@ env:
   - SPHINX_SPEC='==1.7.0'
   - SPHINX_SPEC='==1.8.0'
   - SPHINX_SPEC='==2.0.0'
+  # latest release
   - SPHINX_SPEC=''
 
 matrix:
