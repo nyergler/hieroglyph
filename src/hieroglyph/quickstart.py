@@ -7,14 +7,14 @@ import os
 
 import pkg_resources
 from sphinx import version_info as sphinx_version_info
-import sphinx.quickstart
+import sphinx.cmd.quickstart as sphinx_quickstart
 from sphinx.util.console import bold
 
 from hieroglyph import version
 
 
 def ask_user(d):
-    """Wrap sphinx.quickstart.ask_user, and add additional questions."""
+    """Wrap sphinx.cmd.quickstart.ask_user, and add additional questions."""
 
     # Print welcome message
     msg = bold('Welcome to the Hieroglyph %s quickstart utility.') % (
@@ -37,9 +37,9 @@ some basic Sphinx questions.
     if 'project' not in d:
         print('''
 The presentation title will be included on the title slide.''')
-        sphinx.quickstart.do_prompt(d, 'project', 'Presentation title')
+        d['project'] = sphinx_quickstart.do_prompt('Presentation title')
     if 'author' not in d:
-        sphinx.quickstart.do_prompt(d, 'author', 'Author name(s)')
+        d['author'] = sphinx_quickstart.do_prompt('Author name(s)')
 
     # slide_theme
     theme_entrypoints = pkg_resources.iter_entry_points('hieroglyph.theme')
@@ -64,16 +64,17 @@ Available themes:
     msg += """Which theme would you like to use?"""
     print(msg)
 
-    sphinx.quickstart.do_prompt(
-        d, 'slide_theme', 'Slide Theme', themes[0]['name'],
-        sphinx.quickstart.choice(
+    d['slide_theme'] = sphinx_quickstart.do_prompt(
+        'Slide Theme',
+        themes[0]['name'],
+        sphinx_quickstart.choice(
             *[t['name'] for t in themes]
         ),
     )
 
     # Ask original questions
     print("")
-    sphinx.quickstart.ask_user(d)
+    sphinx_quickstart.ask_user(d)
 
 
 def quickstart(path=None):
@@ -84,14 +85,14 @@ def quickstart(path=None):
 
     templatedir = os.path.join(os.path.dirname(__file__), 'templates')
 
-    d = sphinx.quickstart.DEFAULT_VALUE.copy()
+    d = sphinx_quickstart.DEFAULTS.copy()
     d['extensions'] = ['hieroglyph']
-    d.update(dict(("ext_" + ext, False) for ext in sphinx.quickstart.EXTENSIONS))
+    d.update(dict(("ext_" + ext, False) for ext in sphinx_quickstart.EXTENSIONS))
     if path:
         d['path'] = path
 
     ask_user(d)
-    sphinx.quickstart.generate(d, templatedir=templatedir)
+    sphinx_quickstart.generate(d, templatedir=templatedir)
 
 
 def main():
