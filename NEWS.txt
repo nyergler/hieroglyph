@@ -1,6 +1,14 @@
 News
 ====
 
+1.1
+---
+
+*Release date: _unreleased_*
+
+* Drop support for Sphinx < 1.7
+* Fix compatibility with Sphinx 2
+
 1.0
 ---
 
