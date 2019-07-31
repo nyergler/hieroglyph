@@ -72,9 +72,8 @@ class TestQuickstart(TestCase):
 
         self.assertIn('hieroglyph', ns['extensions'])
         self.assertEqual(ns['templates_path'], ['_templates'])
-        self.assertEqual(ns['source_suffix'], '.rst')
-        self.assertEqual(ns['master_doc'], 'index')
         self.assertEqual(ns['project'], 'Hieroglyph Test')
+        self.assertEqual(ns['author'], 'Marcia Brady')
         self.assertEqual(ns['html_static_path'], ['_static'])
 
         self.assertTrue(os.path.isdir(os.path.join(tempdir, '_static')))

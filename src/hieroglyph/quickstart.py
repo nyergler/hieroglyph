@@ -79,10 +79,6 @@ Available themes:
 
 def quickstart(path=None):
 
-    if sphinx_version_info < (1, 5, 0):
-        from . import quickstart_legacy
-        return quickstart_legacy.quickstart(path=path)
-
     templatedir = os.path.join(os.path.dirname(__file__), 'templates')
 
     d = sphinx_quickstart.DEFAULTS.copy()
