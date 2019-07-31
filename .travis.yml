@@ -31,7 +31,7 @@ install:
 
 script:
   - coverage run --source=hieroglyph setup.py test
-  - cd docs; READTHEDOCS=True SPHINXOPTS="-NqW" SPHINXBUILD="sphinx-build" make -e clean html slides
+  - cd docs; READTHEDOCS=True SPHINXOPTS="-NqW" SPHINXBUILD="sphinx-build" make -e clean html slides; cd ..
 
 after_success:
   - coveralls
