@@ -75,6 +75,12 @@ def setup(app):
     app.connect('builder-inited', html.inspect_config)
     app.connect('html-page-context', html.add_link)
 
+    return {
+        'version': __version__,
+        'parallel_read_safe': True,
+        'parallel_write_safe': True,
+    }
+
 from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions
