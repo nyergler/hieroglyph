@@ -1,26 +1,36 @@
+cache: pip
+dist: xenial
 language: python
 python:
   - "2.7"
-  - "3.6"
+  - "3.7"
 
 env:
-  - SPHINX_SPEC=Sphinx~=1.4.0
-  - SPHINX_SPEC=Sphinx~=1.5.0
-  - SPHINX_SPEC=Sphinx~=1.6.0
-  - SPHINX_SPEC=git+https://github.com/sphinx-doc/sphinx.git\#egg\=Sphinx-dev
+  - SPHINX_SPEC='~=1.7.0'
+  - SPHINX_SPEC='~=1.8.0'
+  - SPHINX_SPEC='~=2.0.0'
+  - SPHINX_SPEC='~=2.1.0'
+  # latest release
+  - SPHINX_SPEC=''
 
-# before_install:
-#   - bundle install
+matrix:
+  # exclude non Python2 compatible Sphinx versions
+  exclude:
+  - python:
+      "2.7"
+    env:
+      SPHINX_SPEC='~=2.0.0'
+  - python:
+      "2.7"
+    env:
+      SPHINX_SPEC='~=2.1.0'
 
 install:
-  - pip install coveralls
-  - pip install sphinx_rtd_theme
-  - pip install $SPHINX_SPEC --allow-external Sphinx --allow-unverified Sphinx
+  - pip install coveralls sphinx_rtd_theme "sphinx${SPHINX_SPEC:-}"
   - python setup.py install
 
 script:
   - coverage run --source=hieroglyph setup.py test
-  # - rake jasmine:ci JASMINE_CONFIG_PATH=./src/jstests/jasmine.yml
   - cd docs; READTHEDOCS=True SPHINXOPTS="-NqW" SPHINXBUILD="sphinx-build" make -e clean html slides
 
 after_success:

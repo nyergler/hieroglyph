@@ -253,7 +253,7 @@ Slide ``Title``
         self.document.walkabout(self.translator)
 
         self.assertIn(
-            self.translator.slide_data[-1].title,
+            str(self.translator.slide_data[-1].title),
             [
                 # Sphinx 1.1, 1.2
                 'Slide <tt class="docutils literal">'
@@ -261,6 +261,10 @@ Slide ``Title``
 
                 # Sphinx 1.3
                 'Slide <code class="docutils literal">'
+                '<span class="pre">Title</span></code>',
+
+                # Sphinx 1.7 @Python3.7
+                'Slide <code class="docutils literal notranslate">'
                 '<span class="pre">Title</span></code>'
 
             ],
