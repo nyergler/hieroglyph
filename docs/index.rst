@@ -28,7 +28,24 @@ Hieroglyph is an extension for `Sphinx`_ which builds HTML slides from
 
    .. toctree::
       :maxdepth: 2
+       
+      getting-started
+      styling
+      themes
+      advanced
+      config
+      theme-creation
+      directives
+      builders
+      developing
+      ref-index
+      releases
 
+.. ifslides::
+
+   .. toctree::
+      :hidden:
+      
       getting-started
       styling
       themes
@@ -69,14 +86,3 @@ Related Projects
    :hidden:
 
    tests/smoketest.rst
-   getting-started
-   styling
-   themes
-   advanced
-   config
-   theme-creation
-   directives
-   builders
-   developing
-   ref-index
-   releases
