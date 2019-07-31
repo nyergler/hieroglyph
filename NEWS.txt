@@ -8,6 +8,7 @@ News
 
 * Drop support for Sphinx < 1.7
 * Fix compatibility with Sphinx 2
+* Enabled parallel reading of source files
 
 1.0
 ---
