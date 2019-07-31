@@ -15,9 +15,10 @@ To create a new theme, follow these steps:
 #. Create a directory for your theme.
 
    This directory will need to be somewhere Sphinx and Hieroglyph can
-   find it. You can set the `html_theme_path`_ in your project to the
-   path, if needed. If you plan to distribute your theme, simply add
-   the `sphinx_themes entry point`_.
+   find it. You can set the ``slide_theme_path`` (in analogy to
+   `html_theme_path`_) in your project to the path, if needed. If you
+   plan to distribute your theme, simply add the `sphinx_themes entry
+   point`_.
 
 
 #. Create a ``theme.conf``
