@@ -6,27 +6,32 @@ python:
   - "3.7"
 
 env:
-  - SPHINX_SPEC='~=1.7.0'
-  - SPHINX_SPEC='~=1.8.0'
-  - SPHINX_SPEC='~=2.0.0'
-  - SPHINX_SPEC='~=2.1.0'
+  - SPHINX_SPEC='sphinx~=1.7.0'
+  - SPHINX_SPEC='sphinx~=1.8.0'
+  - SPHINX_SPEC='sphinx~=2.0.0'
+  - SPHINX_SPEC='sphinx~=2.1.0'
   # latest release
-  - SPHINX_SPEC=''
+  - SPHINX_SPEC='sphinx'
+  # master branch (in development)
+  - SPHINX_SPEC='git+https://github.com/sphinx-doc/sphinx.git#egg=Sphinx'
 
 matrix:
   # exclude non Python2 compatible Sphinx versions
   exclude:
-  - python:
-      "2.7"
-    env:
-      SPHINX_SPEC='~=2.0.0'
-  - python:
-      "2.7"
-    env:
-      SPHINX_SPEC='~=2.1.0'
+  - python: "2.7"
+    env: SPHINX_SPEC='sphinx~=2.0.0'
+  - python: "2.7"
+    env: SPHINX_SPEC='sphinx~=2.1.0'
+  - python: "2.7"
+    env: SPHINX_SPEC='sphinx'
+  - python: "2.7"
+    env: SPHINX_SPEC='git+https://github.com/sphinx-doc/sphinx.git#egg=Sphinx'
+
+  allow_failures:
+  - env: SPHINX_SPEC='git+https://github.com/sphinx-doc/sphinx.git#egg=Sphinx'
 
 install:
-  - pip install coveralls sphinx_rtd_theme "sphinx${SPHINX_SPEC:-}"
+  - pip install coveralls sphinx_rtd_theme "${SPHINX_SPEC}"
   - python setup.py install
 
 script:

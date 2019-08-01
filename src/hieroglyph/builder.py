@@ -10,7 +10,11 @@ from sphinx.builders.html import (
     StandaloneHTMLBuilder,
     DirectoryHTMLBuilder,
 )
-from sphinx.util import copy_static_entry
+try:
+    from sphinx.util.fileutil import copy_asset_file
+except ImportError:
+    copy_asset_file = None
+    from sphinx.util import copy_static_entry
 
 from hieroglyph import writer
 from hieroglyph import directives
@@ -174,13 +178,16 @@ class AbstractSlideBuilder(object):
         ctx = self.globalcontext.copy()
         ctx.update(self.indexer.context_for_searchtool())
 
+        staticdir = os.path.join(self.outdir, '_static')
         for theme in self._additional_themes[1:]:
 
             themeentries = [os.path.join(themepath, 'static')
                             for themepath in theme.get_theme_dirs()[::-1]]
             for entry in themeentries:
-                copy_static_entry(entry, os.path.join(self.outdir, '_static'),
-                                  self, ctx)
+                if copy_asset_entry:
+                    copy_asset_entry(entry, staticdir, ctx)
+                else:
+                    copy_static_entry(entry, staticdir, self, ctx)
 
         return result
 
