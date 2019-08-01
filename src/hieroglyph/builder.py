@@ -10,6 +10,11 @@ from sphinx.builders.html import (
     StandaloneHTMLBuilder,
     DirectoryHTMLBuilder,
 )
+try:
+    from sphinx.util.fileutil import copy_asset_file
+except ImportError:
+    copy_asset_file = None
+    from sphinx.util import copy_static_entry
 
 from hieroglyph import writer
 from hieroglyph import directives
@@ -33,12 +38,6 @@ if sphinx.version_info < (1, 6, 0):
     Theme.get_theme_dirs = Theme.get_dirchain
 else:
     from sphinx.theming import HTMLThemeFactory
-
-if sphinx.version_info >= (1, 5):
-    from sphinx.util.fileutil import copy_asset_file
-else:
-    copy_asset_file = None
-    from sphinx.util import copy_static_entry
 
 
 def building_slides(app):
