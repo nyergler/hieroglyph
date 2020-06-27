@@ -2,31 +2,18 @@ cache: pip
 dist: xenial
 language: python
 python:
-  - "2.7"
   - "3.7"
+  - "3.8"
 
 env:
-  - SPHINX_SPEC='sphinx~=1.7.0'
-  - SPHINX_SPEC='sphinx~=1.8.0'
-  - SPHINX_SPEC='sphinx~=2.0.0'
-  - SPHINX_SPEC='sphinx~=2.1.0'
+  - SPHINX_SPEC='sphinx~=2.4.0'
+  - SPHINX_SPEC='sphinx~=3.0.0'
   # latest release
   - SPHINX_SPEC='sphinx'
   # master branch (in development)
   - SPHINX_SPEC='git+https://github.com/sphinx-doc/sphinx.git#egg=Sphinx'
 
 matrix:
-  # exclude non Python2 compatible Sphinx versions
-  exclude:
-  - python: "2.7"
-    env: SPHINX_SPEC='sphinx~=2.0.0'
-  - python: "2.7"
-    env: SPHINX_SPEC='sphinx~=2.1.0'
-  - python: "2.7"
-    env: SPHINX_SPEC='sphinx'
-  - python: "2.7"
-    env: SPHINX_SPEC='git+https://github.com/sphinx-doc/sphinx.git#egg=Sphinx'
-
   allow_failures:
   - env: SPHINX_SPEC='git+https://github.com/sphinx-doc/sphinx.git#egg=Sphinx'
 
