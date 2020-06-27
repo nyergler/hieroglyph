@@ -10,11 +10,6 @@ from sphinx.builders.html import (
     StandaloneHTMLBuilder,
     DirectoryHTMLBuilder,
 )
-try:
-    from sphinx.util.fileutil import copy_asset_file
-except ImportError:
-    copy_asset_file = None
-    from sphinx.util import copy_static_entry
 
 from hieroglyph import writer
 from hieroglyph import directives
@@ -39,6 +34,12 @@ if sphinx.version_info < (1, 6, 0):
 else:
     from sphinx.theming import HTMLThemeFactory
 
+if sphinx.version_info >= (1, 5):
+    from sphinx.util.fileutil import copy_asset_file
+else:
+    copy_asset_file = None
+    from sphinx.util import copy_static_entry
+
 
 def building_slides(app):
     """Returns True if building Slides."""
@@ -48,7 +49,7 @@ def building_slides(app):
 
 class AbstractSlideBuilder(object):
 
-    format = 'slides'
+    format = 'html'
     add_permalinks = False
     default_translator_class = writer.SlideTranslator
 
