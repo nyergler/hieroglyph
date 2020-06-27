@@ -6,7 +6,6 @@ import tempfile
 import time
 from unittest import TestCase
 
-from six import PY2, text_type
 from sphinx.cmd import quickstart as sphinx_quickstart
 from sphinx.util.pycompat import execfile_
 from sphinx.util.console import nocolor, coloron
@@ -24,12 +23,9 @@ def mock_input(answers, needanswer=False):
             raise AssertionError('answer for %r missing and no default '
                                  'present' % prompt)
         called.add(prompt)
-        if PY2:
-            prompt = str(prompt)  # Python2.x raw_input emulation
-            # `raw_input` encode `prompt` by default encoding to print.
-        else:
-            prompt = text_type(prompt)  # Python3.x input emulation
-            # `input` decode prompt by default encoding before print.
+        prompt = str(prompt)  # Python3.x input emulation
+        # `input` decode prompt by default encoding before print.
+
         for question in answers:
             if prompt.startswith(sphinx_quickstart.PROMPT_PREFIX + question):
                 return answers[question]

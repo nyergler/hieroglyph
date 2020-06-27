@@ -11,8 +11,7 @@ NEWS = open(os.path.join(here, 'NEWS.txt')).read()
 
 install_requires = [
     "setuptools",
-    "Sphinx >= 1.7",
-    "six",
+    "Sphinx >= 2.0",
 ]
 
 
