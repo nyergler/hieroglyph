@@ -24,7 +24,7 @@ contain new features::
 
   $ pip install git+https://github.com/nyergler/hieroglyph#egg=hieroglyph
 
-Hieroglyph supports Sphinx 1.7 and later, and Python 2.7 and 3.6.
+Hieroglyph supports Sphinx 2.4 and later, and Python 3.7 and later.
 
 Using Hieroglyph
 ================
@@ -64,6 +64,29 @@ also available.
 .. _`hieroglyph-users`: http://groups.google.com/d/forum/hieroglyph-users
 .. _`Gmane archive`: http://dir.gmane.org/gmane.comp.python.hieroglyph.user
 
+Developing
+==========
+
+Making a Release
+----------------
+
+Hieroglyph uses `Versioneer`_ for managing verison numbers. Versioneer is
+able to derive a reasonable version number using git tags as the source of
+truth.
+
+To create a release, do the following:
+
+* Update the change log (`NEWS.txt`_)
+* Tag the release commit as `hieroglyph-x.y.z`
+* Build the distributions using `setup.py`::
+
+  $ python setup.py sdist bdist_wheel
+
+* Push the changes to Github & upload to PyPI using `Twine`_::
+
+   $ git push origin head
+   $ twine upload dist/<built filenames>
+
 License
 =======
 
@@ -78,3 +101,6 @@ License.
 .. _`HTML 5 Slides`: http://code.google.com/p/html5slides/
 .. _`io-2012-slides`: https://code.google.com/p/io-2012-slides/
 .. _`Read the documentation`: http://docs.hieroglyph.io/
+.. _`Versioneer`: https://github.com/warner/python-versioneer
+.. _`Twine`: https://twine.readthedocs.io/en/latest/
+.. _`NEWS.txt`: ./NEWS.txt
