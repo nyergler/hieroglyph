@@ -34,12 +34,7 @@ if sphinx.version_info < (1, 6, 0):
 else:
     from sphinx.theming import HTMLThemeFactory
 
-if sphinx.version_info >= (1, 5):
-    from sphinx.util.fileutil import copy_asset_file
-else:
-    copy_asset_file = None
-    from sphinx.util import copy_static_entry
-
+from sphinx.util.fileutil import copy_asset
 
 def building_slides(app):
     """Returns True if building Slides."""
@@ -49,7 +44,6 @@ def building_slides(app):
 
 class AbstractSlideBuilder(object):
 
-    format = 'html'
     add_permalinks = False
     default_translator_class = writer.SlideTranslator
 
@@ -172,23 +166,22 @@ class AbstractSlideBuilder(object):
                 )
 
     def copy_static_files(self):
-
         result = super(AbstractSlideBuilder, self).copy_static_files()
 
         # add context items for search function used in searchtools.js_t
         ctx = self.globalcontext.copy()
         ctx.update(self.indexer.context_for_searchtool())
 
+        from sphinx.jinja2glue import BuiltinTemplateLoader
+        templateRenderer = BuiltinTemplateLoader()
         staticdir = os.path.join(self.outdir, '_static')
-        for theme in self._additional_themes[1:]:
 
+        for theme in self._additional_themes[1:]:
             themeentries = [os.path.join(themepath, 'static')
                             for themepath in theme.get_theme_dirs()[::-1]]
+            templateRenderer.init(self, dirs=themeentries)
             for entry in themeentries:
-                if copy_asset_entry:
-                    copy_asset_entry(entry, staticdir, ctx)
-                else:
-                    copy_static_entry(entry, staticdir, self, ctx)
+                copy_asset(entry, staticdir, context=ctx, renderer=templateRenderer)
 
         return result
 
