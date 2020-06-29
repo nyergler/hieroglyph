@@ -47,6 +47,10 @@ setup(name='hieroglyph',
               'single-level=hieroglyph.themes:SINGLE_LEVEL',
               'slides2=hieroglyph.themes:SLIDES2',
           ],
+          'sphinx.builders': [
+            'slides = hieroglyph',
+            'dirslides = hieroglyph',
+        ],
       },
       test_suite='hieroglyph.tests',
       tests_require=[
