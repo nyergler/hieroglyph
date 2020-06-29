@@ -5,11 +5,9 @@ import os
 
 from docutils import nodes
 import sphinx
-from sphinx.builders.html import (
-    SingleFileHTMLBuilder,
-    StandaloneHTMLBuilder,
-    DirectoryHTMLBuilder,
-)
+from sphinx.builders.html import StandaloneHTMLBuilder
+from sphinx.builders.singlehtml import SingleFileHTMLBuilder
+from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 
 from hieroglyph import writer
 from hieroglyph import directives
