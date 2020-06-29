@@ -234,8 +234,10 @@ class slideconf(nodes.Element):
         """Return the first slideconf node for the doctree."""
 
         conf_nodes = doctree.traverse(cls)
-        if conf_nodes:
-            return conf_nodes[0]
+        try:
+            return next(iter(conf_nodes))
+        except StopIteration:
+            pass
 
     @classmethod
     def get_conf(cls, builder, doctree=None):

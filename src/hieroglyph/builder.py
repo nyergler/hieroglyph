@@ -5,40 +5,15 @@ import os
 
 from docutils import nodes
 import sphinx
-from sphinx.builders.html import (
-    SingleFileHTMLBuilder,
-    StandaloneHTMLBuilder,
-    DirectoryHTMLBuilder,
-)
-try:
-    from sphinx.util.fileutil import copy_asset_file
-except ImportError:
-    copy_asset_file = None
-    from sphinx.util import copy_static_entry
+from sphinx.builders.html import StandaloneHTMLBuilder
+from sphinx.builders.singlehtml import SingleFileHTMLBuilder
+from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 
 from hieroglyph import writer
 from hieroglyph import directives
 
-
-if sphinx.version_info < (1, 6, 0):
-    from sphinx.theming import Theme
-
-    class HTMLThemeFactory:
-        """Compatibility shim to make old versions of Sphinx act more like 1.6+."""
-        def __init__(self, app):
-            self.app = app
-
-        def load_additional_themes(self, paths):
-            Theme.init_themes(self.app.confdir, paths)
-
-        def create(self, themename):
-            return Theme(themename)
-
-    Theme.get_config = Theme.get_confstr
-    Theme.get_theme_dirs = Theme.get_dirchain
-else:
-    from sphinx.theming import HTMLThemeFactory
-
+from sphinx.theming import HTMLThemeFactory
+from sphinx.util.fileutil import copy_asset
 
 def building_slides(app):
     """Returns True if building Slides."""
@@ -48,16 +23,10 @@ def building_slides(app):
 
 class AbstractSlideBuilder(object):
 
-    format = 'slides'
     add_permalinks = False
     default_translator_class = writer.SlideTranslator
 
-    def init_translator_class(self):
-        """Compatibility shim to support versions of Sphinx prior to 1.6."""
-        self.translator_class = self.default_translator_class
-
     def get_builtin_theme_dirs(self):
-
         return [
             os.path.join(os.path.dirname(__file__), 'themes',)
         ]
@@ -171,23 +140,22 @@ class AbstractSlideBuilder(object):
                 )
 
     def copy_static_files(self):
-
         result = super(AbstractSlideBuilder, self).copy_static_files()
 
         # add context items for search function used in searchtools.js_t
         ctx = self.globalcontext.copy()
         ctx.update(self.indexer.context_for_searchtool())
 
+        from sphinx.jinja2glue import BuiltinTemplateLoader
+        templateRenderer = BuiltinTemplateLoader()
         staticdir = os.path.join(self.outdir, '_static')
-        for theme in self._additional_themes[1:]:
 
+        for theme in self._additional_themes[1:]:
             themeentries = [os.path.join(themepath, 'static')
                             for themepath in theme.get_theme_dirs()[::-1]]
+            templateRenderer.init(self, dirs=themeentries)
             for entry in themeentries:
-                if copy_asset_entry:
-                    copy_asset_entry(entry, staticdir, ctx)
-                else:
-                    copy_static_entry(entry, staticdir, self, ctx)
+                copy_asset(entry, staticdir, context=ctx, renderer=templateRenderer)
 
         return result
 

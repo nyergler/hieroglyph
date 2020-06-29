@@ -152,3 +152,13 @@ subsequent indices) to the title.
 .. slide::
 
    This slide has only Content, no Title.
+
+Graphviz
+========
+
+.. graphviz::
+
+   digraph foo {
+      "bar" -> "baz";
+   }
+
