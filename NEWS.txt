@@ -1,6 +1,14 @@
 News
 ====
 
+2.1
+---
+
+*Release date: 4 July 2020*
+
+* Improved support with other Sphinx extensions; fixes #148, #168;
+  merges #155
+
 2.0
 ---
 
