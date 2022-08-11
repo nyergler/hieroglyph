@@ -100,7 +100,7 @@ License.
 .. _`Sphinx`: http://sphinx.pocoo.org/
 .. _`HTML 5 Slides`: http://code.google.com/p/html5slides/
 .. _`io-2012-slides`: https://code.google.com/p/io-2012-slides/
-.. _`Read the documentation`: http://docs.hieroglyph.io/
+.. _`Read the documentation`: http://hieroglyph.readthedocs.io/en/latest/
 .. _`Versioneer`: https://github.com/warner/python-versioneer
 .. _`Twine`: https://twine.readthedocs.io/en/latest/
 .. _`NEWS.txt`: ./NEWS.txt
