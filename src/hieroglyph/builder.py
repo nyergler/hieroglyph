@@ -127,12 +127,11 @@ class AbstractSlideBuilder(object):
         )
 
         for node in doctree.traverse(nodes.image):
-
             if node.get('candidates') is None:
                 node['candidates'] = ('*',)
 
             # fix up images with absolute paths
-            if node['uri'].startswith(self.outdir):
+            if node['uri'].startswith(str(self.outdir)):
                 node['uri'] = '/'.join(
                     relative_base + [
                         node['uri'][len(self.outdir) + 1:]
